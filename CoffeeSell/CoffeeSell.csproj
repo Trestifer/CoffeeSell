@@ -52,6 +52,9 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="ObjClass\Class1.cs" />
+    <Compile Include="ObjClass\Employee.cs" />
+    <Compile Include="ObjClass\Customer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -79,7 +82,6 @@
   <ItemGroup>
     <Folder Include="BO\" />
     <Folder Include="DAO\" />
-    <Folder Include="ObjClass\" />
     <Folder Include="PresentationLayer\" />
     <Folder Include="Utility\" />
   </ItemGroup>
