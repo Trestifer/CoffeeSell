@@ -25,5 +25,6 @@ namespace CoffeeSell.ObjClass
         public string GetPasswordHash() => PasswordHash;
         public string GetDisplayName() => DisplayName;
         public bool GetTypeAccount() => TypeAccount;
+
     }
 }
