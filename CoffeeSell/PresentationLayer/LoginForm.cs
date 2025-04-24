@@ -15,6 +15,8 @@ namespace CoffeeSell.PresentationLayer
         public LoginForm()
         {
             InitializeComponent();
+            TestForm testForm = new TestForm();
+            testForm.Show();
         }
     }
 }

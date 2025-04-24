@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoffeeSell.PresentationLayer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace CoffeeSell
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzgyOTQ1MEAzMjM5MmUzMDJlMzAzYjMyMzkzYmNKYmtFMm5neCtGYUxIMmQ2VDVrMzdrZE5VUmtKQkdmenB3QnV0M29zUEk9");
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new TestForm());
+            Application.Run(new LoginForm());
         }
     }
 }
