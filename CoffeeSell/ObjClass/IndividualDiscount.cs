@@ -12,18 +12,21 @@ namespace CoffeeSell.ObjClass
         {
         }
 
-        private int CoustomerId {  get; set; }
+        private int CustomerId {  get; set; }
         private int DiscountId { get; set; }
         private DateTime DateEnd   {  get; set; }
 
         public IndividualDiscount(int coustomerId, int discountId, DateTime dateEnd)
         {
-            CoustomerId = coustomerId;
+            CustomerId = coustomerId;
             DiscountId = discountId;
             DateEnd = dateEnd;
         }
-        public int GetCustomerId ()=> CoustomerId;
+        public int GetCustomerId ()=> CustomerId;
         public int GetDiscountId ()=> DiscountId;
         public DateTime GetDateEnd ()=> DateEnd;
+        public void SetCustomerId(int customerId) => CustomerId = customerId;
+        public void SetDiscountId(int discountId) => DiscountId = discountId;
+        public void SetDateEnd(DateTime dateEnd) => DateEnd = dateEnd;
     }
 }

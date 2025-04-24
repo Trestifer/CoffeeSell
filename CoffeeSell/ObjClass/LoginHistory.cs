@@ -34,6 +34,12 @@ namespace CoffeeSell.ObjClass
         public DateTime GetLoginTime() => LoginTime;
         public DateTime? GetLogoutTime() => LogoutTime;
         public bool GetSuccessfulLogin() => SuccessfulLogin;
+        // Setters
+        public void SetId(int id) => Id = id;
+        public void SetIdAccount(int idAccount) => IdAccount = idAccount;
+        public void SetLoginTime(DateTime loginTime) => LoginTime = loginTime;
+        public void SetLogoutTime(DateTime? logoutTime) => LogoutTime = logoutTime;
+        public void SetSuccessfulLogin(bool successfulLogin) => SuccessfulLogin = successfulLogin;
     }
 }
 

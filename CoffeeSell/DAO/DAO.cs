@@ -10,7 +10,7 @@ namespace CoffeeSell.DAO
 {
     public class DAO
     {
-        protected readonly string conn = "Server=192.168.1.10,1433;Database=YourDatabaseName;User Id=yourUsername;Password=yourPassword;";
+        protected readonly string conn = "Server=26.58.112.204,1433;Database=QuanLyBanCafe;User Id=trestifer;Password=tam73105";
 
 
         public DataTable ExecuteQuery(string query)

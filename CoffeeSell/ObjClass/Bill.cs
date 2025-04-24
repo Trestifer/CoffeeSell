@@ -37,6 +37,12 @@ namespace CoffeeSell.ObjClass
         public decimal GetTotalPrice() => TotalPrice;
         public int GetStatusBill() => StatusBill;
         public int? GetCustomerId() => CustomerId;
+        public void SetBillId(int billId) => BillId = billId;
+        public void SetDateCheckIn(DateTime dateCheckIn) => DateCheckIn = dateCheckIn;
+        public void SetDateCheckOut(DateTime? dateCheckOut) => DateCheckOut = dateCheckOut;
+        public void SetTotalPrice(decimal totalPrice) => TotalPrice = totalPrice;
+        public void SetStatusBill(int statusBill) => StatusBill = statusBill;
+        public void SetCustomerId(int? customerId) => CustomerId = customerId;
     }
 }
 

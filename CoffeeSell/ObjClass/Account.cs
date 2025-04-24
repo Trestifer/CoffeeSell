@@ -25,6 +25,11 @@ namespace CoffeeSell.ObjClass
         public string GetPasswordHash() => PasswordHash;
         public string GetDisplayName() => DisplayName;
         public bool GetTypeAccount() => TypeAccount;
+        public void SetAccountId(int accountId) => AccountId = accountId;
+        public void SetLoginName(string loginName) => LoginName = loginName;
+        public void SetPasswordHash(string passwordHash) => PasswordHash = passwordHash;
+        public void SetDisplayName(string displayName) => DisplayName = displayName;
+        public void SetTypeAccount(bool typeAccount) => TypeAccount = typeAccount;
 
     }
 }

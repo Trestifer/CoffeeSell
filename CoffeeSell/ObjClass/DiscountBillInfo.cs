@@ -25,6 +25,8 @@ namespace CoffeeSell.ObjClass
         // Public getter methods
         public int GetDiscountInfoId() => DiscountInfoId;
         public int GetDiscountId() => DiscountId;
+        public void SetDiscountInfoId(int discountInfoId) => DiscountInfoId = discountInfoId;
+        public void SetDiscountId(int discountId) => DiscountId = discountId;
     }
 }
 

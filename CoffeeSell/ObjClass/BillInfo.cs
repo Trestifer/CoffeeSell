@@ -33,6 +33,12 @@ namespace CoffeeSell.ObjClass
             public int GetIdBill() => IdBill;
             public int GetIdFood() => IdFood;
             public int GetQuantity() => Quantity;
+
+
+            public void SetId(int id) => Id = id;
+            public void SetIdBill(int idBill) => IdBill = idBill;
+            public void SetIdFood(int idFood) => IdFood = idFood;
+            public void SetQuantity(int quantity) => Quantity = quantity;
         }
     }
 

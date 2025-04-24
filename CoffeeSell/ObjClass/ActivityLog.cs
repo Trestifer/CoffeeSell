@@ -34,6 +34,12 @@ namespace CoffeeSell.ObjClass
         public char GetActionRecord() => ActionRecord;
         public DateTime GetTimeRecord() => TimeRecord;
         public string GetDetail() => Detail;
+        // Public setter methods
+        public void SetActivityId(int activityId) => ActivityId = activityId;
+        public void SetUsername(string username) => Username = username;
+        public void SetActionRecord(char actionRecord) => ActionRecord = actionRecord;
+        public void SetTimeRecord(DateTime timeRecord) => TimeRecord = timeRecord;
+        public void SetDetail(string detail) => Detail = detail;
     }
 }
 

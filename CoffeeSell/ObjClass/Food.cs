@@ -43,5 +43,17 @@ namespace CoffeeSell.ObjClass
         public int GetCategoryId() => CategoryId;
         public decimal[] GetPrice() => Price;
 
+    
+
+        // Setters
+        public void SetFoodId(int foodId) => FoodId = foodId;
+        public void SetNameFood(string nameFood) => NameFood = nameFood;
+        public void SetCategoryId(int categoryId) => CategoryId = categoryId;
+        public void SetPrice(decimal[] price) => Price = price;
+
+        // Optional: Set individual prices (small, medium, large)
+        public void SetPriceSmall(decimal price) => Price[0] = price;
+        public void SetPriceMedium(decimal price) => Price[1] = price;
+        public void SetPriceLarge(decimal price) => Price[2] = price;
     }
 }

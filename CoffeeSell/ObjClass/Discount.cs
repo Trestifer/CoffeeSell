@@ -41,6 +41,14 @@ namespace CoffeeSell.ObjClass
         public int GetDiscountValue() => DiscountValue;
         public int GetDiscountPercent() => DiscountPercent;
         public int GetScheduling() => Scheduling;
+        public void SetDiscountId(int discountId) => DiscountId = discountId;
+        public void SetNameDiscount(string nameDiscount) => NameDiscount = nameDiscount;
+        public void SetIsUseable(bool isUseable) => IsUseable = isUseable;
+        public void SetIsIndividual(bool isIndividual) => IsIndividual = isIndividual;
+        public void SetDiscountValue(int discountValue) => DiscountValue = discountValue;
+        public void SetDiscountPercent(int discountPercent) => DiscountPercent = discountPercent;
+        public void SetScheduling(int scheduling) => Scheduling = scheduling;
     }
+
 }
 

@@ -31,6 +31,12 @@ namespace CoffeeSell.ObjClass
         public string GetNameCustomer() => NameCustomer;
         public string GetPhoneNumber() => PhoneNumber;
         public int GetPoints() => Points;
+
+
+        public void SetCustomerId(int customerId) => CustomerId = customerId;
+        public void SetNameCustomer(string nameCustomer) => NameCustomer = nameCustomer;
+        public void SetPhoneNumber(string phoneNumber) => PhoneNumber = phoneNumber;
+        public void SetPoints(int points) => Points = points;
     }
 }
 

@@ -32,5 +32,12 @@ namespace CoffeeSell.ObjClass
         public string GetHomeAddress() => HomeAddress;
         public string GetPhoneNumber() => PhoneNumber;
         public int GetAccountId() => AccountId;
+        public void SetEmployeeId(int employeeId) => EmployeeId = employeeId;
+        public void SetNameEmployee(string nameEmployee) => NameEmployee = nameEmployee;
+        public void SetDateOfBirth(DateTime dateOfBirth) => DateOfBirth = dateOfBirth;
+        public void SetGender(bool gender) => Gender = gender;
+        public void SetHomeAddress(string homeAddress) => HomeAddress = homeAddress;
+        public void SetPhoneNumber(string phoneNumber) => PhoneNumber = phoneNumber;
+        public void SetAccountId(int accountId) => AccountId = accountId;
     }
 }

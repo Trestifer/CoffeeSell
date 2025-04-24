@@ -22,5 +22,7 @@ namespace CoffeeSell.ObjClass
         }
         public int GetCategoryID()  => CategoryID;
         public string GetCategoryName() => CategoryName;
+        public void SetCategoryID(int categoryID) => CategoryID = categoryID;
+        public void SetCategoryName(string categoryName) => CategoryName = categoryName;
     }
 }

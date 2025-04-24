@@ -17,7 +17,7 @@ namespace CoffeeSell
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzgyOTQ1MEAzMjM5MmUzMDJlMzAzYjMyMzkzYmNKYmtFMm5neCtGYUxIMmQ2VDVrMzdrZE5VUmtKQkdmenB3QnV0M29zUEk9");
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new TestForm());
         }
     }
 }
