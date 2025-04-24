@@ -27,8 +27,8 @@ namespace CoffeeSell
             DAOAccount acc = new DAOAccount();
             acc.CreateAccount( managerAccount );
             DataTable accList = acc.GetAllAccount();
-            dtgridTest.DataSource = accList;
-            dtgridTest.Show();
+            dtGridTest.DataSource = accList;
+            dtGridTest.Show();
         }
 
         private void label2_Click(object sender, EventArgs e)
