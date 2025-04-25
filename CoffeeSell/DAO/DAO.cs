@@ -13,19 +13,30 @@ namespace CoffeeSell.DAO
         protected readonly string conn = "Server=26.58.112.204,1433;Database=QuanLyBanCafe;User Id=trestifer;Password=tam73105";
 
 
-        public DataTable ExecuteQuery(string query)
+        protected DataTable ExecuteQuery(string query, string[] paramNames, object[] paramValues)
         {
             using (SqlConnection connection = new SqlConnection(conn))
             {
-    
-                SqlDataAdapter adap = new SqlDataAdapter(query, connection);
-                DataTable dt = new DataTable();
-                adap.Fill(dt);
-                return dt;
+                using (SqlCommand cmd = new SqlCommand(query, connection))
+                {
+                    for (int i = 0; i < paramNames.Length; i++)
+                    {
+                        cmd.Parameters.AddWithValue(paramNames[i], paramValues[i]);
+                    }
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
+                    return dt;
+                }
             }
         }
+        protected DataTable ExecuteQuery(string query)
+        {
+            return ExecuteQuery(query, new string[0], new object[0]);
+        }
 
-        public int ExecuteNonQuery(string query, string[] paramNames, object[] paramValues)
+        protected int ExecuteNonQuery(string query, string[] paramNames, object[] paramValues)
         {
             using (SqlConnection connection = new SqlConnection(conn))
             {
@@ -41,6 +52,33 @@ namespace CoffeeSell.DAO
                 }
 
                 return cmd.ExecuteNonQuery();
+            }
+        }
+        protected object ExecuteScalar(string query, string[] parameterNames, object[] parameterValues)
+        {
+            using (SqlConnection connection = new SqlConnection(conn))
+            {
+                connection.Open();
+                using (SqlCommand cmd = new SqlCommand(query, connection))
+                {
+                    for (int i = 0; i < parameterNames.Length; i++)
+                    {
+                        cmd.Parameters.AddWithValue(parameterNames[i], parameterValues[i]);
+                    }
+
+                    return cmd.ExecuteScalar();
+                }
+            }
+        }
+        protected object ExecuteScalar(string query)
+        {
+            using (SqlConnection connection = new SqlConnection(conn))
+            {
+                connection.Open();
+                using (SqlCommand cmd = new SqlCommand(query, connection))
+                {
+                    return cmd.ExecuteScalar();
+                }
             }
         }
     }

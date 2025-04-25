@@ -1,4 +1,5 @@
-﻿using CoffeeSell.DAO;
+﻿using CoffeeSell.BO;
+using CoffeeSell.DAO;
 using CoffeeSell.ObjClass;
 using System;
 using System.Collections.Generic;
@@ -17,17 +18,19 @@ namespace CoffeeSell
         public TestForm()
         {
             InitializeComponent();
-            Account managerAccount = new Account(
-            accountId: 1,
-            loginName: "trestifer",
-            passwordHash: Security.HashPassword("Tam73105"),
-            displayName: "Trestifer",
-            typeAccount: true
+
+
+            var employee = new Employee(
+            employeeId: 0,  // 0 if it's auto-incremented by DB
+            nameEmployee: "Nguyen Van A",
+            dateOfBirth: new DateTime(1995, 5, 20),
+            gender: false,  // false = Male
+            homeAddress: "123 Nguyen Trai, Ha Noi",
+            phoneNumber: "0123456789",
+            accountId : 0
             );
-            DAOAccount acc = new DAOAccount();
-            acc.CreateAccount( managerAccount );
-            DataTable accList = acc.GetAllAccount();
-            dtGridTest.DataSource = accList;
+            BOEmployee.AddEmployee( employee );
+            dtGridTest.DataSource = BOEmployee.GetAllEmployees();
             dtGridTest.Show();
         }
 

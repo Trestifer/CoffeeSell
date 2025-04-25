@@ -37,7 +37,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.25F);
-            this.label2.Location = new System.Drawing.Point(371, 34);
+            this.label2.Location = new System.Drawing.Point(349, 37);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(89, 22);
             this.label2.TabIndex = 2;
@@ -47,7 +47,7 @@
             // dtGridTest
             // 
             this.dtGridTest.AccessibleName = "Table";
-            this.dtGridTest.Location = new System.Drawing.Point(109, 80);
+            this.dtGridTest.Location = new System.Drawing.Point(84, 85);
             this.dtGridTest.Name = "dtGridTest";
             this.dtGridTest.Size = new System.Drawing.Size(619, 308);
             this.dtGridTest.TabIndex = 3;
