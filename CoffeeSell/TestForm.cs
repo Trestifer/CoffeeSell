@@ -1,5 +1,4 @@
 ﻿using CoffeeSell.BO;
-using CoffeeSell.DAO;
 using CoffeeSell.ObjClass;
 using System;
 using System.Collections.Generic;
@@ -18,8 +17,6 @@ namespace CoffeeSell
         public TestForm()
         {
             InitializeComponent();
-
-
             var employee = new Employee(
             employeeId: 0,  // 0 if it's auto-incremented by DB
             nameEmployee: "Nguyen Van A",
@@ -27,19 +24,20 @@ namespace CoffeeSell
             gender: false,  // false = Male
             homeAddress: "123 Nguyen Trai, Ha Noi",
             phoneNumber: "0123456789",
-            accountId : 0
+            accountId: 0
             );
-            BOEmployee.AddEmployee( employee );
-            dtGridTest.DataSource = BOEmployee.GetAllEmployees();
-            dtGridTest.Show();
+            BOEmployee.AddEmployee(employee);
+            dtgridTest.DataSource = BOEmployee.GetAllEmployees();
+            Console.WriteLine(111111111111111111);
+            dtgridTest.Show();
         }
 
-        private void label2_Click(object sender, EventArgs e)
+        private void TestForm_Load(object sender, EventArgs e)
         {
 
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dtgridTest_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }

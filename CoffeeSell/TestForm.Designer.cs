@@ -28,48 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label2 = new System.Windows.Forms.Label();
-            this.dtGridTest = new Syncfusion.WinForms.DataGrid.SfDataGrid();
-            ((System.ComponentModel.ISupportInitialize)(this.dtGridTest)).BeginInit();
-            this.SuspendLayout();
+            dtgridTest = new DataGridView();
+            ((System.ComponentModel.ISupportInitialize)dtgridTest).BeginInit();
+            SuspendLayout();
             // 
-            // label2
+            // dtgridTest
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.25F);
-            this.label2.Location = new System.Drawing.Point(349, 37);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(89, 22);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Test Data";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
-            // 
-            // dtGridTest
-            // 
-            this.dtGridTest.AccessibleName = "Table";
-            this.dtGridTest.Location = new System.Drawing.Point(84, 85);
-            this.dtGridTest.Name = "dtGridTest";
-            this.dtGridTest.Size = new System.Drawing.Size(619, 308);
-            this.dtGridTest.TabIndex = 3;
-            this.dtGridTest.Text = "sfDataGrid1";
+            dtgridTest.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dtgridTest.Location = new Point(133, 71);
+            dtgridTest.Name = "dtgridTest";
+            dtgridTest.Size = new Size(705, 394);
+            dtgridTest.TabIndex = 0;
+            dtgridTest.CellContentClick += dtgridTest_CellContentClick;
             // 
             // TestForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.dtGridTest);
-            this.Controls.Add(this.label2);
-            this.Name = "TestForm";
-            this.Text = "TestForm";
-            ((System.ComponentModel.ISupportInitialize)(this.dtGridTest)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(970, 531);
+            Controls.Add(dtgridTest);
+            Name = "TestForm";
+            Text = "TestForm";
+            Load += TestForm_Load;
+            ((System.ComponentModel.ISupportInitialize)dtgridTest).EndInit();
+            ResumeLayout(false);
         }
 
         #endregion
-        private System.Windows.Forms.Label label2;
-        private Syncfusion.WinForms.DataGrid.SfDataGrid dtGridTest;
+
+        private DataGridView dtgridTest;
     }
 }

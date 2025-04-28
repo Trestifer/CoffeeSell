@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 
 namespace CoffeeSell.DAO
 {
     public class DAO
     {
-        protected readonly string conn = "Server=26.58.112.204,1433;Database=QuanLyBanCafe;User Id=trestifer;Password=tam73105";
+        protected readonly string conn = "Server=26.58.112.204,1433;Database=QuanLyBanCafe;User Id=trestifer;Password=tam73105;Encrypt=False";
+
 
 
         protected DataTable ExecuteQuery(string query, string[] paramNames, object[] paramValues)
