@@ -1,0 +1,160 @@
+﻿namespace CoffeeSell
+{
+    partial class NhapOTP
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            button2 = new Button();
+            button1 = new Button();
+            textBox1 = new TextBox();
+            label2 = new Label();
+            panel1 = new Panel();
+            label1 = new Label();
+            label3 = new Label();
+            label4 = new Label();
+            panel1.SuspendLayout();
+            SuspendLayout();
+            // 
+            // button2
+            // 
+            button2.BackColor = Color.Gainsboro;
+            button2.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 163);
+            button2.ForeColor = Color.White;
+            button2.Location = new Point(271, 293);
+            button2.Name = "button2";
+            button2.Size = new Size(207, 62);
+            button2.TabIndex = 10;
+            button2.Text = "HỦY";
+            button2.UseVisualStyleBackColor = false;
+            // 
+            // button1
+            // 
+            button1.BackColor = Color.FromArgb(0, 94, 165);
+            button1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 163);
+            button1.ForeColor = Color.White;
+            button1.Location = new Point(31, 293);
+            button1.Name = "button1";
+            button1.Size = new Size(208, 62);
+            button1.TabIndex = 9;
+            button1.Text = "GỬI YÊU CẦU";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
+            // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(31, 233);
+            textBox1.Multiline = true;
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(444, 40);
+            textBox1.TabIndex = 8;
+            textBox1.TextChanged += textBox1_TextChanged;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 163);
+            label2.Location = new Point(34, 193);
+            label2.Name = "label2";
+            label2.Size = new Size(235, 28);
+            label2.TabIndex = 7;
+            label2.Text = "Nhập Mã OTP (6 chữ số)";
+            // 
+            // panel1
+            // 
+            panel1.BackColor = Color.FromArgb(0, 94, 165);
+            panel1.Controls.Add(label1);
+            panel1.Location = new Point(-3, -1);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(509, 98);
+            panel1.TabIndex = 6;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 163);
+            label1.ForeColor = Color.White;
+            label1.Location = new Point(138, 28);
+            label1.Name = "label1";
+            label1.Size = new Size(228, 41);
+            label1.TabIndex = 1;
+            label1.Text = "NHẬP MÃ OTP";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 163);
+            label3.Location = new Point(-228, 125);
+            label3.Name = "label3";
+            label3.Size = new Size(0, 28);
+            label3.TabIndex = 11;
+            label3.Click += label3_Click;
+            // 
+            // label4
+            // 
+            label4.AllowDrop = true;
+            label4.BackColor = Color.WhiteSmoke;
+            label4.Location = new Point(34, 122);
+            label4.Name = "label4";
+            label4.Size = new Size(444, 53);
+            label4.TabIndex = 12;
+            label4.Text = "Chúng tôi đã gửi đến bạn 1 mã xác thực gồm 6 chữ số. Vui lòng kiểm tra email của bạn.";
+            label4.Click += label4_Click;
+            // 
+            // NhapOTP
+            // 
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.White;
+            ClientSize = new Size(501, 380);
+            Controls.Add(label4);
+            Controls.Add(label3);
+            Controls.Add(button2);
+            Controls.Add(button1);
+            Controls.Add(textBox1);
+            Controls.Add(label2);
+            Controls.Add(panel1);
+            Name = "NhapOTP";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "NhapOTP";
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
+        }
+
+        #endregion
+
+        private Button button2;
+        private Button button1;
+        private TextBox textBox1;
+        private Label label2;
+        private Panel panel1;
+        private Label label1;
+        private Label label3;
+        private Label label4;
+    }
+}

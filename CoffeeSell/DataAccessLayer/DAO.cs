@@ -6,14 +6,28 @@ using System.Threading.Tasks;
 using System.Data;
 using Microsoft.Data.SqlClient;
 
-namespace CoffeeSell.DAO
+namespace CoffeeSell.DataAccessLayer
 {
     public class DAO
     {
         protected readonly string conn = "Server=26.58.112.204,1433;Database=QuanLyBanCafe;User Id=trestifer;Password=tam73105;Encrypt=False";
 
 
-
+        public bool TestConnection()
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(conn))
+                {
+                    connection.Open();
+                    return connection.State == ConnectionState.Open;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
         protected DataTable ExecuteQuery(string query, string[] paramNames, object[] paramValues)
         {
             using (SqlConnection connection = new SqlConnection(conn))

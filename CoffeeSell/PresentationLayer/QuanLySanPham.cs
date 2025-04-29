@@ -8,15 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace CoffeeSell.PresentationLayer
+namespace CoffeeSell
 {
-    public partial class LoginForm : Form
+    public partial class QuanLySanPham : Form
     {
-        public LoginForm()
+        public QuanLySanPham()
         {
             InitializeComponent();
-            TestForm testForm = new TestForm();
-            testForm.Show();
+        }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

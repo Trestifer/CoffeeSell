@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 
-namespace CoffeeSell.DAO
+namespace CoffeeSell.DataAccessLayer
 {
     public class DAOEmployee : DAO
     {

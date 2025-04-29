@@ -7,7 +7,7 @@ using System.Data;
 using Microsoft.Data.SqlClient;
 using CoffeeSell.ObjClass;
 
-namespace CoffeeSell.DAO
+namespace CoffeeSell.DataAccessLayer
 {
     public class DAOAccount :   DAO
     {
