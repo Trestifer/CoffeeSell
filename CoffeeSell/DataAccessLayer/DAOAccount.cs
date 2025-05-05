@@ -99,6 +99,7 @@ namespace CoffeeSell.DataAccessLayer
                     DataRow row = result.Rows[0];
                     Account loggedInAccount = new Account();
                     loggedInAccount.SetLoginName(row["LoginName"].ToString());
+                    loggedInAccount.SetAccountId((int)row["AccountId"]);
                     loggedInAccount.SetPasswordHash(row["PasswordHash"].ToString());
                     loggedInAccount.SetDisplayName(row["DisplayName"].ToString());
                     loggedInAccount.SetTypeAccount(Convert.ToBoolean(row["TypeAccount"]));
@@ -150,24 +151,38 @@ namespace CoffeeSell.DataAccessLayer
                 return null;
             }
         }
-        public bool GetAccount(string LoginName)
+        public Account GetAccount(string loginName)
         {
             string cmString = "SELECT * FROM Account WHERE LoginName = @LoginName";
 
             try
             {
-                int result = ExecuteNonQuery(
+                DataTable result = ExecuteQuery(
                     cmString,
                     new string[] { "@LoginName" },
-                    new object[] { LoginName }
+                    new object[] { loginName }
                 );
 
-                return result == 1;
+                if (result.Rows.Count == 1)
+                {
+                    DataRow row = result.Rows[0];
+                    Account account = new Account();
+                    account.SetAccountId(Convert.ToInt32(row["AccountId"]));
+                    account.SetLoginName(row["LoginName"].ToString());
+                    account.SetPasswordHash(row["PasswordHash"].ToString());
+                    account.SetDisplayName(row["DisplayName"].ToString());
+                    account.SetTypeAccount(Convert.ToBoolean(row["TypeAccount"]));
+                    return account;
+                }
+                else
+                {
+                    return null; // No matching account found
+                }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error during delete: {ex.Message}");
-                return false;
+                Console.WriteLine($"Error retrieving account: {ex.Message}");
+                return null;
             }
         }
         public int GetMaxAccountId()

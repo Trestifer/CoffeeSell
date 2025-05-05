@@ -2,6 +2,7 @@
 using CoffeeSell.ObjClass;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,24 +12,32 @@ namespace CoffeeSell.BO
     public class BOLoginHistory
     {
         static DAOLoginHistory lgh = new DAOLoginHistory();
-        static void SuccessLogin(int accountId)
+        public static void SuccessLogin(int accountId)
         {
             LoginHistory loginHistory = new LoginHistory();
             loginHistory.SetIdAccount(accountId);
             loginHistory.SetSuccessfulLogin(true);
             loginHistory.SetLoginTime(DateTime.Now);
+            lgh.CreateLoginHistory(loginHistory);
         }
-        static void FailureLogin(int accountId)
+        public static void FailureLogin(string username)
         {
             LoginHistory loginHistory = new LoginHistory();
+            int accountId = BOAccount.GetAccount(username).GetAccountId();
             loginHistory.SetIdAccount(accountId);
             loginHistory.SetSuccessfulLogin(false);
             loginHistory.SetLoginTime(DateTime.Now);
+            lgh.CreateLoginHistory(loginHistory);
         }
-        static void Logout(int accountId)
+        public static void Logout(int accountId)
         {
             LoginHistory loginHistory = lgh.GetLatestSuccessfulLogin(accountId);
             lgh.UpdateLogoutTime(loginHistory.GetId(), DateTime.Now);
+        }
+        public static DataTable GetAllLoginHistory()
+        {
+            DataTable dt = lgh.GetAllLoginHistory();
+            return dt;
         }
     }
 }

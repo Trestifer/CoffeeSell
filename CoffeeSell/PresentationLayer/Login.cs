@@ -10,29 +10,49 @@ namespace CoffeeSell
         public Login()
         {
             InitializeComponent();
-            new TestForm().Show();
             guna2TextBox2.PasswordChar = '●';
             guna2TextBox2.UseSystemPasswordChar = true;
+            guna2TextBox1.TabIndex = 0;
+            guna2TextBox2.TabIndex = 1;
+            guna2Button1.TabIndex = 2;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             guna2HtmlLabel9.MouseEnter += guna2HtmlLabel9_MouseEnter;
             guna2HtmlLabel9.MouseLeave += guna2HtmlLabel9_MouseLeave;
+            guna2TextBox1.Focus();
+            guna2TextBox1.Select();
+            guna2TextBox2.KeyDown += TextBoxes_KeyDown;
+            guna2TextBox1.KeyDown += TextBoxes_KeyDown;
         }
-
+        private void TextBoxes_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                TextBox currentBox = sender as TextBox;
+                guna2Button1_Click(null,EventArgs.Empty);
+                e.SuppressKeyPress = true;
+            }
+        }
         private void guna2Button1_Click(object sender, EventArgs e)
         {
             Account account = BOAccount.Login(guna2TextBox1.Text, guna2TextBox2.Text);
             if (account != null)
+            {
                 MessageBox.Show("Đăng nhập thàn công");
+                BOLoginHistory.SuccessLogin(account.GetAccountId()); 
+                TrangChu trangChuForm = new TrangChu(account);
+                trangChuForm.Show();
+                this.Hide();
+            }
             else
             {
                 MessageBox.Show("Đăng nhập thất bại");
+                BOLoginHistory.FailureLogin(guna2TextBox1.Text);
+                guna2TextBox2.Text= string.Empty;
             }
-                TrangChu trangChuForm = new TrangChu();
-            trangChuForm.Show();
-            this.Hide();
+            
         }
 
         private void guna2HtmlLabel9_Click(object sender, EventArgs e)
@@ -68,6 +88,11 @@ namespace CoffeeSell
                 guna2TextBox2.UseSystemPasswordChar = true;
                 guna2TextBox2.PasswordChar = '●'; // or '*'
             }
+        }
+
+        private void guna2HtmlLabel6_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

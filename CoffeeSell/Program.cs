@@ -1,4 +1,5 @@
 ﻿using CoffeeSell.DataAccessLayer;
+using CoffeeSell.PresentationLayer;
 using Microsoft.VisualBasic.Logging;
 namespace CoffeeSell
 {
@@ -16,6 +17,7 @@ namespace CoffeeSell
             if (!dao.TestConnection())
                 MessageBox.Show("Database hiện đang tắt hoặc cúp điện");
             ApplicationConfiguration.Initialize();
+            new TestForm().Show();
             Application.Run(new Login());
         }
     }

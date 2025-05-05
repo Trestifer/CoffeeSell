@@ -54,7 +54,8 @@
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             guna2DataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            guna2DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            guna2DataGridView1.ColumnHeadersHeight = 4;
+            guna2DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = Color.White;
             dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
@@ -64,11 +65,13 @@
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
             guna2DataGridView1.DefaultCellStyle = dataGridViewCellStyle3;
             guna2DataGridView1.GridColor = Color.FromArgb(231, 229, 255);
-            guna2DataGridView1.Location = new Point(24, 144);
+            guna2DataGridView1.Location = new Point(21, 108);
+            guna2DataGridView1.Margin = new Padding(3, 2, 3, 2);
             guna2DataGridView1.Name = "guna2DataGridView1";
             guna2DataGridView1.RowHeadersVisible = false;
             guna2DataGridView1.RowHeadersWidth = 51;
-            guna2DataGridView1.Size = new Size(436, 299);
+            guna2DataGridView1.RowTemplate.Height = 29;
+            guna2DataGridView1.Size = new Size(382, 224);
             guna2DataGridView1.TabIndex = 0;
             guna2DataGridView1.ThemeStyle.AlternatingRowsStyle.BackColor = Color.White;
             guna2DataGridView1.ThemeStyle.AlternatingRowsStyle.Font = null;
@@ -81,7 +84,7 @@
             guna2DataGridView1.ThemeStyle.HeaderStyle.BorderStyle = DataGridViewHeaderBorderStyle.None;
             guna2DataGridView1.ThemeStyle.HeaderStyle.Font = new Font("Segoe UI", 9F);
             guna2DataGridView1.ThemeStyle.HeaderStyle.ForeColor = Color.White;
-            guna2DataGridView1.ThemeStyle.HeaderStyle.HeaightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            guna2DataGridView1.ThemeStyle.HeaderStyle.HeaightSizeMode = DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
             guna2DataGridView1.ThemeStyle.HeaderStyle.Height = 4;
             guna2DataGridView1.ThemeStyle.ReadOnly = false;
             guna2DataGridView1.ThemeStyle.RowsStyle.BackColor = Color.White;
@@ -116,11 +119,13 @@
             dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
             guna2DataGridView2.DefaultCellStyle = dataGridViewCellStyle6;
             guna2DataGridView2.GridColor = Color.FromArgb(231, 229, 255);
-            guna2DataGridView2.Location = new Point(528, 144);
+            guna2DataGridView2.Location = new Point(462, 108);
+            guna2DataGridView2.Margin = new Padding(3, 2, 3, 2);
             guna2DataGridView2.Name = "guna2DataGridView2";
             guna2DataGridView2.RowHeadersVisible = false;
             guna2DataGridView2.RowHeadersWidth = 51;
-            guna2DataGridView2.Size = new Size(459, 299);
+            guna2DataGridView2.RowTemplate.Height = 29;
+            guna2DataGridView2.Size = new Size(402, 224);
             guna2DataGridView2.TabIndex = 1;
             guna2DataGridView2.ThemeStyle.AlternatingRowsStyle.BackColor = Color.White;
             guna2DataGridView2.ThemeStyle.AlternatingRowsStyle.Font = null;
@@ -143,34 +148,36 @@
             guna2DataGridView2.ThemeStyle.RowsStyle.Height = 29;
             guna2DataGridView2.ThemeStyle.RowsStyle.SelectionBackColor = Color.FromArgb(231, 229, 255);
             guna2DataGridView2.ThemeStyle.RowsStyle.SelectionForeColor = Color.FromArgb(71, 69, 94);
+            guna2DataGridView2.CellContentClick += guna2DataGridView2_CellContentClick;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(170, 83);
+            label1.Location = new Point(149, 62);
             label1.Name = "label1";
-            label1.Size = new Size(58, 20);
+            label1.Size = new Size(47, 15);
             label1.TabIndex = 2;
             label1.Text = "Activity";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(729, 83);
+            label2.Location = new Point(638, 62);
             label2.Name = "label2";
-            label2.Size = new Size(46, 20);
+            label2.Size = new Size(37, 15);
             label2.TabIndex = 3;
             label2.Text = "Login";
             // 
             // TestForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1026, 518);
+            ClientSize = new Size(898, 388);
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(guna2DataGridView2);
             Controls.Add(guna2DataGridView1);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "TestForm";
             Text = "TestForm";
             ((System.ComponentModel.ISupportInitialize)guna2DataGridView1).EndInit();

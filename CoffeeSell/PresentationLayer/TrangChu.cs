@@ -1,4 +1,6 @@
-﻿using Guna.UI2.WinForms;
+﻿using CoffeeSell.BO;
+using CoffeeSell.ObjClass;
+using Guna.UI2.WinForms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,7 +16,8 @@ namespace CoffeeSell
     public partial class TrangChu : Form
     {
         private Panel currentPanel = null;
-        public TrangChu()
+        private Account user;
+        public TrangChu(Account _user)
         {
             InitializeComponent();
             panel10.Controls.Clear();
@@ -34,6 +37,11 @@ namespace CoffeeSell
                 p.MouseLeave += Panel_MouseLeave;
                 p.MouseDown += Panel_MouseDown;
             }
+            user = _user;
+            lblDisplayName.Text = user.GetDisplayName();
+            lblStaff.Text = user.GetTypeAccount() ? "Quản lý" : "Nhân viên";
+            UpdateDateTime();
+            timer1.Start();
 
         }
 
@@ -89,7 +97,11 @@ namespace CoffeeSell
             panel7.Click += Panel7_Click;
             panel8.Click += Panel8_Click;
             panel9.Click += Panel9_Click;
+            timer1.Interval = 10000; // 10 seconds
+            timer1.Tick += timer1_Tick;
+            timer1.Start(); // Start the timer
 
+            UpdateDateTime(); // Initial update when form loads
         }
         private void Panel2_Click(object sender, EventArgs e)
         {
@@ -277,6 +289,26 @@ namespace CoffeeSell
 
         private void panel4_Paint(object sender, PaintEventArgs e)
         {
+
+        }
+        private void UpdateDateTime()
+        {
+            lblDate.Text = DateTime.Now.ToString("dd/MM/yyyy");
+            string[] vietnameseDays = { "Chủ Nhật", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7" };
+            lblDays.Text = vietnameseDays[(int)DateTime.Now.DayOfWeek];
+            lblTime.Text = DateTime.Now.ToString("HH:mm");
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            UpdateDateTime();
+        }
+
+        private void guna2Button2_Click(object sender, EventArgs e)
+        {
+            BOLoginHistory.Logout(user.GetAccountId());
+            new Login().Show();
+            this.Close();
 
         }
     }
