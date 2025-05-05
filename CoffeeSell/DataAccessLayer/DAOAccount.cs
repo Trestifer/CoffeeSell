@@ -82,7 +82,7 @@ namespace CoffeeSell.DataAccessLayer
             }
         }
 
-        public Account Login(Account accountInfo)
+        public Account Login(string username, string password)
         {
             string cmString = "SELECT * FROM Account WHERE LoginName = @LoginName AND PasswordHash = @PasswordHash";
 
@@ -91,7 +91,7 @@ namespace CoffeeSell.DataAccessLayer
                 DataTable result = ExecuteQuery(
                     cmString,
                     new string[] { "@LoginName", "@PasswordHash" },
-                    new object[] { accountInfo.GetLoginName(), accountInfo.GetPasswordHash() }
+                    new object[] { username, password }
                 );
 
                 if (result.Rows.Count == 1)

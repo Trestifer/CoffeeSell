@@ -17,10 +17,9 @@ namespace CoffeeSell.BO
             accountInfo.SetPasswordHash(Security.HashPassword(accountInfo.GetPasswordHash()));
             return account.CreateAccount(accountInfo);
         }
-        public static Account Login(Account accountInfo)
+        public static Account Login(string username, string password)
         {
-            accountInfo.SetPasswordHash(Security.HashPassword(accountInfo.GetPasswordHash()));
-            return account.Login(accountInfo);
+            return account.Login(username, Security.HashPassword(password));
         }
         public static DataTable GetAllAccount() { return account.GetAllAccount(); }
     }

@@ -50,7 +50,6 @@
             guna2HtmlLabel2 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             guna2PictureBox2 = new Guna.UI2.WinForms.Guna2PictureBox();
             guna2CustomGradientPanel2 = new Guna.UI2.WinForms.Guna2CustomGradientPanel();
-            guna2HtmlLabel10 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
             guna2HtmlLabel9 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             guna2CheckBox1 = new Guna.UI2.WinForms.Guna2CheckBox();
@@ -140,7 +139,6 @@
             // 
             // guna2CustomGradientPanel2
             // 
-            guna2CustomGradientPanel2.Controls.Add(guna2HtmlLabel10);
             guna2CustomGradientPanel2.Controls.Add(guna2Button1);
             guna2CustomGradientPanel2.Controls.Add(guna2HtmlLabel9);
             guna2CustomGradientPanel2.Controls.Add(guna2CheckBox1);
@@ -158,16 +156,6 @@
             guna2CustomGradientPanel2.Size = new Size(424, 520);
             guna2CustomGradientPanel2.TabIndex = 1;
             guna2CustomGradientPanel2.Paint += guna2CustomGradientPanel2_Paint;
-            // 
-            // guna2HtmlLabel10
-            // 
-            guna2HtmlLabel10.BackColor = Color.Transparent;
-            guna2HtmlLabel10.Font = new Font("Arial", 10.2F, FontStyle.Italic, GraphicsUnit.Point, 163);
-            guna2HtmlLabel10.Location = new Point(38, 463);
-            guna2HtmlLabel10.Name = "guna2HtmlLabel10";
-            guna2HtmlLabel10.Size = new Size(362, 22);
-            guna2HtmlLabel10.TabIndex = 11;
-            guna2HtmlLabel10.Text = "Bạn chưa có tài khoản? Vui lòng đăng ký tại đây";
             // 
             // guna2Button1
             // 
@@ -217,6 +205,7 @@
             guna2CheckBox1.UncheckedState.BorderThickness = 0;
             guna2CheckBox1.UncheckedState.FillColor = Color.FromArgb(125, 137, 149);
             guna2CheckBox1.UseVisualStyleBackColor = false;
+            guna2CheckBox1.CheckedChanged += guna2CheckBox1_CheckedChanged;
             // 
             // guna2TextBox2
             // 
@@ -353,7 +342,6 @@
         private Guna.UI2.WinForms.Guna2TextBox guna2TextBox2;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel8;
         private Guna.UI2.WinForms.Guna2TextBox guna2TextBox1;
-        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel10;
         private Guna.UI2.WinForms.Guna2Button guna2Button1;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel9;
     }

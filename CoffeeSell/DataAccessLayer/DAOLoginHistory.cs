@@ -117,5 +117,40 @@ namespace CoffeeSell.DataAccessLayer
                 return -1;
             }
         }
+        public LoginHistory GetLatestSuccessfulLogin(int accountId)
+        {
+            string cmString = @"
+        SELECT TOP 1 * FROM LoginHistory
+        WHERE IdAccount = @AccountId AND SuccessfulLogin = 1
+        ORDER BY LoginTime DESC";
+
+            try
+            {
+                DataTable dt = ExecuteQuery(
+                    cmString,
+                    new string[] { "@AccountId" },
+                    new object[] { accountId });
+
+                if (dt.Rows.Count == 1)
+                {
+                    DataRow r = dt.Rows[0];
+                    LoginHistory lh = new LoginHistory();
+                    lh.SetId(Convert.ToInt32(r["Id"]));
+                    lh.SetIdAccount(Convert.ToInt32(r["IdAccount"]));
+                    lh.SetLoginTime(Convert.ToDateTime(r["LoginTime"]));
+                    lh.SetLogoutTime(r["LogoutTime"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(r["LogoutTime"]));
+                    lh.SetSuccessfulLogin(Convert.ToBoolean(r["SuccessfulLogin"]));
+                    return lh;
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"GetLatestSuccessfulLogin error: {ex.Message}");
+                return null;
+            }
+        }
+
     }
 }
