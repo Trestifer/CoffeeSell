@@ -11,6 +11,9 @@ using System.Windows.Forms;
 namespace CoffeeSell
 {
     //ghiiiiiiiiiiiiiiiiiiiiiiiii chuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu
+    /// <summary>
+    /// eqqweqweqweqweweq
+    /// </summary>
     public partial class ResetMatKhau : Form
     {
         public ResetMatKhau()
