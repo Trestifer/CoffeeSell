@@ -34,8 +34,8 @@ namespace CoffeeSell.ObjClass
             CategoryId = categoryId;
             Price = new decimal[3];
             Price[0] = price_s;
-            Price[0] = price_m;
-            Price[0] = price_l;
+            Price[1] = price_m;
+            Price[2] = price_l;
         }
 
         public int GetFoodId() => FoodId;
