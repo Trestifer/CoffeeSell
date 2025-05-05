@@ -41,10 +41,18 @@ namespace CoffeeSell
             if (account != null)
             {
                 MessageBox.Show("Đăng nhập thàn công");
-                BOLoginHistory.SuccessLogin(account.GetAccountId()); 
+                BOLoginHistory.SuccessLogin(account.GetAccountId());
+                this.Hide();
+                if(!account.GetTypeAccount())
+                {
+                    if(!BOEmployee.CheckFirstLogin(account.GetAccountId()))
+                    {
+                        new NhapOTP(account).Show();
+                        return;
+                    }
+                }
                 TrangChu trangChuForm = new TrangChu(account);
                 trangChuForm.Show();
-                this.Hide();
             }
             else
             {

@@ -30,7 +30,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error updating employee email: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Error updating employee email: {ex.Message}");
                 return false;
             }
         }
@@ -60,7 +60,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error creating employee email: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Error creating employee email: {ex.Message}");
                 return -1;
             }
         }
@@ -95,7 +95,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error fetching employee email: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Error fetching employee email: {ex.Message}");
                 return null;
             }
         }
@@ -116,7 +116,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error deleting employee email: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Error deleting employee email: {ex.Message}");
                 return false;
             }
         }
@@ -132,7 +132,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error fetching all employee emails: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Error fetching all employee emails: {ex.Message}");
             }
 
             return dt;

@@ -29,7 +29,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"CreateIndividualDiscount error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"CreateIndividualDiscount error: {ex.Message}");
                 return false;
             }
         }
@@ -51,7 +51,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"DeleteIndividualDiscount error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"DeleteIndividualDiscount error: {ex.Message}");
                 return false;
             }
         }
@@ -64,7 +64,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"GetAllIndividualDiscounts error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"GetAllIndividualDiscounts error: {ex.Message}");
                 return new DataTable();
             }
         }
@@ -96,7 +96,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"GetIndividualDiscount error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"GetIndividualDiscount error: {ex.Message}");
                 return null;
             }
         }

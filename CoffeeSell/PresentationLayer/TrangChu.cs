@@ -42,7 +42,7 @@ namespace CoffeeSell
             lblStaff.Text = user.GetTypeAccount() ? "Quản lý" : "Nhân viên";
             UpdateDateTime();
             timer1.Start();
-
+            if (!user.GetTypeAccount()) new[] { panel4, panel5, panel6, panel7, panel9 }.ToList().ForEach(p => p.Visible = false);
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -310,6 +310,26 @@ namespace CoffeeSell
             new Login().Show();
             this.Close();
 
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void guna2Button1_Click(object sender, EventArgs e)
+        {
+            if(user.GetTypeAccount())
+            {
+                new DoiMatKhau(user).Show();
+                
+            }
+            else
+            {
+                new NhapOTP(user).Show();
+            }
+            BOLoginHistory.Logout(user.GetAccountId());
+            this.Close();
         }
     }
 }

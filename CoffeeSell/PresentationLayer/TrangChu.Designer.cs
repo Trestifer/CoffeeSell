@@ -403,6 +403,7 @@
             label4.Size = new Size(110, 26);
             label4.TabIndex = 2;
             label4.Text = "Sản Phẩm ";
+            label4.Click += label4_Click;
             // 
             // panel3
             // 
@@ -646,6 +647,7 @@
             guna2Button1.Size = new Size(143, 63);
             guna2Button1.TabIndex = 3;
             guna2Button1.Text = "Đổi Mật Khẩu";
+            guna2Button1.Click += guna2Button1_Click;
             // 
             // guna2CirclePictureBox1
             // 

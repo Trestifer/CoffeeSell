@@ -33,7 +33,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"CreateDiscount error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"CreateDiscount error: {ex.Message}");
                 return -1;
             }
         }
@@ -66,7 +66,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"UpdateDiscount error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"UpdateDiscount error: {ex.Message}");
                 return false;
             }
         }
@@ -84,7 +84,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"DeleteDiscount error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"DeleteDiscount error: {ex.Message}");
                 return false;
             }
         }
@@ -97,7 +97,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"GetAllDiscounts error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"GetAllDiscounts error: {ex.Message}");
                 return new DataTable();
             }
         }
@@ -131,7 +131,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"GetDiscountById error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"GetDiscountById error: {ex.Message}");
                 return null;
             }
         }
@@ -145,7 +145,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"GetMaxDiscountId error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"GetMaxDiscountId error: {ex.Message}");
                 return -1;
             }
         }

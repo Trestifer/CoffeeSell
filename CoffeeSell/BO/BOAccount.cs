@@ -26,5 +26,11 @@ namespace CoffeeSell.BO
             return account.GetAccount(username);
         }
         public static DataTable GetAllAccount() { return account.GetAllAccount(); }
+
+        public static bool UpdateAccount(Account accountInfo)
+        {
+            accountInfo.SetPasswordHash(Security.HashPassword(accountInfo.GetPasswordHash()));
+            return account.UpdateAccount(accountInfo); 
+        }
     }
 }

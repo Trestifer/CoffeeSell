@@ -32,7 +32,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"CreateBill error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"CreateBill error: {ex.Message}");
                 return -1;
             }
         }
@@ -64,7 +64,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"UpdateBill error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"UpdateBill error: {ex.Message}");
                 return false;
             }
         }
@@ -82,7 +82,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"DeleteBill error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"DeleteBill error: {ex.Message}");
                 return false;
             }
         }
@@ -95,7 +95,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"GetAllBill error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"GetAllBill error: {ex.Message}");
                 return new DataTable();
             }
         }
@@ -128,7 +128,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"GetBillById error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"GetBillById error: {ex.Message}");
                 return null;
             }
         }
@@ -142,7 +142,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"GetMaxBillId error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"GetMaxBillId error: {ex.Message}");
                 return -1;
             }
         }

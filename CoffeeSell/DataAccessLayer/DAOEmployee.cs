@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
+using Microsoft.Identity.Client;
 
 namespace CoffeeSell.DataAccessLayer
 {
@@ -36,7 +37,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error adding employee: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Error adding employee: {ex.Message}");
                 return false;
             }
         }
@@ -69,7 +70,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error updating employee: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Error updating employee: {ex.Message}");
                 return false;
             }
         }
@@ -89,7 +90,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error deleting employee: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Error deleting employee: {ex.Message}");
                 return false;
             }
         }
@@ -103,9 +104,62 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error fetching employees: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Error fetching employees: {ex.Message}");
                 return null;
             }
         }
+        public int GetMaxEmployeeId()
+        {
+            string cmString = "SELECT MAX(EmployeeId) FROM Employee";
+            try
+            {
+                object result = ExecuteScalar(cmString);
+                if (result != DBNull.Value && result != null)
+                    return Convert.ToInt32(result);
+                else
+                    return 0; // Return 0 if no employee exists
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error getting max EmployeeId: {ex.Message}");
+                return -1;
+            }
+        }
+        public Employee GetEmployeeByAccountId(int accountId)
+        {
+            string cmString = "SELECT * FROM Employee WHERE AccountId = @AccountId";
+            try
+            {
+                DataTable result = ExecuteQuery(
+                    cmString,
+                    new string[] { "@AccountId" },
+                    new object[] { accountId });
+
+                if (result.Rows.Count > 0)
+                {
+                    DataRow row = result.Rows[0];
+
+                    Employee emp = new Employee();
+                    emp.SetEmployeeId(Convert.ToInt32(row["EmployeeId"]));
+                    emp.SetNameEmployee(row["NameEmployee"].ToString());
+                    emp.SetDateOfBirth(Convert.ToDateTime(row["DateOfBirth"]));
+                    emp.SetGender(Convert.ToBoolean(row["Gender"]));
+                    emp.SetHomeAddress(row["HomeAddress"].ToString());
+                    emp.SetPhoneNumber(row["PhoneNumber"].ToString());
+                    emp.SetAccountId(Convert.ToInt32(row["AccountId"]));
+
+                    return emp;
+                }
+
+                return null; // Not found
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error fetching employee by AccountId: {ex.Message}");
+                return null;
+            }
+        }
+
+
     }
 }

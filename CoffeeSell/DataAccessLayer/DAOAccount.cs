@@ -35,7 +35,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error updating account: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Error updating account: {ex.Message}");
                 return false;
             }
         }
@@ -49,7 +49,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                System.Diagnostics.Debug.WriteLine(ex.Message);
             }
             return dt;
         }
@@ -77,7 +77,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error creating account: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Error creating account: {ex.Message}");
                 return -1;
             }
         }
@@ -113,7 +113,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error during login: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Error during login: {ex.Message}");
                 return null;
             }
         }
@@ -147,7 +147,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error during search: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Error during search: {ex.Message}");
                 return null;
             }
         }
@@ -181,7 +181,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error retrieving account: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Error retrieving account: {ex.Message}");
                 return null;
             }
         }
@@ -196,7 +196,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error getting max AccountId: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Error getting max AccountId: {ex.Message}");
                 return -1;
             }
         }

@@ -31,7 +31,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"CreateLoginHistory error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"CreateLoginHistory error: {ex.Message}");
                 return -1;
             }
         }
@@ -54,7 +54,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"UpdateLogoutTime error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"UpdateLogoutTime error: {ex.Message}");
                 return false;
             }
         }
@@ -67,7 +67,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"GetAllLoginHistory error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"GetAllLoginHistory error: {ex.Message}");
                 return new DataTable();
             }
         }
@@ -99,7 +99,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"GetLoginHistoryById error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"GetLoginHistoryById error: {ex.Message}");
                 return null;
             }
         }
@@ -113,7 +113,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"GetMaxLoginHistoryId error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"GetMaxLoginHistoryId error: {ex.Message}");
                 return -1;
             }
         }
@@ -147,7 +147,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"GetLatestSuccessfulLogin error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"GetLatestSuccessfulLogin error: {ex.Message}");
                 return null;
             }
         }

@@ -31,7 +31,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"CreateActivityLog error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"CreateActivityLog error: {ex.Message}");
                 return -1;
             }
         }
@@ -44,7 +44,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"GetAllActivityLogs error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"GetAllActivityLogs error: {ex.Message}");
                 return new DataTable();
             }
         }
@@ -76,7 +76,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"GetActivityLogById error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"GetActivityLogById error: {ex.Message}");
                 return null;
             }
         }
@@ -94,7 +94,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"DeleteActivityLog error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"DeleteActivityLog error: {ex.Message}");
                 return false;
             }
         }
@@ -108,7 +108,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"GetMaxActivityLogId error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"GetMaxActivityLogId error: {ex.Message}");
                 return -1;
             }
         }

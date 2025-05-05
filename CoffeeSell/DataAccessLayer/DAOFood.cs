@@ -34,7 +34,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"CreateFood error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"CreateFood error: {ex.Message}");
                 return -1;
             }
         }
@@ -68,7 +68,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"UpdateFood error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"UpdateFood error: {ex.Message}");
                 return false;
             }
         }
@@ -87,7 +87,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"DeleteFood error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"DeleteFood error: {ex.Message}");
                 return false;
             }
         }
@@ -100,7 +100,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"GetAllFood error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"GetAllFood error: {ex.Message}");
                 return new DataTable();
             }
         }
@@ -114,7 +114,7 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"GetMaxFoodId error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"GetMaxFoodId error: {ex.Message}");
                 return -1;
             }
         }

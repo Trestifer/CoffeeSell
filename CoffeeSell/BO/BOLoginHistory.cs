@@ -23,8 +23,10 @@ namespace CoffeeSell.BO
         public static void FailureLogin(string username)
         {
             LoginHistory loginHistory = new LoginHistory();
-            int accountId = BOAccount.GetAccount(username).GetAccountId();
-            loginHistory.SetIdAccount(accountId);
+            Account account =BOAccount.GetAccount(username);
+            if (account == null)
+                return;
+            loginHistory.SetIdAccount(account.GetAccountId());
             loginHistory.SetSuccessfulLogin(false);
             loginHistory.SetLoginTime(DateTime.Now);
             lgh.CreateLoginHistory(loginHistory);
@@ -37,7 +39,11 @@ namespace CoffeeSell.BO
         public static DataTable GetAllLoginHistory()
         {
             DataTable dt = lgh.GetAllLoginHistory();
-            return dt;
+            var sortedRows = dt.AsEnumerable()
+                   .OrderByDescending(row => row.Field<DateTime>("LoginTime"))
+                   .CopyToDataTable();
+
+            return sortedRows;
         }
     }
 }
