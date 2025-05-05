@@ -10,21 +10,11 @@ using System.Windows.Forms;
 
 namespace CoffeeSell
 {
-    public partial class BaoCao : Form
+    public partial class NenTrangChu: Form
     {
-        public BaoCao()
+        public NenTrangChu()
         {
             InitializeComponent();
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void BaoCao_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }

@@ -32,6 +32,8 @@
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(QuanLySanPham));
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             guna2DataGridView1 = new Guna.UI2.WinForms.Guna2DataGridView();
             textBox1 = new TextBox();
             panel1 = new Panel();
@@ -55,9 +57,12 @@
             label1 = new Label();
             comboBox3 = new ComboBox();
             button5 = new Button();
+            guna2CustomGradientPanel1 = new Guna.UI2.WinForms.Guna2CustomGradientPanel();
+            label7 = new Label();
             ((System.ComponentModel.ISupportInitialize)guna2DataGridView1).BeginInit();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            guna2CustomGradientPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // guna2DataGridView1
@@ -88,7 +93,7 @@
             guna2DataGridView1.Name = "guna2DataGridView1";
             guna2DataGridView1.RowHeadersVisible = false;
             guna2DataGridView1.RowHeadersWidth = 51;
-            guna2DataGridView1.Size = new Size(909, 970);
+            guna2DataGridView1.Size = new Size(888, 913);
             guna2DataGridView1.TabIndex = 0;
             guna2DataGridView1.ThemeStyle.AlternatingRowsStyle.BackColor = Color.White;
             guna2DataGridView1.ThemeStyle.AlternatingRowsStyle.Font = null;
@@ -142,9 +147,9 @@
             panel1.Controls.Add(label3);
             panel1.Controls.Add(label2);
             panel1.Controls.Add(label1);
-            panel1.Location = new Point(946, -1);
+            panel1.Location = new Point(946, 55);
             panel1.Name = "panel1";
-            panel1.Size = new Size(711, 1069);
+            panel1.Size = new Size(626, 941);
             panel1.TabIndex = 2;
             // 
             // button8
@@ -315,12 +320,38 @@
             // 
             // button5
             // 
-            button5.Location = new Point(547, 27);
+            button5.Location = new Point(544, 27);
             button5.Name = "button5";
             button5.Size = new Size(83, 37);
             button5.TabIndex = 4;
             button5.Text = "Tìm kiếm";
             button5.UseVisualStyleBackColor = true;
+            // 
+            // guna2CustomGradientPanel1
+            // 
+            guna2CustomGradientPanel1.Controls.Add(label7);
+            guna2CustomGradientPanel1.CustomizableEdges = customizableEdges1;
+            guna2CustomGradientPanel1.FillColor = Color.FromArgb(84, 125, 224);
+            guna2CustomGradientPanel1.FillColor2 = Color.FromArgb(84, 125, 224);
+            guna2CustomGradientPanel1.FillColor3 = Color.FromArgb(84, 125, 224);
+            guna2CustomGradientPanel1.FillColor4 = Color.FromArgb(84, 125, 224);
+            guna2CustomGradientPanel1.Location = new Point(946, 0);
+            guna2CustomGradientPanel1.Name = "guna2CustomGradientPanel1";
+            guna2CustomGradientPanel1.ShadowDecoration.CustomizableEdges = customizableEdges2;
+            guna2CustomGradientPanel1.Size = new Size(626, 55);
+            guna2CustomGradientPanel1.TabIndex = 5;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.BackColor = Color.Transparent;
+            label7.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
+            label7.ForeColor = Color.White;
+            label7.Location = new Point(220, 9);
+            label7.Name = "label7";
+            label7.Size = new Size(199, 31);
+            label7.TabIndex = 21;
+            label7.Text = "Quản lý sản phẩm";
             // 
             // QuanLySanPham
             // 
@@ -328,6 +359,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(1699, 1055);
+            Controls.Add(guna2CustomGradientPanel1);
             Controls.Add(button5);
             Controls.Add(comboBox3);
             Controls.Add(panel1);
@@ -339,6 +371,8 @@
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            guna2CustomGradientPanel1.ResumeLayout(false);
+            guna2CustomGradientPanel1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -368,5 +402,7 @@
         private TextBox textBox4;
         private ComboBox comboBox3;
         private Button button5;
+        private Guna.UI2.WinForms.Guna2CustomGradientPanel guna2CustomGradientPanel1;
+        private Label label7;
     }
 }

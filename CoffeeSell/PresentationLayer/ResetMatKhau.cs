@@ -10,21 +10,24 @@ using System.Windows.Forms;
 
 namespace CoffeeSell
 {
-    public partial class BaoCao : Form
+    public partial class ResetMatKhau : Form
     {
-        public BaoCao()
+        public ResetMatKhau()
         {
             InitializeComponent();
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void label2_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void BaoCao_Load(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
-
+            NhapOTP nhapotpForm = new NhapOTP();
+            nhapotpForm.Show();
+            this.Hide();
         }
     }
+    
 }

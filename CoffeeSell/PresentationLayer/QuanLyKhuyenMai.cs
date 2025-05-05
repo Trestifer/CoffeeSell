@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace CoffeeSell
 {
-    public partial class QuanLyKhuyenMai: Form
+    public partial class QuanLyKhuyenMai : Form
     {
         public QuanLyKhuyenMai()
         {
             InitializeComponent();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

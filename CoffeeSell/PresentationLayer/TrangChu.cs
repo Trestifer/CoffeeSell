@@ -17,6 +17,13 @@ namespace CoffeeSell
         public TrangChu()
         {
             InitializeComponent();
+            panel10.Controls.Clear();
+            NenTrangChu tcform = new NenTrangChu();
+            tcform.TopLevel = false; // Đặt TopLevel thành false để Form có thể được nhúng
+            tcform.FormBorderStyle = FormBorderStyle.None; // Xóa viền của Form (tùy chọn)
+            tcform.Dock = DockStyle.Fill; // Đảm bảo Form lấp đầy panel10
+            panel10.Controls.Add(tcform);
+            tcform.Show();
             // Tạo danh sách các panel
             List<Panel> panels = new List<Panel> { panel1, panel2, panel3, panel4, panel5, panel6, panel7, panel8, panel9 };
 
@@ -72,6 +79,7 @@ namespace CoffeeSell
 
         private void TrangChu_Load(object sender, EventArgs e)
         {
+
             panel1.Click += Panel1_Click;
             panel2.Click += Panel2_Click;
             panel3.Click += Panel3_Click;
@@ -81,7 +89,7 @@ namespace CoffeeSell
             panel7.Click += Panel7_Click;
             panel8.Click += Panel8_Click;
             panel9.Click += Panel9_Click;
-            
+
         }
         private void Panel2_Click(object sender, EventArgs e)
         {
@@ -92,61 +100,100 @@ namespace CoffeeSell
         }
         private void Panel1_Click(object sender, EventArgs e)
         {
-            TrangChu tcform = new TrangChu();
+            panel10.Controls.Clear();
+            NenTrangChu tcform = new NenTrangChu();
+            tcform.TopLevel = false; // Đặt TopLevel thành false để Form có thể được nhúng
+            tcform.FormBorderStyle = FormBorderStyle.None; // Xóa viền của Form (tùy chọn)
+            tcform.Dock = DockStyle.Fill; // Đảm bảo Form lấp đầy panel10
+            panel10.Controls.Add(tcform);
             tcform.Show();
 
 
         }
         private void Panel3_Click(object sender, EventArgs e)
         {
+            panel10.Controls.Clear();
             QuanLyHoaDon hdform = new QuanLyHoaDon();
+            hdform.TopLevel = false;
+            hdform.FormBorderStyle = FormBorderStyle.None;
+            hdform.Dock = DockStyle.Fill;
+            panel10.Controls.Add(hdform);
             hdform.Show();
-
 
         }
         private void Panel4_Click(object sender, EventArgs e)
         {
+            panel10.Controls.Clear();
             QuanLySanPham spform = new QuanLySanPham();
+            spform.TopLevel = false;
+            spform.FormBorderStyle = FormBorderStyle.None;
+            spform.Dock = DockStyle.Fill;
+            panel10.Controls.Add(spform);
             spform.Show();
 
 
         }
         private void Panel5_Click(object sender, EventArgs e)
         {
+            panel10.Controls.Clear();
             QuanLyDanhMuc dmform = new QuanLyDanhMuc();
+            dmform.TopLevel = false;
+            dmform.FormBorderStyle = FormBorderStyle.None;
+            dmform.Dock = DockStyle.Fill;
+            panel10.Controls.Add(dmform);
             dmform.Show();
 
 
         }
         private void Panel6_Click(object sender, EventArgs e)
         {
+            panel10.Controls.Clear();
             QuanLyKhuyenMai kmform = new QuanLyKhuyenMai();
+            kmform.TopLevel = false;
+            kmform.FormBorderStyle = FormBorderStyle.None;
+            kmform.Dock = DockStyle.Fill;
+            panel10.Controls.Add(kmform);
             kmform.Show();
 
 
         }
         private void Panel7_Click(object sender, EventArgs e)
         {
+            panel10.Controls.Clear();
             QuanLyNhanVien nvform = new QuanLyNhanVien();
+            nvform.TopLevel = false;
+            nvform.FormBorderStyle = FormBorderStyle.None;
+            nvform.Dock = DockStyle.Fill;
+            panel10.Controls.Add(nvform);
             nvform.Show();
+
 
 
         }
         private void Panel8_Click(object sender, EventArgs e)
         {
+            panel10.Controls.Clear();
             QuanLyKhachHang khform = new QuanLyKhachHang();
+            khform.TopLevel = false;
+            khform.FormBorderStyle = FormBorderStyle.None;
+            khform.Dock = DockStyle.Fill;
+            panel10.Controls.Add(khform);
             khform.Show();
-            this.Hide();
 
         }
         private void Panel9_Click(object sender, EventArgs e)
         {
+            panel10.Controls.Clear();
             BaoCao bcform = new BaoCao();
+            bcform.TopLevel = false;
+            bcform.FormBorderStyle = FormBorderStyle.None;
+            bcform.Dock = DockStyle.Fill;
+            panel10.Controls.Add(bcform);
             bcform.Show();
-            
+
 
         }
-       
+
 
         private void Panel_MouseEnter(object sender, EventArgs e)
         {
@@ -219,6 +266,16 @@ namespace CoffeeSell
         }
 
         private void panel6_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panel10_Paint_1(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panel4_Paint(object sender, PaintEventArgs e)
         {
 
         }
