@@ -14,6 +14,10 @@ namespace CoffeeSell
     /// <summary>
     /// eqqweqweqweqweweq
     /// </summary>
+    /// 
+
+
+    //them ghi chu
     public partial class ResetMatKhau : Form
     {
         public ResetMatKhau()
