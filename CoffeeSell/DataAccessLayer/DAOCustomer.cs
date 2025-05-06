@@ -10,20 +10,22 @@ namespace CoffeeSell.DataAccessLayer
         public int CreateCustomer(Customer cus)
         {
             string cmString = @"
-                INSERT INTO Customer (NameCustomer, PhoneNumber, Points)
+                INSERT INTO Customer (NameCustomer, PhoneNumber, Points, RegisterDate, LattestBuy)
                 OUTPUT INSERTED.CustomerId
-                VALUES (@Name, @Phone, @Points)";
+                VALUES (@Name, @Phone, @Points, @RegisterDate, @LattestBuy)";
 
             try
             {
                 object result = ExecuteScalar(
                     cmString,
-                    new string[] { "@Name", "@Phone", "@Points" },
+                    new string[] { "@Name", "@Phone", "@Points", "@RegisterDate", "@LattestBuy" },
                     new object[]
                     {
                         cus.GetNameCustomer(),
                         cus.GetPhoneNumber(),
-                        cus.GetPoints()
+                        cus.GetPoints(),
+                        cus.GetRegisterDate(),
+                        cus.GetLattestBuy()
                     });
 
                 return result != null ? Convert.ToInt32(result) : -1;
@@ -39,19 +41,25 @@ namespace CoffeeSell.DataAccessLayer
         {
             string cmString = @"
                 UPDATE Customer
-                SET NameCustomer = @Name, PhoneNumber = @Phone, Points = @Points
+                SET NameCustomer = @Name,
+                    PhoneNumber = @Phone,
+                    Points = @Points,
+                    RegisterDate = @RegisterDate,
+                    LattestBuy = @LattestBuy
                 WHERE CustomerId = @Id";
 
             try
             {
                 int rows = ExecuteNonQuery(
                     cmString,
-                    new string[] { "@Name", "@Phone", "@Points", "@Id" },
+                    new string[] { "@Name", "@Phone", "@Points", "@RegisterDate", "@LattestBuy", "@Id" },
                     new object[]
                     {
                         cus.GetNameCustomer(),
                         cus.GetPhoneNumber(),
                         cus.GetPoints(),
+                        cus.GetRegisterDate(),
+                        cus.GetLattestBuy(),
                         cus.GetCustomerId()
                     });
 
@@ -114,6 +122,8 @@ namespace CoffeeSell.DataAccessLayer
                     c.SetNameCustomer(r["NameCustomer"].ToString());
                     c.SetPhoneNumber(r["PhoneNumber"].ToString());
                     c.SetPoints(Convert.ToInt32(r["Points"]));
+                    c.SetRegisterDate(Convert.ToDateTime(r["RegisterDate"]));
+                    c.SetLattestBuy(Convert.ToDateTime(r["LattestBuy"]));
                     return c;
                 }
 

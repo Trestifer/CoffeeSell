@@ -18,6 +18,8 @@ namespace CoffeeSell.PresentationLayer
             InitializeComponent();
             guna2DataGridView2.DataSource = BOLoginHistory.GetAllLoginHistory();
             guna2DataGridView2.Show();
+            guna2DataGridView1.DataSource = BOActivityLog.GetActivityLog();
+            guna2DataGridView1.Show();
         }
 
         private void guna2DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)

@@ -10,7 +10,7 @@ namespace CoffeeSell.DataAccessLayer
         public int CreateActivityLog(ActivityLog log)
         {
             string cmString = @"
-                INSERT INTO ActivityLog (Username, ActionRecord, TimeRecord, Detail)
+                INSERT INTO ActivityLog (LoginName, ActionName, TimeRecord, Detail)
                 OUTPUT INSERTED.ActivityId
                 VALUES (@Username, @Action, @Time, @Detail)";
 
@@ -21,7 +21,7 @@ namespace CoffeeSell.DataAccessLayer
                     new[] { "@Username", "@Action", "@Time", "@Detail" },
                     new object[]
                     {
-                        log.GetUsername(),
+                        log.GetLoginName(),
                         log.GetActionRecord(),
                         log.GetTimeRecord(),
                         log.GetDetail()
@@ -65,8 +65,8 @@ namespace CoffeeSell.DataAccessLayer
                     DataRow r = dt.Rows[0];
                     ActivityLog log = new ActivityLog();
                     log.SetActivityId(Convert.ToInt32(r["ActivityId"]));
-                    log.SetUsername(r["Username"].ToString());
-                    log.SetActionRecord(Convert.ToChar(r["ActionRecord"]));
+                    log.SetLoginName(r["LoginName"].ToString());
+                    log.SetActionRecord(Convert.ToChar(r["ActionName"]));
                     log.SetTimeRecord(Convert.ToDateTime(r["TimeRecord"]));
                     log.SetDetail(r["Detail"].ToString());
                     return log;

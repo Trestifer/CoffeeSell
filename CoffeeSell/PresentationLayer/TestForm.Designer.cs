@@ -65,13 +65,13 @@
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
             guna2DataGridView1.DefaultCellStyle = dataGridViewCellStyle3;
             guna2DataGridView1.GridColor = Color.FromArgb(231, 229, 255);
-            guna2DataGridView1.Location = new Point(21, 108);
+            guna2DataGridView1.Location = new Point(75, 125);
             guna2DataGridView1.Margin = new Padding(3, 2, 3, 2);
             guna2DataGridView1.Name = "guna2DataGridView1";
             guna2DataGridView1.RowHeadersVisible = false;
             guna2DataGridView1.RowHeadersWidth = 51;
             guna2DataGridView1.RowTemplate.Height = 29;
-            guna2DataGridView1.Size = new Size(382, 224);
+            guna2DataGridView1.Size = new Size(721, 224);
             guna2DataGridView1.TabIndex = 0;
             guna2DataGridView1.ThemeStyle.AlternatingRowsStyle.BackColor = Color.White;
             guna2DataGridView1.ThemeStyle.AlternatingRowsStyle.Font = null;
@@ -119,13 +119,13 @@
             dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
             guna2DataGridView2.DefaultCellStyle = dataGridViewCellStyle6;
             guna2DataGridView2.GridColor = Color.FromArgb(231, 229, 255);
-            guna2DataGridView2.Location = new Point(462, 108);
+            guna2DataGridView2.Location = new Point(75, 449);
             guna2DataGridView2.Margin = new Padding(3, 2, 3, 2);
             guna2DataGridView2.Name = "guna2DataGridView2";
             guna2DataGridView2.RowHeadersVisible = false;
             guna2DataGridView2.RowHeadersWidth = 51;
             guna2DataGridView2.RowTemplate.Height = 29;
-            guna2DataGridView2.Size = new Size(402, 224);
+            guna2DataGridView2.Size = new Size(721, 224);
             guna2DataGridView2.TabIndex = 1;
             guna2DataGridView2.ThemeStyle.AlternatingRowsStyle.BackColor = Color.White;
             guna2DataGridView2.ThemeStyle.AlternatingRowsStyle.Font = null;
@@ -153,7 +153,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(149, 62);
+            label1.Location = new Point(419, 72);
             label1.Name = "label1";
             label1.Size = new Size(47, 15);
             label1.TabIndex = 2;
@@ -162,7 +162,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(638, 62);
+            label2.Location = new Point(419, 387);
             label2.Name = "label2";
             label2.Size = new Size(37, 15);
             label2.TabIndex = 3;
@@ -172,7 +172,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(898, 388);
+            ClientSize = new Size(898, 750);
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(guna2DataGridView2);

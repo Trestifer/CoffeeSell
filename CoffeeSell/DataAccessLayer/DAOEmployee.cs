@@ -159,6 +159,34 @@ namespace CoffeeSell.DataAccessLayer
                 return null;
             }
         }
+        public DataTable GetAllEmployeeFullData()
+        {
+            string cmString = @"
+        SELECT 
+            e.EmployeeId,
+            e.NameEmployee,
+            e.DateOfBirth,
+            e.Gender,
+            e.HomeAddress,
+            e.PhoneNumber,
+            e.AccountId,
+            a.LoginName,
+            ee.Email
+        FROM Employee e
+        JOIN Account a ON e.AccountId = a.AccountId
+        LEFT JOIN EmployeeEmail ee ON e.EmployeeId = ee.EmployeeId";
+
+            try
+            {
+                DataTable result = ExecuteQuery(cmString);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error fetching full employee data: {ex.Message}");
+                return null;
+            }
+        }
 
 
     }

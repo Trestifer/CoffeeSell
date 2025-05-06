@@ -17,13 +17,15 @@ namespace CoffeeSell
     {
         DataTable employeeDttb;
         int employeeID;
-        public QuanLyNhanVien()
+        Account user;
+        public QuanLyNhanVien(Account _user)
         {
             InitializeComponent();
             dateTimePicker1.Format = DateTimePickerFormat.Custom;
             dateTimePicker1.CustomFormat = "dd/MM/yyyy";
             dateTimePicker1.MinDate = new DateTime(DateTime.Now.Year - 50, 12, 31);
             dateTimePicker1.MaxDate = new DateTime(DateTime.Now.Year - 16, 1, 1);
+            user = _user;
             Reset();
 
         }
@@ -53,16 +55,108 @@ namespace CoffeeSell
 
         private void Reset()
         {
-            employeeDttb = BOEmployee.GetAllEmployees();
+            // Set the data source
+            employeeDttb = BOEmployee.SpeccialDataTable();
+
+            if (employeeDttb == null)
+            {
+                MessageBox.Show("Failed to load employee data.");
+                return;
+            }
+
+            // Add "Giới tính" column with translated values
+            if (!employeeDttb.Columns.Contains("GioiTinhText"))
+            {
+                employeeDttb.Columns.Add("GioiTinhText", typeof(string));
+                foreach (DataRow row in employeeDttb.Rows)
+                {
+                    bool gender = Convert.ToBoolean(row["Gender"]);
+                    row["GioiTinhText"] = gender ? "Nam" : "Nữ";
+                }
+            }
+
+            // Bind data
+            if (dtgridNhanVien == null)
+            {
+                MessageBox.Show("Guna2DataGridView is not initialized.");
+                return;
+            }
+
             dtgridNhanVien.DataSource = employeeDttb;
+
+            // Enable column resizing
+            dtgridNhanVien.AllowUserToResizeColumns = true;
+            dtgridNhanVien.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;  // Automatically adjust column width
+
+            // Hide all columns first
+            foreach (DataGridViewColumn col in dtgridNhanVien.Columns)
+            {
+                col.Visible = false;
+            }
+
+            // Show and rename only desired columns, set custom widths
+            if (employeeDttb.Columns.Contains("EmployeeId"))
+            {
+                dtgridNhanVien.Columns["EmployeeId"].Visible = true;
+                dtgridNhanVien.Columns["EmployeeId"].MinimumWidth = 150;
+                dtgridNhanVien.Columns["EmployeeId"].HeaderText = "Mã nhân viên";
+            }
+
+            if (employeeDttb.Columns.Contains("NameEmployee"))
+            {
+                dtgridNhanVien.Columns["NameEmployee"].Visible = true;
+                dtgridNhanVien.Columns["NameEmployee"].MinimumWidth = 250;
+                dtgridNhanVien.Columns["NameEmployee"].HeaderText = "Tên nhân viên";
+            }
+
+            if (employeeDttb.Columns.Contains("GioiTinhText"))
+            {
+                dtgridNhanVien.Columns["GioiTinhText"].Visible = true;
+                dtgridNhanVien.Columns["GioiTinhText"].MinimumWidth = 100;
+                dtgridNhanVien.Columns["GioiTinhText"].HeaderText = "Giới tính";
+            }
+
+            if (employeeDttb.Columns.Contains("DateOfBirth"))
+            {
+                dtgridNhanVien.Columns["DateOfBirth"].Visible = true;
+                dtgridNhanVien.Columns["DateOfBirth"].MinimumWidth = 150;
+                dtgridNhanVien.Columns["DateOfBirth"].HeaderText = "Ngày sinh";
+            }
+
+            if (employeeDttb.Columns.Contains("LoginName"))
+            {
+                dtgridNhanVien.Columns["LoginName"].Visible = true;
+                dtgridNhanVien.Columns["LoginName"].MinimumWidth = 220;
+                dtgridNhanVien.Columns["LoginName"].HeaderText = "Tên đăng nhập";
+            }
+
+            if (employeeDttb.Columns.Contains("Email"))
+            {
+                dtgridNhanVien.Columns["Email"].Visible = true;
+                dtgridNhanVien.Columns["Email"].MinimumWidth = 270;
+                dtgridNhanVien.Columns["Email"].HeaderText = "Email";
+            }
+
+            if (employeeDttb.Columns.Contains("HomeAddress"))
+            {
+                dtgridNhanVien.Columns["HomeAddress"].Visible = true;
+                dtgridNhanVien.Columns["HomeAddress"].MinimumWidth = 270;
+                dtgridNhanVien.Columns["HomeAddress"].HeaderText = "Địa chỉ";
+            }
+
+            // Set header height
+            dtgridNhanVien.ColumnHeadersHeight = 40;
+            dtgridNhanVien.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
+
             dtgridNhanVien.Show();
+
             genderCheckBox.Checked = true;
             txtAddress.Text = "";
             txtName.Text = "";
             txtPhoneNumber.Text = "";
             employeeID = -1;
-
         }
+
         private void QuanLyNhanVien_Load(object sender, EventArgs e)
         {
 
@@ -105,7 +199,11 @@ namespace CoffeeSell
         {
             Employee newEmployee = GetEmployeeInfo();
             newEmployee.SetEmployeeId(0);
-            BOEmployee.AddEmployee(newEmployee); // Trả về Boolean có thể thêm If để kt
+            if (BOEmployee.AddEmployee(newEmployee))
+            {
+                MessageBox.Show("Thêm thành công");
+                BOActivityLog.Record(user.GetLoginName(), 'A', $"Đã thêm nhân viên {newEmployee.GetNameEmployee()}");
+            }
             Reset();
         }
 
@@ -113,10 +211,15 @@ namespace CoffeeSell
         {
             if (employeeID != -1)
             {
-                BOEmployee.DeleteEmployee(employeeID); // Trả về Boolean có thể thêm If để kt
+                if (BOEmployee.DeleteEmployee(employeeID))
+                {
+                    MessageBox.Show("Xoá thành công");
+
+                    BOActivityLog.Record(user.GetLoginName(), 'D', $"Đã xóa nhân viên có mã {employeeID}");
+
+                }
 
             }
-            MessageBox.Show(employeeID.ToString());
             Reset();
         }
 
@@ -124,7 +227,12 @@ namespace CoffeeSell
         {
             if (employeeID != 1)
             {
-                BOEmployee.EditEmployee(GetEmployeeInfo()); // Trả về Boolean có thể thêm If để kt
+                if (BOEmployee.EditEmployee(GetEmployeeInfo()))
+                {
+                    MessageBox.Show("Sửa thành công");
+                    BOActivityLog.Record(user.GetLoginName(), 'E', $"Đã sửa nhân viên có mã {employeeID}");
+
+                }// Trả về Boolean có thể thêm If để kt
             }
             Reset();
         }

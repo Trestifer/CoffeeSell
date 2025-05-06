@@ -213,9 +213,14 @@
             // 
             // dtgridNhanVien
             // 
+            dtgridNhanVien.AllowUserToAddRows = false;
+            dtgridNhanVien.AllowUserToDeleteRows = false;
+            dtgridNhanVien.AllowUserToResizeColumns = false;
+            dtgridNhanVien.AllowUserToResizeRows = false;
             dataGridViewCellStyle1.BackColor = Color.White;
             dtgridNhanVien.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             dtgridNhanVien.BackgroundColor = Color.WhiteSmoke;
+            dtgridNhanVien.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = Color.FromArgb(100, 88, 255);
             dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
@@ -225,7 +230,6 @@
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             dtgridNhanVien.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dtgridNhanVien.ColumnHeadersHeight = 4;
-            dtgridNhanVien.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = Color.White;
             dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
@@ -256,7 +260,7 @@
             dtgridNhanVien.ThemeStyle.HeaderStyle.BorderStyle = DataGridViewHeaderBorderStyle.None;
             dtgridNhanVien.ThemeStyle.HeaderStyle.Font = new Font("Segoe UI", 9F);
             dtgridNhanVien.ThemeStyle.HeaderStyle.ForeColor = Color.White;
-            dtgridNhanVien.ThemeStyle.HeaderStyle.HeaightSizeMode = DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
+            dtgridNhanVien.ThemeStyle.HeaderStyle.HeaightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dtgridNhanVien.ThemeStyle.HeaderStyle.Height = 4;
             dtgridNhanVien.ThemeStyle.ReadOnly = true;
             dtgridNhanVien.ThemeStyle.RowsStyle.BackColor = Color.White;

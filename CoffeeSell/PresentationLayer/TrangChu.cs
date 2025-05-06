@@ -172,7 +172,7 @@ namespace CoffeeSell
         private void Panel7_Click(object sender, EventArgs e)
         {
             panel10.Controls.Clear();
-            QuanLyNhanVien nvform = new QuanLyNhanVien();
+            QuanLyNhanVien nvform = new QuanLyNhanVien(user);
             nvform.TopLevel = false;
             nvform.FormBorderStyle = FormBorderStyle.None;
             nvform.Dock = DockStyle.Fill;

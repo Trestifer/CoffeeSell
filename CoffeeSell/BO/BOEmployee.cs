@@ -31,7 +31,6 @@ namespace CoffeeSell.BO
             if (!employee.AddEmployee(employeeInfo)) ;
                 
             int maxEmployeeId = employee.GetMaxEmployeeId();
-            MessageBox.Show("" + maxEmployeeId);
             return BOEmployeeEmail.AddEmployeeEmail(maxEmployeeId);
         }
         public static DataTable GetAllEmployees()
@@ -73,6 +72,11 @@ namespace CoffeeSell.BO
             }
 
             return sb.ToString().Normalize(NormalizationForm.FormC);
+        }
+
+        public static DataTable SpeccialDataTable()
+        {
+            return employee.GetAllEmployeeFullData();
         }
 
     }
