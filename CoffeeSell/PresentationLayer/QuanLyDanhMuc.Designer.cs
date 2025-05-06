@@ -36,7 +36,6 @@
             button1 = new Button();
             panel1 = new Panel();
             button4 = new Button();
-            button3 = new Button();
             button2 = new Button();
             textBox2 = new TextBox();
             label2 = new Label();
@@ -71,11 +70,13 @@
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
             guna2DataGridView1.DefaultCellStyle = dataGridViewCellStyle3;
             guna2DataGridView1.GridColor = Color.FromArgb(231, 229, 255);
-            guna2DataGridView1.Location = new Point(12, 62);
+            guna2DataGridView1.Location = new Point(10, 46);
+            guna2DataGridView1.Margin = new Padding(3, 2, 3, 2);
             guna2DataGridView1.Name = "guna2DataGridView1";
             guna2DataGridView1.RowHeadersVisible = false;
             guna2DataGridView1.RowHeadersWidth = 51;
-            guna2DataGridView1.Size = new Size(800, 682);
+            guna2DataGridView1.RowTemplate.Height = 29;
+            guna2DataGridView1.Size = new Size(700, 512);
             guna2DataGridView1.TabIndex = 0;
             guna2DataGridView1.ThemeStyle.AlternatingRowsStyle.BackColor = Color.White;
             guna2DataGridView1.ThemeStyle.AlternatingRowsStyle.Font = null;
@@ -98,21 +99,24 @@
             guna2DataGridView1.ThemeStyle.RowsStyle.Height = 29;
             guna2DataGridView1.ThemeStyle.RowsStyle.SelectionBackColor = Color.FromArgb(231, 229, 255);
             guna2DataGridView1.ThemeStyle.RowsStyle.SelectionForeColor = Color.FromArgb(71, 69, 94);
+            guna2DataGridView1.CellClick += guna2DataGridView1_CellClick;
             // 
             // textBox1
             // 
             textBox1.ForeColor = Color.Black;
-            textBox1.Location = new Point(12, 12);
+            textBox1.Location = new Point(10, 9);
+            textBox1.Margin = new Padding(3, 2, 3, 2);
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(205, 27);
+            textBox1.Size = new Size(180, 23);
             textBox1.TabIndex = 1;
             // 
             // button1
             // 
             button1.ForeColor = Color.Black;
-            button1.Location = new Point(251, 12);
+            button1.Location = new Point(220, 9);
+            button1.Margin = new Padding(3, 2, 3, 2);
             button1.Name = "button1";
-            button1.Size = new Size(101, 27);
+            button1.Size = new Size(88, 20);
             button1.TabIndex = 2;
             button1.Text = "Tìm kiếm";
             button1.UseVisualStyleBackColor = true;
@@ -120,61 +124,56 @@
             // panel1
             // 
             panel1.Controls.Add(button4);
-            panel1.Controls.Add(button3);
             panel1.Controls.Add(button2);
             panel1.Controls.Add(textBox2);
             panel1.Controls.Add(label2);
             panel1.Controls.Add(panel2);
-            panel1.Location = new Point(896, 4);
+            panel1.Location = new Point(784, 3);
+            panel1.Margin = new Padding(3, 2, 3, 2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(667, 740);
+            panel1.Size = new Size(584, 555);
             panel1.TabIndex = 3;
             // 
             // button4
             // 
             button4.ForeColor = Color.Black;
-            button4.Location = new Point(228, 283);
+            button4.Location = new Point(200, 212);
+            button4.Margin = new Padding(3, 2, 3, 2);
             button4.Name = "button4";
-            button4.Size = new Size(122, 38);
+            button4.Size = new Size(107, 28);
             button4.TabIndex = 5;
             button4.Text = "Xóa";
             button4.UseVisualStyleBackColor = true;
-            // 
-            // button3
-            // 
-            button3.ForeColor = Color.Black;
-            button3.Location = new Point(41, 355);
-            button3.Name = "button3";
-            button3.Size = new Size(116, 38);
-            button3.TabIndex = 4;
-            button3.Text = "Sửa";
-            button3.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
             // 
             // button2
             // 
             button2.ForeColor = Color.Black;
-            button2.Location = new Point(41, 283);
+            button2.Location = new Point(36, 212);
+            button2.Margin = new Padding(3, 2, 3, 2);
             button2.Name = "button2";
-            button2.Size = new Size(116, 41);
+            button2.Size = new Size(102, 31);
             button2.TabIndex = 3;
             button2.Text = "Thêm";
             button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // textBox2
             // 
             textBox2.ForeColor = Color.Black;
-            textBox2.Location = new Point(159, 182);
+            textBox2.Location = new Point(139, 136);
+            textBox2.Margin = new Padding(3, 2, 3, 2);
             textBox2.Name = "textBox2";
-            textBox2.Size = new Size(164, 27);
+            textBox2.Size = new Size(144, 23);
             textBox2.TabIndex = 2;
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.ForeColor = Color.Black;
-            label2.Location = new Point(41, 182);
+            label2.Location = new Point(36, 136);
             label2.Name = "label2";
-            label2.Size = new Size(101, 20);
+            label2.Size = new Size(83, 15);
             label2.TabIndex = 1;
             label2.Text = "Tên danh mục";
             // 
@@ -182,33 +181,35 @@
             // 
             panel2.BackColor = Color.Teal;
             panel2.Controls.Add(label1);
-            panel2.Location = new Point(0, 8);
+            panel2.Location = new Point(0, 6);
+            panel2.Margin = new Padding(3, 2, 3, 2);
             panel2.Name = "panel2";
-            panel2.Size = new Size(667, 55);
+            panel2.Size = new Size(584, 41);
             panel2.TabIndex = 0;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
-            label1.Location = new Point(280, 10);
+            label1.Location = new Point(245, 8);
             label1.Name = "label1";
-            label1.Size = new Size(120, 31);
+            label1.Size = new Size(101, 25);
             label1.TabIndex = 0;
             label1.Text = "Danh Mục";
             label1.Click += label1_Click;
             // 
             // QuanLyDanhMuc
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(1597, 756);
+            ClientSize = new Size(1397, 567);
             Controls.Add(panel1);
             Controls.Add(button1);
             Controls.Add(textBox1);
             Controls.Add(guna2DataGridView1);
             ForeColor = Color.White;
+            Margin = new Padding(3, 2, 3, 2);
             Name = "QuanLyDanhMuc";
             Text = "QuanLyDanhMuc";
             ((System.ComponentModel.ISupportInitialize)guna2DataGridView1).EndInit();
@@ -229,7 +230,6 @@
         private Panel panel2;
         private Label label1;
         private Button button4;
-        private Button button3;
         private Button button2;
         private TextBox textBox2;
         private Label label2;

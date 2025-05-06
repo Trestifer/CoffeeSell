@@ -148,7 +148,7 @@ namespace CoffeeSell
         private void Panel5_Click(object sender, EventArgs e)
         {
             panel10.Controls.Clear();
-            QuanLyDanhMuc dmform = new QuanLyDanhMuc();
+            QuanLyDanhMuc dmform = new QuanLyDanhMuc(user);
             dmform.TopLevel = false;
             dmform.FormBorderStyle = FormBorderStyle.None;
             dmform.Dock = DockStyle.Fill;
