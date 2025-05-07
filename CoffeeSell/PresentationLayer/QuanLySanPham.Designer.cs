@@ -31,45 +31,44 @@
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(QuanLySanPham));
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            guna2DataGridView1 = new Guna.UI2.WinForms.Guna2DataGridView();
+            dtgrid = new Guna.UI2.WinForms.Guna2DataGridView();
             textBox1 = new TextBox();
-            panel1 = new Panel();
-            button8 = new Button();
-            button7 = new Button();
-            button4 = new Button();
-            button3 = new Button();
-            button2 = new Button();
-            comboBox2 = new ComboBox();
-            comboBox1 = new ComboBox();
-            button1 = new Button();
-            pictureBox1 = new PictureBox();
-            textBox5 = new TextBox();
-            textBox4 = new TextBox();
-            textBox3 = new TextBox();
-            label6 = new Label();
-            label5 = new Label();
-            label4 = new Label();
-            label3 = new Label();
-            label2 = new Label();
-            label1 = new Label();
             comboBox3 = new ComboBox();
             button5 = new Button();
             guna2CustomGradientPanel1 = new Guna.UI2.WinForms.Guna2CustomGradientPanel();
             label7 = new Label();
-            ((System.ComponentModel.ISupportInitialize)guna2DataGridView1).BeginInit();
-            panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            label1 = new Label();
+            label2 = new Label();
+            label4 = new Label();
+            label5 = new Label();
+            label6 = new Label();
+            txtS = new TextBox();
+            txtName = new TextBox();
+            pictureBox1 = new PictureBox();
+            button1 = new Button();
+            cbcDanhMuc = new ComboBox();
+            button2 = new Button();
+            button3 = new Button();
+            button4 = new Button();
+            panel1 = new Panel();
+            label11 = new Label();
+            label10 = new Label();
+            label9 = new Label();
+            txtM = new TextBox();
+            txtL = new TextBox();
+            ((System.ComponentModel.ISupportInitialize)dtgrid).BeginInit();
             guna2CustomGradientPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
-            // guna2DataGridView1
+            // dtgrid
             // 
             dataGridViewCellStyle1.BackColor = Color.White;
-            guna2DataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            guna2DataGridView1.BackgroundColor = Color.Gray;
+            dtgrid.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dtgrid.BackgroundColor = Color.Gray;
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = Color.FromArgb(100, 88, 255);
             dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
@@ -77,9 +76,9 @@
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            guna2DataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            guna2DataGridView1.ColumnHeadersHeight = 4;
-            guna2DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
+            dtgrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dtgrid.ColumnHeadersHeight = 4;
+            dtgrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = Color.White;
             dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
@@ -87,35 +86,37 @@
             dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(231, 229, 255);
             dataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(71, 69, 94);
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
-            guna2DataGridView1.DefaultCellStyle = dataGridViewCellStyle3;
-            guna2DataGridView1.GridColor = Color.FromArgb(231, 229, 255);
-            guna2DataGridView1.Location = new Point(31, 83);
-            guna2DataGridView1.Name = "guna2DataGridView1";
-            guna2DataGridView1.RowHeadersVisible = false;
-            guna2DataGridView1.RowHeadersWidth = 51;
-            guna2DataGridView1.Size = new Size(888, 913);
-            guna2DataGridView1.TabIndex = 0;
-            guna2DataGridView1.ThemeStyle.AlternatingRowsStyle.BackColor = Color.White;
-            guna2DataGridView1.ThemeStyle.AlternatingRowsStyle.Font = null;
-            guna2DataGridView1.ThemeStyle.AlternatingRowsStyle.ForeColor = Color.Empty;
-            guna2DataGridView1.ThemeStyle.AlternatingRowsStyle.SelectionBackColor = Color.Empty;
-            guna2DataGridView1.ThemeStyle.AlternatingRowsStyle.SelectionForeColor = Color.Empty;
-            guna2DataGridView1.ThemeStyle.BackColor = Color.Gray;
-            guna2DataGridView1.ThemeStyle.GridColor = Color.FromArgb(231, 229, 255);
-            guna2DataGridView1.ThemeStyle.HeaderStyle.BackColor = Color.FromArgb(100, 88, 255);
-            guna2DataGridView1.ThemeStyle.HeaderStyle.BorderStyle = DataGridViewHeaderBorderStyle.None;
-            guna2DataGridView1.ThemeStyle.HeaderStyle.Font = new Font("Segoe UI", 9F);
-            guna2DataGridView1.ThemeStyle.HeaderStyle.ForeColor = Color.White;
-            guna2DataGridView1.ThemeStyle.HeaderStyle.HeaightSizeMode = DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
-            guna2DataGridView1.ThemeStyle.HeaderStyle.Height = 4;
-            guna2DataGridView1.ThemeStyle.ReadOnly = false;
-            guna2DataGridView1.ThemeStyle.RowsStyle.BackColor = Color.White;
-            guna2DataGridView1.ThemeStyle.RowsStyle.BorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            guna2DataGridView1.ThemeStyle.RowsStyle.Font = new Font("Segoe UI", 9F);
-            guna2DataGridView1.ThemeStyle.RowsStyle.ForeColor = Color.FromArgb(71, 69, 94);
-            guna2DataGridView1.ThemeStyle.RowsStyle.Height = 29;
-            guna2DataGridView1.ThemeStyle.RowsStyle.SelectionBackColor = Color.FromArgb(231, 229, 255);
-            guna2DataGridView1.ThemeStyle.RowsStyle.SelectionForeColor = Color.FromArgb(71, 69, 94);
+            dtgrid.DefaultCellStyle = dataGridViewCellStyle3;
+            dtgrid.GridColor = Color.FromArgb(231, 229, 255);
+            dtgrid.Location = new Point(31, 83);
+            dtgrid.Name = "dtgrid";
+            dtgrid.RowHeadersVisible = false;
+            dtgrid.RowHeadersWidth = 51;
+            dtgrid.Size = new Size(888, 913);
+            dtgrid.TabIndex = 0;
+            dtgrid.ThemeStyle.AlternatingRowsStyle.BackColor = Color.White;
+            dtgrid.ThemeStyle.AlternatingRowsStyle.Font = null;
+            dtgrid.ThemeStyle.AlternatingRowsStyle.ForeColor = Color.Empty;
+            dtgrid.ThemeStyle.AlternatingRowsStyle.SelectionBackColor = Color.Empty;
+            dtgrid.ThemeStyle.AlternatingRowsStyle.SelectionForeColor = Color.Empty;
+            dtgrid.ThemeStyle.BackColor = Color.Gray;
+            dtgrid.ThemeStyle.GridColor = Color.FromArgb(231, 229, 255);
+            dtgrid.ThemeStyle.HeaderStyle.BackColor = Color.FromArgb(100, 88, 255);
+            dtgrid.ThemeStyle.HeaderStyle.BorderStyle = DataGridViewHeaderBorderStyle.None;
+            dtgrid.ThemeStyle.HeaderStyle.Font = new Font("Segoe UI", 9F);
+            dtgrid.ThemeStyle.HeaderStyle.ForeColor = Color.White;
+            dtgrid.ThemeStyle.HeaderStyle.HeaightSizeMode = DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
+            dtgrid.ThemeStyle.HeaderStyle.Height = 4;
+            dtgrid.ThemeStyle.ReadOnly = false;
+            dtgrid.ThemeStyle.RowsStyle.BackColor = Color.White;
+            dtgrid.ThemeStyle.RowsStyle.BorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dtgrid.ThemeStyle.RowsStyle.Font = new Font("Segoe UI", 9F);
+            dtgrid.ThemeStyle.RowsStyle.ForeColor = Color.FromArgb(71, 69, 94);
+            dtgrid.ThemeStyle.RowsStyle.Height = 29;
+            dtgrid.ThemeStyle.RowsStyle.SelectionBackColor = Color.FromArgb(231, 229, 255);
+            dtgrid.ThemeStyle.RowsStyle.SelectionForeColor = Color.FromArgb(71, 69, 94);
+            dtgrid.CellClick += dtgrid_CellClick;
+            dtgrid.CellContentClick += dtgrid_CellContentClick;
             // 
             // textBox1
             // 
@@ -125,189 +126,6 @@
             textBox1.PlaceholderText = "Tìm kiếm";
             textBox1.Size = new Size(333, 37);
             textBox1.TabIndex = 1;
-            // 
-            // panel1
-            // 
-            panel1.BackColor = Color.WhiteSmoke;
-            panel1.Controls.Add(button8);
-            panel1.Controls.Add(button7);
-            panel1.Controls.Add(button4);
-            panel1.Controls.Add(button3);
-            panel1.Controls.Add(button2);
-            panel1.Controls.Add(comboBox2);
-            panel1.Controls.Add(comboBox1);
-            panel1.Controls.Add(button1);
-            panel1.Controls.Add(pictureBox1);
-            panel1.Controls.Add(textBox5);
-            panel1.Controls.Add(textBox4);
-            panel1.Controls.Add(textBox3);
-            panel1.Controls.Add(label6);
-            panel1.Controls.Add(label5);
-            panel1.Controls.Add(label4);
-            panel1.Controls.Add(label3);
-            panel1.Controls.Add(label2);
-            panel1.Controls.Add(label1);
-            panel1.Location = new Point(946, 55);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(626, 941);
-            panel1.TabIndex = 2;
-            // 
-            // button8
-            // 
-            button8.Location = new Point(58, 697);
-            button8.Name = "button8";
-            button8.Size = new Size(107, 42);
-            button8.TabIndex = 23;
-            button8.Text = "Làm mới";
-            button8.UseVisualStyleBackColor = true;
-            // 
-            // button7
-            // 
-            button7.Location = new Point(208, 697);
-            button7.Name = "button7";
-            button7.Size = new Size(107, 42);
-            button7.TabIndex = 22;
-            button7.Text = "Xem chi tiết";
-            button7.UseVisualStyleBackColor = true;
-            // 
-            // button4
-            // 
-            button4.Location = new Point(345, 611);
-            button4.Name = "button4";
-            button4.Size = new Size(107, 42);
-            button4.TabIndex = 19;
-            button4.Text = "Xóa";
-            button4.UseVisualStyleBackColor = true;
-            // 
-            // button3
-            // 
-            button3.Location = new Point(208, 611);
-            button3.Name = "button3";
-            button3.Size = new Size(107, 42);
-            button3.TabIndex = 18;
-            button3.Text = "Sửa ";
-            button3.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            button2.Location = new Point(58, 611);
-            button2.Name = "button2";
-            button2.Size = new Size(107, 42);
-            button2.TabIndex = 17;
-            button2.Text = "Thêm";
-            button2.UseVisualStyleBackColor = true;
-            // 
-            // comboBox2
-            // 
-            comboBox2.FormattingEnabled = true;
-            comboBox2.Location = new Point(187, 520);
-            comboBox2.Name = "comboBox2";
-            comboBox2.Size = new Size(158, 28);
-            comboBox2.TabIndex = 16;
-            // 
-            // comboBox1
-            // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(187, 461);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(158, 28);
-            comboBox1.TabIndex = 15;
-            // 
-            // button1
-            // 
-            button1.Location = new Point(370, 35);
-            button1.Name = "button1";
-            button1.Size = new Size(82, 46);
-            button1.TabIndex = 14;
-            button1.Text = "Chọn ảnh";
-            button1.UseVisualStyleBackColor = true;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.BackColor = Color.White;
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(190, 35);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(155, 134);
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox1.TabIndex = 13;
-            pictureBox1.TabStop = false;
-            // 
-            // textBox5
-            // 
-            textBox5.Location = new Point(190, 284);
-            textBox5.Name = "textBox5";
-            textBox5.Size = new Size(155, 27);
-            textBox5.TabIndex = 10;
-            // 
-            // textBox4
-            // 
-            textBox4.Location = new Point(190, 187);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(155, 27);
-            textBox4.TabIndex = 9;
-            textBox4.TextChanged += textBox4_TextChanged;
-            // 
-            // textBox3
-            // 
-            textBox3.Location = new Point(190, 362);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(155, 27);
-            textBox3.TabIndex = 8;
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(43, 520);
-            label6.Name = "label6";
-            label6.Size = new Size(75, 20);
-            label6.TabIndex = 5;
-            label6.Text = "Trạng thái";
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(43, 464);
-            label5.Name = "label5";
-            label5.Size = new Size(76, 20);
-            label5.TabIndex = 4;
-            label5.Text = "Danh mục";
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(43, 369);
-            label4.Name = "label4";
-            label4.Size = new Size(31, 20);
-            label4.TabIndex = 3;
-            label4.Text = "Giá";
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(45, 284);
-            label3.Name = "label3";
-            label3.Size = new Size(48, 20);
-            label3.TabIndex = 2;
-            label3.Text = "Mô tả";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(43, 187);
-            label2.Name = "label2";
-            label2.Size = new Size(100, 20);
-            label2.TabIndex = 1;
-            label2.Text = "Tên sản phẩm";
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(43, 45);
-            label1.Name = "label1";
-            label1.Size = new Size(68, 20);
-            label1.TabIndex = 0;
-            label1.Text = "Hình ảnh";
             // 
             // comboBox3
             // 
@@ -353,6 +171,191 @@
             label7.TabIndex = 21;
             label7.Text = "Quản lý sản phẩm";
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(43, 45);
+            label1.Name = "label1";
+            label1.Size = new Size(68, 20);
+            label1.TabIndex = 0;
+            label1.Text = "Hình ảnh";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(43, 187);
+            label2.Name = "label2";
+            label2.Size = new Size(100, 20);
+            label2.TabIndex = 1;
+            label2.Text = "Tên sản phẩm";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(43, 369);
+            label4.Name = "label4";
+            label4.Size = new Size(31, 20);
+            label4.TabIndex = 3;
+            label4.Text = "Giá";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(43, 464);
+            label5.Name = "label5";
+            label5.Size = new Size(76, 20);
+            label5.TabIndex = 4;
+            label5.Text = "Danh mục";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(43, 520);
+            label6.Name = "label6";
+            label6.Size = new Size(0, 20);
+            label6.TabIndex = 5;
+            // 
+            // txtS
+            // 
+            txtS.Location = new Point(190, 366);
+            txtS.Name = "txtS";
+            txtS.Size = new Size(57, 27);
+            txtS.TabIndex = 8;
+            // 
+            // txtName
+            // 
+            txtName.Location = new Point(190, 187);
+            txtName.Name = "txtName";
+            txtName.Size = new Size(155, 27);
+            txtName.TabIndex = 9;
+            txtName.TextChanged += textBox4_TextChanged;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.BackColor = Color.White;
+            pictureBox1.Location = new Point(190, 35);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(155, 134);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 13;
+            pictureBox1.TabStop = false;
+            pictureBox1.Click += pictureBox1_Click;
+            // 
+            // button1
+            // 
+            button1.Location = new Point(370, 35);
+            button1.Name = "button1";
+            button1.Size = new Size(82, 46);
+            button1.TabIndex = 14;
+            button1.Text = "Chọn ảnh";
+            button1.UseVisualStyleBackColor = true;
+            // 
+            // cbcDanhMuc
+            // 
+            cbcDanhMuc.FormattingEnabled = true;
+            cbcDanhMuc.Location = new Point(187, 461);
+            cbcDanhMuc.Name = "cbcDanhMuc";
+            cbcDanhMuc.Size = new Size(158, 28);
+            cbcDanhMuc.TabIndex = 15;
+            // 
+            // button2
+            // 
+            button2.Location = new Point(58, 611);
+            button2.Name = "button2";
+            button2.Size = new Size(107, 42);
+            button2.TabIndex = 17;
+            button2.Text = "Thêm";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
+            // 
+            // button3
+            // 
+            button3.Location = new Point(208, 611);
+            button3.Name = "button3";
+            button3.Size = new Size(107, 42);
+            button3.TabIndex = 18;
+            button3.Text = "Sửa ";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
+            // 
+            // button4
+            // 
+            button4.Location = new Point(345, 611);
+            button4.Name = "button4";
+            button4.Size = new Size(107, 42);
+            button4.TabIndex = 19;
+            button4.Text = "Xóa";
+            button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
+            // 
+            // panel1
+            // 
+            panel1.BackColor = Color.WhiteSmoke;
+            panel1.Controls.Add(label11);
+            panel1.Controls.Add(label10);
+            panel1.Controls.Add(label9);
+            panel1.Controls.Add(txtM);
+            panel1.Controls.Add(txtL);
+            panel1.Controls.Add(button4);
+            panel1.Controls.Add(button3);
+            panel1.Controls.Add(button2);
+            panel1.Controls.Add(cbcDanhMuc);
+            panel1.Controls.Add(button1);
+            panel1.Controls.Add(pictureBox1);
+            panel1.Controls.Add(txtName);
+            panel1.Controls.Add(txtS);
+            panel1.Controls.Add(label6);
+            panel1.Controls.Add(label5);
+            panel1.Controls.Add(label4);
+            panel1.Controls.Add(label2);
+            panel1.Controls.Add(label1);
+            panel1.Location = new Point(946, 55);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(626, 941);
+            panel1.TabIndex = 2;
+            panel1.Paint += panel1_Paint;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(167, 373);
+            label11.Name = "label11";
+            label11.Size = new Size(17, 20);
+            label11.TabIndex = 29;
+            label11.Text = "S";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(260, 373);
+            label10.Name = "label10";
+            label10.Size = new Size(22, 20);
+            label10.TabIndex = 28;
+            label10.Text = "M";
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(370, 373);
+            label9.Name = "label9";
+            label9.Size = new Size(16, 20);
+            label9.TabIndex = 27;
+            label9.Text = "L";
+            // 
+            // txtM
+            // 
+            txtM.Location = new Point(288, 366);
+            txtM.Name = "txtM";
+            txtM.Size = new Size(57, 27);
+            txtM.TabIndex = 25;
+            // 
+            // txtL
+            // 
+            txtL.Location = new Point(395, 366);
+            txtL.Name = "txtL";
+            txtL.Size = new Size(57, 27);
+            txtL.TabIndex = 24;
+            // 
             // QuanLySanPham
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -364,45 +367,45 @@
             Controls.Add(comboBox3);
             Controls.Add(panel1);
             Controls.Add(textBox1);
-            Controls.Add(guna2DataGridView1);
+            Controls.Add(dtgrid);
             Name = "QuanLySanPham";
             Text = "QuanLySanPham";
-            ((System.ComponentModel.ISupportInitialize)guna2DataGridView1).EndInit();
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dtgrid).EndInit();
             guna2CustomGradientPanel1.ResumeLayout(false);
             guna2CustomGradientPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private Guna.UI2.WinForms.Guna2DataGridView guna2DataGridView1;
+        private Guna.UI2.WinForms.Guna2DataGridView dtgrid;
         private TextBox textBox1;
-        private Panel panel1;
-        private TextBox textBox5;
-        private TextBox textBox3;
-        private Label label6;
-        private Label label5;
-        private Label label4;
-        private Label label3;
-        private Label label2;
-        private Label label1;
-        private Button button1;
-        private PictureBox pictureBox1;
-        private Button button8;
-        private Button button7;
-        private Button button4;
-        private Button button3;
-        private Button button2;
-        private ComboBox comboBox2;
-        private ComboBox comboBox1;
-        private TextBox textBox4;
         private ComboBox comboBox3;
         private Button button5;
         private Guna.UI2.WinForms.Guna2CustomGradientPanel guna2CustomGradientPanel1;
         private Label label7;
+        private Label label1;
+        private Label label2;
+        private Label label4;
+        private Label label5;
+        private Label label6;
+        private TextBox txtS;
+        private TextBox txtName;
+        private PictureBox pictureBox1;
+        private Button button1;
+        private ComboBox cbcDanhMuc;
+        private Button button2;
+        private Button button3;
+        private Button button4;
+        private Panel panel1;
+        private Label label11;
+        private Label label10;
+        private Label label9;
+        private TextBox txtM;
+        private TextBox txtL;
     }
 }

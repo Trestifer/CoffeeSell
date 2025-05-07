@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CoffeeSell.BO;
+using CoffeeSell.ObjClass;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,14 +14,187 @@ namespace CoffeeSell
 {
     public partial class QuanLySanPham : Form
     {
+        int foodId;
+        string _NameCategory;
+        string oldName;
         public QuanLySanPham()
         {
             InitializeComponent();
-        }
+            DataTable dt = BOCategory.GetCategory();
 
+            // Add a new empty row at the top
+            DataRow newRow = dt.NewRow();
+            newRow["NameCategory"] = "";  // Display text
+            newRow["CategoryId"] = -1;    // Value
+            dt.Rows.InsertAt(newRow, 0);
+
+            // Bind to ComboBox
+            cbcDanhMuc.DataSource = dt;
+            cbcDanhMuc.DisplayMember = "NameCategory";
+            cbcDanhMuc.ValueMember = "CategoryId";
+            Reset();
+        }
+        private void Reset()
+        {
+            foodId = -1;
+            _NameCategory = "";
+            txtL.Text = "";
+            txtM.Text = "";
+            txtS.Text = "";
+            txtName.Text = "";
+            // Bind data to DataGridView
+            DataTable dt = BOFood.GetAllFood();
+            dtgrid.DataSource = dt;
+
+            // Hide CategoryId column
+            if (dtgrid.Columns.Contains("CategoryId"))
+                dtgrid.Columns["CategoryId"].Visible = false;
+            dtgrid.Columns["Photo"].Visible = false;
+
+            // Set Vietnamese headers
+            dtgrid.Columns["FoodId"].HeaderText = "Mã món";
+            dtgrid.Columns["NameFood"].HeaderText = "Tên món";
+            dtgrid.Columns["NameCategory"].HeaderText = "Danh mục";
+            dtgrid.Columns["Price_S"].HeaderText = "Giá nhỏ";
+            dtgrid.Columns["Price_M"].HeaderText = "Giá vừa";
+            dtgrid.Columns["Price_L"].HeaderText = "Giá lớn";
+            dtgrid.Columns["Sold"].HeaderText = "Đã bán";
+
+            // Add "Bán chạy" checkbox column
+            if (!dtgrid.Columns.Contains("BanChay"))
+            {
+                DataGridViewCheckBoxColumn chk = new DataGridViewCheckBoxColumn();
+                chk.HeaderText = "Bán chạy";
+                chk.Name = "BanChay";
+                chk.ReadOnly = true;
+                dtgrid.Columns.Add(chk);
+            }
+
+            // Determine top 5 by Sold (without ties at position 5)
+            var rows = dt.AsEnumerable()
+                         .OrderByDescending(r => r.Field<int>("Sold"))
+                         .ToList();
+
+            bool hasTieAt5 = rows.Count >= 6 && rows[4].Field<int>("Sold") == rows[5].Field<int>("Sold");
+
+            for (int i = 0; i < rows.Count; i++)
+            {
+                DataGridViewRow gridRow = dtgrid.Rows[i];
+
+                // Only check if in top 5 AND no tie at position 5
+                bool isTop5 = i < 5 && !hasTieAt5;
+                gridRow.Cells["BanChay"].Value = isTop5;
+            }
+
+            // Fixed header height
+            dtgrid.ColumnHeadersHeight = 40;
+            dtgrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+
+            // Auto size columns
+            dtgrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+
+            // Optional: Improve visuals
+            dtgrid.EnableHeadersVisualStyles = false;
+            dtgrid.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        }
+        private Food GetFood()
+        {
+            Food food = new Food();
+            _NameCategory = cbcDanhMuc.Text;
+            food.SetFoodId(foodId);
+            food.SetNameFood(txtName.Text);
+            try
+            {
+                food.SetPriceLarge(Convert.ToDecimal(txtL.Text));
+                food.SetPriceMedium(Convert.ToDecimal(txtM.Text));
+                food.SetPriceSmall(Convert.ToDecimal(txtS.Text));
+                food.SetCategoryId((int)cbcDanhMuc.SelectedValue);
+                food.SetPhoto("");
+            }
+            catch { }
+            return food;
+
+        }
         private void textBox4_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Food info = GetFood();
+            if (BOFood.Add(info))
+            {
+                MessageBox.Show("Thêm thành công");
+                BOActivityLog.Record("trestifer", 'A', $"Đã thêm vào {_NameCategory} sản phẩm {info.GetNameFood()}");
+            }
+            Reset();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+
+
+
+
+            Food info = GetFood();
+            if (BOFood.Update(info))
+            {
+                MessageBox.Show("Sủa thành công");
+                BOActivityLog.Record("trestifer", 'E', $"Sửa sản phẩm có mã {foodId}");
+            }
+            Reset();
+
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void dtgrid_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                try
+                {
+                    DataGridViewRow row = dtgrid.Rows[e.RowIndex];
+                    int columnIndex = e.ColumnIndex;
+                    foodId = Convert.ToInt32(row.Cells["FoodId"].Value);
+                    string foodName = row.Cells["NameFood"].Value.ToString();
+                    oldName = foodName;
+                    cbcDanhMuc.SelectedValue = Convert.ToInt32(row.Cells["CategoryId"].Value);
+                    txtL.Text = row.Cells["Price_L"].Value.ToString();
+                    txtM.Text = row.Cells["Price_M"].Value.ToString();
+                    txtS.Text = row.Cells["Price_S"].Value.ToString();
+                }
+                catch (Exception ex)
+                {
+
+                    Reset();
+                }
+            }
+        }
+
+        private void dtgrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Food info = GetFood();
+            if (BOFood.Delete(info.GetFoodId()))
+            {
+                MessageBox.Show("Xóa thành công");
+                BOActivityLog.Record("trestifer", 'D', $"Đã xóa từ {_NameCategory} sản phẩm {info.GetNameFood()}");
+            }
+            Reset();
         }
     }
 }

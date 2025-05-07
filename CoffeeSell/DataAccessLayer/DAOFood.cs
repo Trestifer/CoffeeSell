@@ -10,9 +10,9 @@ namespace CoffeeSell.DataAccessLayer
         public int CreateFood(Food food)
         {
             string cmString = @"
-                INSERT INTO Food (NameFood, CategoryId, Price_S, Price_M, Price_L)
+                INSERT INTO Food (NameFood, CategoryId, Price_S, Price_M, Price_L, Photo, Sold)
                 OUTPUT INSERTED.FoodId
-                VALUES (@Name, @CatId, @PriceS, @PriceM, @PriceL)";
+                VALUES (@Name, @CatId, @PriceS, @PriceM, @PriceL, @Photo, @Sold)";
 
             try
             {
@@ -20,14 +20,16 @@ namespace CoffeeSell.DataAccessLayer
 
                 object result = ExecuteScalar(
                     cmString,
-                    new string[] { "@Name", "@CatId", "@PriceS", "@PriceM", "@PriceL" },
+                    new string[] { "@Name", "@CatId", "@PriceS", "@PriceM", "@PriceL", "@Photo", "@Sold" },
                     new object[]
                     {
-                food.GetNameFood(),
-                food.GetCategoryId(),
-                prices[0],
-                prices[1],
-                prices[2]
+                        food.GetNameFood(),
+                        food.GetCategoryId(),
+                        prices[0],
+                        prices[1],
+                        prices[2],
+                        food.GetPhoto(),
+                        food.GetSold()
                     });
 
                 return result != null ? Convert.ToInt32(result) : -1;
@@ -39,12 +41,17 @@ namespace CoffeeSell.DataAccessLayer
             }
         }
 
-
         public bool UpdateFood(Food food)
         {
             string cmString = @"
                 UPDATE Food
-                SET NameFood = @Name, CategoryId = @CatId, Price_S = @PriceS, Price_M = @PriceM, Price_L = @PriceL
+                SET NameFood = @Name,
+                    CategoryId = @CatId,
+                    Price_S = @PriceS,
+                    Price_M = @PriceM,
+                    Price_L = @PriceL,
+                    Photo = @Photo,
+                    Sold = @Sold
                 WHERE FoodId = @Id";
 
             try
@@ -53,15 +60,17 @@ namespace CoffeeSell.DataAccessLayer
 
                 int rows = ExecuteNonQuery(
                     cmString,
-                    new string[] { "@Name", "@CatId", "@PriceS", "@PriceM", "@PriceL", "@Id" },
+                    new string[] { "@Name", "@CatId", "@PriceS", "@PriceM", "@PriceL", "@Photo", "@Sold", "@Id" },
                     new object[]
                     {
-                food.GetNameFood(),
-                food.GetCategoryId(),
-                prices[0],
-                prices[1],
-                prices[2],
-                food.GetFoodId()
+                        food.GetNameFood(),
+                        food.GetCategoryId(),
+                        prices[0],
+                        prices[1],
+                        prices[2],
+                        food.GetPhoto(),
+                        food.GetSold(),
+                        food.GetFoodId()
                     });
 
                 return rows > 0;
@@ -72,7 +81,6 @@ namespace CoffeeSell.DataAccessLayer
                 return false;
             }
         }
-
 
         public bool DeleteFood(int foodId)
         {
@@ -118,5 +126,32 @@ namespace CoffeeSell.DataAccessLayer
                 return -1;
             }
         }
+        public DataTable GetAllFoodWithCategory()
+        {
+            string query = @"
+        SELECT 
+            f.FoodId,
+            f.NameFood,
+            f.CategoryId,
+            c.NameCategory,
+            f.Price_S,
+            f.Price_M,
+            f.Price_L,
+            f.Photo,
+            f.Sold
+        FROM Food f
+        INNER JOIN Category c ON f.CategoryId = c.CategoryId";
+
+            try
+            {
+                return ExecuteQuery(query);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"GetAllFoodWithCategory error: {ex.Message}");
+                return new DataTable();
+            }
+        }
+
     }
 }

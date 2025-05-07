@@ -31,7 +31,7 @@ namespace CoffeeSell
             if (e.KeyCode == Keys.Enter)
             {
                 TextBox currentBox = sender as TextBox;
-                guna2Button1_Click(null,EventArgs.Empty);
+                guna2Button1_Click(null, EventArgs.Empty);
                 e.SuppressKeyPress = true;
             }
         }
@@ -43,9 +43,9 @@ namespace CoffeeSell
                 MessageBox.Show("Đăng nhập thàn công");
                 BOLoginHistory.SuccessLogin(account.GetAccountId());
                 this.Hide();
-                if(!account.GetTypeAccount())
+                if (!account.GetTypeAccount())
                 {
-                    if(!BOEmployee.CheckFirstLogin(account.GetAccountId()))
+                    if (!BOEmployee.CheckFirstLogin(account.GetAccountId()))
                     {
                         new NhapOTP(account).Show();
                         return;
@@ -58,9 +58,9 @@ namespace CoffeeSell
             {
                 MessageBox.Show("Đăng nhập thất bại");
                 BOLoginHistory.FailureLogin(guna2TextBox1.Text);
-                guna2TextBox2.Text= string.Empty;
+                guna2TextBox2.Text = string.Empty;
             }
-            
+
         }
 
         private void guna2HtmlLabel9_Click(object sender, EventArgs e)
@@ -99,6 +99,11 @@ namespace CoffeeSell
         }
 
         private void guna2HtmlLabel6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void guna2PictureBox1_Click(object sender, EventArgs e)
         {
 
         }
