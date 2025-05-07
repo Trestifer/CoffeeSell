@@ -1,5 +1,6 @@
 ﻿using CoffeeSell.BO;
 using CoffeeSell.ObjClass;
+using CoffeeSell.Ulti;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,7 +17,9 @@ namespace CoffeeSell
     {
         int foodId;
         string _NameCategory;
-        string oldName;
+        string PhotoName;
+        private List<TextBox> textBoxes = new List<TextBox>();
+
         public QuanLySanPham()
         {
             InitializeComponent();
@@ -33,15 +36,26 @@ namespace CoffeeSell
             cbcDanhMuc.DisplayMember = "NameCategory";
             cbcDanhMuc.ValueMember = "CategoryId";
             Reset();
+            textBoxes.Add(txtL);
+            textBoxes.Add(txtM);
+            textBoxes.Add(txtS);
+            foreach(TextBox txt in textBoxes)
+            {
+                txt.KeyPress += KeyPressTien;
+            }
+            txtName.KeyPress += NamePress;
         }
         private void Reset()
         {
+            pictureBox1.Image = null;
+            PhotoName = "";
             foodId = -1;
             _NameCategory = "";
             txtL.Text = "";
             txtM.Text = "";
             txtS.Text = "";
             txtName.Text = "";
+            cbcDanhMuc.SelectedIndex = 0;
             // Bind data to DataGridView
             DataTable dt = BOFood.GetAllFood();
             dtgrid.DataSource = dt;
@@ -109,7 +123,7 @@ namespace CoffeeSell
                 food.SetPriceMedium(Convert.ToDecimal(txtM.Text));
                 food.SetPriceSmall(Convert.ToDecimal(txtS.Text));
                 food.SetCategoryId((int)cbcDanhMuc.SelectedValue);
-                food.SetPhoto("");
+                food.SetPhoto(PhotoName);
             }
             catch { }
             return food;
@@ -167,11 +181,12 @@ namespace CoffeeSell
                     int columnIndex = e.ColumnIndex;
                     foodId = Convert.ToInt32(row.Cells["FoodId"].Value);
                     string foodName = row.Cells["NameFood"].Value.ToString();
-                    oldName = foodName;
                     cbcDanhMuc.SelectedValue = Convert.ToInt32(row.Cells["CategoryId"].Value);
-                    txtL.Text = row.Cells["Price_L"].Value.ToString();
-                    txtM.Text = row.Cells["Price_M"].Value.ToString();
-                    txtS.Text = row.Cells["Price_S"].Value.ToString();
+                    txtS.Text = TextHandling.CustomDecimalToString(row.Cells["Price_S"].Value.ToString());
+                    txtL.Text = TextHandling.CustomDecimalToString(row.Cells["Price_L"].Value.ToString());
+                    txtM.Text = TextHandling.CustomDecimalToString(row.Cells["Price_M"].Value.ToString());
+                    PhotoName = row.Cells["Photo"].Value.ToString();
+                    pictureBox1.Image = Image.FromFile(PhotoFunction.GetPhoto(PhotoName));
                 }
                 catch (Exception ex)
                 {
@@ -195,6 +210,47 @@ namespace CoffeeSell
                 BOActivityLog.Record("trestifer", 'D', $"Đã xóa từ {_NameCategory} sản phẩm {info.GetNameFood()}");
             }
             Reset();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Title = "Chọn hình ảnh";
+                openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string sourcePath = openFileDialog.FileName;
+                    PhotoName = PhotoFunction.SavePhotoToUploads(sourcePath);
+                    MessageBox.Show($"Hình ảnh đã được lưu với tên: {PhotoName}");
+                    string fullPath = PhotoFunction.GetPhoto(PhotoName);
+                    pictureBox1.Image = Image.FromFile(fullPath);
+
+                }
+            }
+
+        }
+
+        private void KeyPressTien(object sender, KeyPressEventArgs e)
+        {
+            TextBox txtBox = sender as TextBox;
+
+            // Check if the character is a valid numeric input (like your `txtS_KeyPress` method)
+            if (!TextHandling.IsValidNumericInput(e.KeyChar, txtBox.Text))
+            {
+                e.Handled = true;  // Block the keypress if it's not valid
+            }
+        }
+        private void NamePress(object sender, KeyPressEventArgs e)
+        {
+            TextBox txtBox = sender as TextBox;
+
+            // Check if the character is a valid numeric input (like your `txtS_KeyPress` method)
+            if (!TextHandling.IsValidAlphabeticInput(e.KeyChar, txtBox.Text))
+            {
+                e.Handled = true;  // Block the keypress if it's not valid
+            }
         }
     }
 }

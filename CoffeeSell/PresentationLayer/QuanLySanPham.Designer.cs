@@ -78,7 +78,6 @@
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             dtgrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dtgrid.ColumnHeadersHeight = 4;
-            dtgrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = Color.White;
             dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
@@ -88,11 +87,15 @@
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
             dtgrid.DefaultCellStyle = dataGridViewCellStyle3;
             dtgrid.GridColor = Color.FromArgb(231, 229, 255);
-            dtgrid.Location = new Point(31, 83);
+            dtgrid.Location = new Point(27, 62);
+            dtgrid.Margin = new Padding(3, 2, 3, 2);
+            dtgrid.MultiSelect = false;
             dtgrid.Name = "dtgrid";
+            dtgrid.ReadOnly = true;
             dtgrid.RowHeadersVisible = false;
             dtgrid.RowHeadersWidth = 51;
-            dtgrid.Size = new Size(888, 913);
+            dtgrid.RowTemplate.Height = 29;
+            dtgrid.Size = new Size(663, 685);
             dtgrid.TabIndex = 0;
             dtgrid.ThemeStyle.AlternatingRowsStyle.BackColor = Color.White;
             dtgrid.ThemeStyle.AlternatingRowsStyle.Font = null;
@@ -105,9 +108,9 @@
             dtgrid.ThemeStyle.HeaderStyle.BorderStyle = DataGridViewHeaderBorderStyle.None;
             dtgrid.ThemeStyle.HeaderStyle.Font = new Font("Segoe UI", 9F);
             dtgrid.ThemeStyle.HeaderStyle.ForeColor = Color.White;
-            dtgrid.ThemeStyle.HeaderStyle.HeaightSizeMode = DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
+            dtgrid.ThemeStyle.HeaderStyle.HeaightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dtgrid.ThemeStyle.HeaderStyle.Height = 4;
-            dtgrid.ThemeStyle.ReadOnly = false;
+            dtgrid.ThemeStyle.ReadOnly = true;
             dtgrid.ThemeStyle.RowsStyle.BackColor = Color.White;
             dtgrid.ThemeStyle.RowsStyle.BorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dtgrid.ThemeStyle.RowsStyle.Font = new Font("Segoe UI", 9F);
@@ -120,27 +123,30 @@
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(31, 27);
+            textBox1.Location = new Point(27, 20);
+            textBox1.Margin = new Padding(3, 2, 3, 2);
             textBox1.Multiline = true;
             textBox1.Name = "textBox1";
             textBox1.PlaceholderText = "Tìm kiếm";
-            textBox1.Size = new Size(333, 37);
+            textBox1.Size = new Size(292, 29);
             textBox1.TabIndex = 1;
             // 
             // comboBox3
             // 
             comboBox3.FormattingEnabled = true;
             comboBox3.Items.AddRange(new object[] { "Mã SP", "Tên SP" });
-            comboBox3.Location = new Point(398, 27);
+            comboBox3.Location = new Point(348, 20);
+            comboBox3.Margin = new Padding(3, 2, 3, 2);
             comboBox3.Name = "comboBox3";
-            comboBox3.Size = new Size(95, 28);
+            comboBox3.Size = new Size(84, 23);
             comboBox3.TabIndex = 3;
             // 
             // button5
             // 
-            button5.Location = new Point(544, 27);
+            button5.Location = new Point(476, 20);
+            button5.Margin = new Padding(3, 2, 3, 2);
             button5.Name = "button5";
-            button5.Size = new Size(83, 37);
+            button5.Size = new Size(73, 28);
             button5.TabIndex = 4;
             button5.Text = "Tìm kiếm";
             button5.UseVisualStyleBackColor = true;
@@ -153,10 +159,11 @@
             guna2CustomGradientPanel1.FillColor2 = Color.FromArgb(84, 125, 224);
             guna2CustomGradientPanel1.FillColor3 = Color.FromArgb(84, 125, 224);
             guna2CustomGradientPanel1.FillColor4 = Color.FromArgb(84, 125, 224);
-            guna2CustomGradientPanel1.Location = new Point(946, 0);
+            guna2CustomGradientPanel1.Location = new Point(828, 0);
+            guna2CustomGradientPanel1.Margin = new Padding(3, 2, 3, 2);
             guna2CustomGradientPanel1.Name = "guna2CustomGradientPanel1";
             guna2CustomGradientPanel1.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            guna2CustomGradientPanel1.Size = new Size(626, 55);
+            guna2CustomGradientPanel1.Size = new Size(548, 41);
             guna2CustomGradientPanel1.TabIndex = 5;
             // 
             // label7
@@ -165,77 +172,81 @@
             label7.BackColor = Color.Transparent;
             label7.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
             label7.ForeColor = Color.White;
-            label7.Location = new Point(220, 9);
+            label7.Location = new Point(192, 7);
             label7.Name = "label7";
-            label7.Size = new Size(199, 31);
+            label7.Size = new Size(166, 25);
             label7.TabIndex = 21;
             label7.Text = "Quản lý sản phẩm";
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(43, 45);
+            label1.Location = new Point(38, 34);
             label1.Name = "label1";
-            label1.Size = new Size(68, 20);
+            label1.Size = new Size(56, 15);
             label1.TabIndex = 0;
             label1.Text = "Hình ảnh";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(43, 187);
+            label2.Location = new Point(38, 140);
             label2.Name = "label2";
-            label2.Size = new Size(100, 20);
+            label2.Size = new Size(81, 15);
             label2.TabIndex = 1;
             label2.Text = "Tên sản phẩm";
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(43, 369);
+            label4.Location = new Point(38, 277);
             label4.Name = "label4";
-            label4.Size = new Size(31, 20);
+            label4.Size = new Size(24, 15);
             label4.TabIndex = 3;
             label4.Text = "Giá";
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(43, 464);
+            label5.Location = new Point(38, 348);
             label5.Name = "label5";
-            label5.Size = new Size(76, 20);
+            label5.Size = new Size(62, 15);
             label5.TabIndex = 4;
             label5.Text = "Danh mục";
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(43, 520);
+            label6.Location = new Point(38, 390);
             label6.Name = "label6";
-            label6.Size = new Size(0, 20);
+            label6.Size = new Size(0, 15);
             label6.TabIndex = 5;
             // 
             // txtS
             // 
-            txtS.Location = new Point(190, 366);
+            txtS.Location = new Point(166, 274);
+            txtS.Margin = new Padding(3, 2, 3, 2);
             txtS.Name = "txtS";
-            txtS.Size = new Size(57, 27);
+            txtS.Size = new Size(50, 23);
             txtS.TabIndex = 8;
+
             // 
             // txtName
             // 
-            txtName.Location = new Point(190, 187);
+            txtName.Location = new Point(166, 140);
+            txtName.Margin = new Padding(3, 2, 3, 2);
             txtName.Name = "txtName";
-            txtName.Size = new Size(155, 27);
+            txtName.Size = new Size(136, 23);
             txtName.TabIndex = 9;
             txtName.TextChanged += textBox4_TextChanged;
             // 
             // pictureBox1
             // 
             pictureBox1.BackColor = Color.White;
-            pictureBox1.Location = new Point(190, 35);
+            pictureBox1.Location = new Point(166, 26);
+            pictureBox1.Margin = new Padding(3, 2, 3, 2);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(155, 134);
+            pictureBox1.Size = new Size(136, 100);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 13;
             pictureBox1.TabStop = false;
@@ -243,26 +254,30 @@
             // 
             // button1
             // 
-            button1.Location = new Point(370, 35);
+            button1.Location = new Point(324, 26);
+            button1.Margin = new Padding(3, 2, 3, 2);
             button1.Name = "button1";
-            button1.Size = new Size(82, 46);
+            button1.Size = new Size(72, 34);
             button1.TabIndex = 14;
             button1.Text = "Chọn ảnh";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // cbcDanhMuc
             // 
             cbcDanhMuc.FormattingEnabled = true;
-            cbcDanhMuc.Location = new Point(187, 461);
+            cbcDanhMuc.Location = new Point(164, 346);
+            cbcDanhMuc.Margin = new Padding(3, 2, 3, 2);
             cbcDanhMuc.Name = "cbcDanhMuc";
-            cbcDanhMuc.Size = new Size(158, 28);
+            cbcDanhMuc.Size = new Size(139, 23);
             cbcDanhMuc.TabIndex = 15;
             // 
             // button2
             // 
-            button2.Location = new Point(58, 611);
+            button2.Location = new Point(51, 458);
+            button2.Margin = new Padding(3, 2, 3, 2);
             button2.Name = "button2";
-            button2.Size = new Size(107, 42);
+            button2.Size = new Size(94, 32);
             button2.TabIndex = 17;
             button2.Text = "Thêm";
             button2.UseVisualStyleBackColor = true;
@@ -270,9 +285,10 @@
             // 
             // button3
             // 
-            button3.Location = new Point(208, 611);
+            button3.Location = new Point(182, 458);
+            button3.Margin = new Padding(3, 2, 3, 2);
             button3.Name = "button3";
-            button3.Size = new Size(107, 42);
+            button3.Size = new Size(94, 32);
             button3.TabIndex = 18;
             button3.Text = "Sửa ";
             button3.UseVisualStyleBackColor = true;
@@ -280,9 +296,10 @@
             // 
             // button4
             // 
-            button4.Location = new Point(345, 611);
+            button4.Location = new Point(302, 458);
+            button4.Margin = new Padding(3, 2, 3, 2);
             button4.Name = "button4";
-            button4.Size = new Size(107, 42);
+            button4.Size = new Size(94, 32);
             button4.TabIndex = 19;
             button4.Text = "Xóa";
             button4.UseVisualStyleBackColor = true;
@@ -309,65 +326,69 @@
             panel1.Controls.Add(label4);
             panel1.Controls.Add(label2);
             panel1.Controls.Add(label1);
-            panel1.Location = new Point(946, 55);
+            panel1.Location = new Point(828, 41);
+            panel1.Margin = new Padding(3, 2, 3, 2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(626, 941);
+            panel1.Size = new Size(548, 706);
             panel1.TabIndex = 2;
             panel1.Paint += panel1_Paint;
             // 
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new Point(167, 373);
+            label11.Location = new Point(146, 280);
             label11.Name = "label11";
-            label11.Size = new Size(17, 20);
+            label11.Size = new Size(13, 15);
             label11.TabIndex = 29;
             label11.Text = "S";
             // 
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(260, 373);
+            label10.Location = new Point(228, 280);
             label10.Name = "label10";
-            label10.Size = new Size(22, 20);
+            label10.Size = new Size(18, 15);
             label10.TabIndex = 28;
             label10.Text = "M";
             // 
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(370, 373);
+            label9.Location = new Point(324, 280);
             label9.Name = "label9";
-            label9.Size = new Size(16, 20);
+            label9.Size = new Size(13, 15);
             label9.TabIndex = 27;
             label9.Text = "L";
             // 
             // txtM
             // 
-            txtM.Location = new Point(288, 366);
+            txtM.Location = new Point(252, 274);
+            txtM.Margin = new Padding(3, 2, 3, 2);
             txtM.Name = "txtM";
-            txtM.Size = new Size(57, 27);
+            txtM.Size = new Size(50, 23);
             txtM.TabIndex = 25;
             // 
             // txtL
             // 
-            txtL.Location = new Point(395, 366);
+            txtL.Location = new Point(346, 274);
+            txtL.Margin = new Padding(3, 2, 3, 2);
             txtL.Name = "txtL";
-            txtL.Size = new Size(57, 27);
+            txtL.Size = new Size(50, 23);
             txtL.TabIndex = 24;
             // 
             // QuanLySanPham
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(1699, 1055);
+            ClientSize = new Size(1487, 791);
             Controls.Add(guna2CustomGradientPanel1);
             Controls.Add(button5);
             Controls.Add(comboBox3);
             Controls.Add(panel1);
             Controls.Add(textBox1);
             Controls.Add(dtgrid);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "QuanLySanPham";
             Text = "QuanLySanPham";
             ((System.ComponentModel.ISupportInitialize)dtgrid).EndInit();
