@@ -246,5 +246,10 @@ namespace CoffeeSell
         {
             checkBox2.Checked = !genderCheckBox.Checked;
         }
+
+        private void txtPhoneNumber_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

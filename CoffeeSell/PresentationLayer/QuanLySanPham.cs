@@ -17,8 +17,8 @@ namespace CoffeeSell
     {
         int foodId;
         string _NameCategory;
-        string PhotoName;
         private List<TextBox> textBoxes = new List<TextBox>();
+        private string PhotoBase64;
 
         public QuanLySanPham()
         {
@@ -42,15 +42,25 @@ namespace CoffeeSell
             foreach(TextBox txt in textBoxes)
             {
                 txt.KeyPress += KeyPressTien;
+                txt.TextChanged += Txt_TextChanged;
             }
             txtName.KeyPress += NamePress;
+
+
         }
+
+        private void Txt_TextChanged(object? sender, EventArgs e)
+        {
+            TextBox txtBox = sender as TextBox;
+            txtBox.Text = TextHandling.InputRange(txtBox,0, 200);
+        }
+
         private void Reset()
         {
             pictureBox1.Image = null;
-            PhotoName = "";
             foodId = -1;
             _NameCategory = "";
+            PhotoBase64 = "";
             txtL.Text = "";
             txtM.Text = "";
             txtS.Text = "";
@@ -123,7 +133,7 @@ namespace CoffeeSell
                 food.SetPriceMedium(Convert.ToDecimal(txtM.Text));
                 food.SetPriceSmall(Convert.ToDecimal(txtS.Text));
                 food.SetCategoryId((int)cbcDanhMuc.SelectedValue);
-                food.SetPhoto(PhotoName);
+                food.SetPhoto(PhotoBase64);
             }
             catch { }
             return food;
@@ -185,8 +195,7 @@ namespace CoffeeSell
                     txtS.Text = TextHandling.CustomDecimalToString(row.Cells["Price_S"].Value.ToString());
                     txtL.Text = TextHandling.CustomDecimalToString(row.Cells["Price_L"].Value.ToString());
                     txtM.Text = TextHandling.CustomDecimalToString(row.Cells["Price_M"].Value.ToString());
-                    PhotoName = row.Cells["Photo"].Value.ToString();
-                    pictureBox1.Image = Image.FromFile(PhotoFunction.GetPhoto(PhotoName));
+                    pictureBox1.Image = PhotoFunction.Base64ToImage(row.Cells["Photo"].Value.ToString());
                 }
                 catch (Exception ex)
                 {
@@ -222,10 +231,8 @@ namespace CoffeeSell
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     string sourcePath = openFileDialog.FileName;
-                    PhotoName = PhotoFunction.SavePhotoToUploads(sourcePath);
-                    MessageBox.Show($"Hình ảnh đã được lưu với tên: {PhotoName}");
-                    string fullPath = PhotoFunction.GetPhoto(PhotoName);
-                    pictureBox1.Image = Image.FromFile(fullPath);
+                    PhotoBase64 = PhotoFunction.ImageToBase64(sourcePath);
+                    pictureBox1.Image = PhotoFunction.Base64ToImage(PhotoBase64);
 
                 }
             }

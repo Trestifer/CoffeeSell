@@ -16,17 +16,20 @@ namespace CoffeeSell
     {
         Account user;
         EmployeeEmail Eemail;
+        string trueEmail;
         int countdown;
         public NhapOTP(Account _user)
         {
             InitializeComponent();
             user = _user;
             Eemail = BOEmployee.GetEmployeeEmail(user.GetAccountId());
+            
             if (Eemail.GetEmail() != null)
                 textBox2.Text = Eemail.GetEmail();
             button2.Enabled = false;
             if (Eemail.GetIsConfirmed())
             {
+                trueEmail = textBox2.Text;
                 textBox2.Text = MaskEmail(textBox2.Text);
                 textBox2.ReadOnly = true;
             }
@@ -55,10 +58,13 @@ namespace CoffeeSell
         {
             string newOTP = Security.GenerateOTP();
             string email = textBox2.Text;
-            if (Security.SendOtpEmail(email, newOTP))
+            if(!textBox2.ReadOnly)
+                trueEmail = email;
+            if (Security.SendOtpEmail(trueEmail, newOTP))
             {
                 MessageBox.Show("Đã gửi mã OTP");
-                Eemail.SetEmail(email);
+                if (!textBox2.ReadOnly)
+                { Eemail.SetEmail(trueEmail); }
                 Eemail.SetCurrentOTP(newOTP);
                 Eemail.SetOTPExpired(DateTime.Now.AddMinutes(2));
                 BOEmployeeEmail.UpdateEmployeeEmail(Eemail);
@@ -86,13 +92,17 @@ namespace CoffeeSell
 
         private void button2_Click(object sender, EventArgs e)
         {
+            
             if (DateTime.Now < Eemail.GetOTPExpired())
             {
                 if (textBox1.Text == Eemail.GetCurrentOTP())
                 {
-                    Eemail.SetIsConfirmed(true);
-                    BOEmployeeEmail.UpdateEmployeeEmail(Eemail);
-                    MessageBox.Show("Cập nhật Email thành công");
+                    if (!textBox2.ReadOnly)
+                    {
+                        Eemail.SetIsConfirmed(true);
+                        BOEmployeeEmail.UpdateEmployeeEmail(Eemail);
+                        MessageBox.Show("Cập nhật Email thành công");
+                    }
                     new DoiMatKhau(user).Show();
                     this.Close();
 

@@ -65,9 +65,8 @@ namespace CoffeeSell
 
         private void guna2HtmlLabel9_Click(object sender, EventArgs e)
         {
-            ResetMatKhau resetForm = new ResetMatKhau();
-            resetForm.Show();
-
+            new QuenMatKhau().Show();
+            this.Hide();
         }
         private void guna2HtmlLabel9_MouseEnter(object sender, EventArgs e)
         {

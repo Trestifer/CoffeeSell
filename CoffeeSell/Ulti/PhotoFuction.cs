@@ -1,39 +1,31 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 
 namespace CoffeeSell.Ulti
 {
     public class PhotoFunction
     {
-        public static string SavePhotoToUploads(string sourceFilePath)
+        public static string ImageToBase64(string imagePath)
         {
-            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            string uploadsFolder = Path.Combine(baseDirectory, "Uploads");
-
-            if (!Directory.Exists(uploadsFolder))
-                Directory.CreateDirectory(uploadsFolder);
-
-            // Generate a unique filename with timestamp or GUID
-            string extension = Path.GetExtension(sourceFilePath);
-            string uniqueFileName = Guid.NewGuid().ToString() + extension;
-
-            string destFilePath = Path.Combine(uploadsFolder, uniqueFileName);
-            File.Copy(sourceFilePath, destFilePath);
-
-            return uniqueFileName; // Save this to database
-        }
-        public static string GetPhoto(string fileName)
-        {
-            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            string uploadsFolder = Path.Combine(baseDirectory, "Uploads");
-            string photoPath = Path.Combine(uploadsFolder, fileName);
-
-            if (File.Exists(photoPath))
+            using (Image image = Image.FromFile(imagePath))
+            using (MemoryStream ms = new MemoryStream())
             {
-                return photoPath;
+                image.Save(ms, image.RawFormat);
+                byte[] imageBytes = ms.ToArray();
+                return Convert.ToBase64String(imageBytes);
             }
-
-            return null; // or throw exception if preferred
+        }
+        public static Image Base64ToImage(string base64String)
+        {
+            byte[] imageBytes = Convert.FromBase64String(base64String);
+            using (var ms = new MemoryStream(imageBytes))
+            {
+                using (var original = Image.FromStream(ms))
+                {
+                    return new Bitmap(original); // Return a copy that doesn't depend on the stream
+                }
+            }
         }
 
     }

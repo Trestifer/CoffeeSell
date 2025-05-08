@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -58,6 +59,47 @@ namespace CoffeeSell.Ulti
 
             // Otherwise, block
             return false;
+        }
+        public static bool IsNumberInput(char keyChar, string currentText)
+        {
+            // Allow control characters (Backspace, Delete, etc.)
+            if (char.IsControl(keyChar))
+                return true;
+
+            // Allow digits
+            if (char.IsDigit(keyChar))
+                return true;
+            return false;
+        }
+        public static string txtLimit(TextBox txt, int max)
+        {
+            string s = txt.Text;
+            if (s.Length > max)
+            {
+                return s.Substring(0, max);
+            }
+            return s;
+        }
+        public static string InputRange(TextBox txt, decimal min = decimal.MinValue, decimal max = decimal.MaxValue)
+        {
+            try
+            {
+                // Evaluate simple math expression like "87-3"
+                var expression = txt.Text;
+                var value = Convert.ToDecimal(new DataTable().Compute(expression, null));
+
+                // Clamp to min/max range
+                if (value > max)
+                    return max.ToString();
+                else if (value < min)
+                    return min.ToString();
+                else
+                    return value.ToString();
+            }
+            catch
+            {
+                return txt.Text;
+            }
         }
     }
 }

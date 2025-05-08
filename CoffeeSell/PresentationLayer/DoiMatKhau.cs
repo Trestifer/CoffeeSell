@@ -19,6 +19,11 @@ namespace CoffeeSell
         {
             InitializeComponent();
             user = _user;
+            textBox1.PasswordChar = '●';
+            textBox2.PasswordChar = '●';
+            textBox2.UseSystemPasswordChar = true;
+            textBox1.UseSystemPasswordChar = true;
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
