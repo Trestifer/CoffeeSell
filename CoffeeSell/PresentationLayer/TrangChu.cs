@@ -168,7 +168,7 @@ namespace CoffeeSell
         private void Panel6_Click(object sender, EventArgs e)
         {
             panel10.Controls.Clear();
-            QuanLyKhuyenMai kmform = new QuanLyKhuyenMai();
+            QuanLyKhuyenMai kmform = new QuanLyKhuyenMai(user);
             kmform.TopLevel = false;
             kmform.FormBorderStyle = FormBorderStyle.None;
             kmform.Dock = DockStyle.Fill;

@@ -42,4 +42,8 @@
     <Folder Include="Uploads\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="ObjClass\UsedDiscount.cs" />
+  </ItemGroup>
+
 </Project>

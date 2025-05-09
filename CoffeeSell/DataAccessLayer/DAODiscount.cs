@@ -10,23 +10,24 @@ namespace CoffeeSell.DataAccessLayer
         public int CreateDiscount(Discount discount)
         {
             string cmString = @"
-                INSERT INTO Discount (NameDiscount, IsUseable, IsIndividual, Discount, DiscountPercent, Scheduling)
+                INSERT INTO Discount (NameDiscount, IsUseable, IsReuseable, EndDate, Detail, DiscountPercent, PointRequire)
                 OUTPUT INSERTED.DiscountId
-                VALUES (@Name, @IsUseable, @IsIndividual, @Discount, @Percent, @Schedule)";
+                VALUES (@Name, @IsUseable, @IsReuseable, @EndDate, @Detail, @Percent, @PointRequire)";
 
             try
             {
                 object result = ExecuteScalar(
                     cmString,
-                    new[] { "@Name", "@IsUseable", "@IsIndividual", "@Discount", "@Percent", "@Schedule" },
+                    new[] { "@Name", "@IsUseable", "@IsReuseable", "@EndDate", "@Detail", "@Percent", "@PointRequire" },
                     new object[]
                     {
                         discount.GetNameDiscount(),
                         discount.GetIsUseable(),
-                        discount.GetIsIndividual(),
-                        discount.GetDiscountValue(),
+                        discount.GetIsReuseable(),
+                        discount.GetEndDate(),
+                        discount.GetDetail(),
                         discount.GetDiscountPercent(),
-                        discount.GetScheduling()
+                        discount.GetPointRequire()
                     });
 
                 return result != null ? Convert.ToInt32(result) : -1;
@@ -42,23 +43,24 @@ namespace CoffeeSell.DataAccessLayer
         {
             string cmString = @"
                 UPDATE Discount
-                SET NameDiscount = @Name, IsUseable = @IsUseable, IsIndividual = @IsIndividual,
-                    Discount = @Discount, DiscountPercent = @Percent, Scheduling = @Schedule
+                SET NameDiscount = @Name, IsUseable = @IsUseable, IsReuseable = @IsReuseable,
+                    EndDate = @EndDate, Detail = @Detail, DiscountPercent = @Percent, PointRequire = @PointRequire
                 WHERE DiscountId = @Id";
 
             try
             {
                 int rows = ExecuteNonQuery(
                     cmString,
-                    new[] { "@Name", "@IsUseable", "@IsIndividual", "@Discount", "@Percent", "@Schedule", "@Id" },
+                    new[] { "@Name", "@IsUseable", "@IsReuseable", "@EndDate", "@Detail", "@Percent", "@PointRequire", "@Id" },
                     new object[]
                     {
                         discount.GetNameDiscount(),
                         discount.GetIsUseable(),
-                        discount.GetIsIndividual(),
-                        discount.GetDiscountValue(),
+                        discount.GetIsReuseable(),
+                        discount.GetEndDate(),
+                        discount.GetDetail(),
                         discount.GetDiscountPercent(),
-                        discount.GetScheduling(),
+                        discount.GetPointRequire(),
                         discount.GetDiscountId()
                     });
 
@@ -120,10 +122,11 @@ namespace CoffeeSell.DataAccessLayer
                     d.SetDiscountId(Convert.ToInt32(r["DiscountId"]));
                     d.SetNameDiscount(r["NameDiscount"].ToString());
                     d.SetIsUseable(Convert.ToBoolean(r["IsUseable"]));
-                    d.SetIsIndividual(Convert.ToBoolean(r["IsIndividual"]));
-                    d.SetDiscountValue(Convert.ToInt32(r["Discount"]));
-                    d.SetDiscountPercent(Convert.ToInt32(r["DiscountPercent"]));
-                    d.SetScheduling(Convert.ToInt32(r["Scheduling"]));
+                    d.SetIsReuseable(Convert.ToBoolean(r["IsReuseable"]));
+                    d.SetEndDate(r["EndDate"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(r["EndDate"]));
+                    d.SetDetail(r["Detail"]?.ToString());
+                    d.SetDiscountPercent(Convert.ToDecimal(r["DiscountPercent"]));
+                    d.SetPointRequire(Convert.ToInt32(r["PointRequire"]));
                     return d;
                 }
 
@@ -149,5 +152,25 @@ namespace CoffeeSell.DataAccessLayer
                 return -1;
             }
         }
+        public bool UpdateIsUseable(int discountId, bool usable, DateTime? endDate)
+        {
+            string cmString = "UPDATE Discount SET IsUseable = @IsUseable, EndDate = @EndDate WHERE DiscountId = @Id";
+
+            try
+            {
+                int rowsAffected = ExecuteNonQuery(
+                    cmString,
+                    new[] { "@IsUseable", "@EndDate", "@Id" },
+                    new object[] { usable ? 1 : 0, (object?)endDate ?? DBNull.Value, discountId });
+
+                return rowsAffected > 0;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"UpdateIsUseable error: {ex.Message}");
+                return false;
+            }
+        }
+
     }
 }
