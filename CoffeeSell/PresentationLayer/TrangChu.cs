@@ -29,7 +29,7 @@ namespace CoffeeSell
             panel10.Controls.Add(tcform);
             tcform.Show();
             // Tạo danh sách các panel
-            List<Panel> panels = new List<Panel> { panel1, panel2, panel3, panel4, panel5, panel6, panel7, panel8, panel9, panel11 };
+            List<Panel> panels = new List<Panel> { panel1, panel2, panel3, panel4, panel6, panel7, panel8, panel9, panel11 };
 
             // Dùng vòng lặp để gán sự kiện cho tất cả các panel
             foreach (var p in panels)
@@ -43,7 +43,7 @@ namespace CoffeeSell
             lblStaff.Text = user.GetTypeAccount() ? "Quản lý" : "Nhân viên";
             UpdateDateTime();
             timer1.Start();
-            if (!user.GetTypeAccount()) new[] { panel4, panel5, panel6, panel7, panel9, panel11 }.ToList().ForEach(p => p.Visible = false);
+            if (!user.GetTypeAccount()) new[] { panel4, panel6, panel7, panel9, panel11 }.ToList().ForEach(p => p.Visible = false);
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -93,7 +93,7 @@ namespace CoffeeSell
             panel2.Click += Panel2_Click;
             panel3.Click += Panel3_Click;
             panel4.Click += Panel4_Click;
-            panel5.Click += Panel5_Click;
+            
             panel6.Click += Panel6_Click;
             panel7.Click += Panel7_Click;
             panel8.Click += Panel8_Click;
@@ -161,13 +161,7 @@ namespace CoffeeSell
         }
         private void Panel5_Click(object sender, EventArgs e)
         {
-            panel10.Controls.Clear();
-            QuanLyDanhMuc dmform = new QuanLyDanhMuc(user);
-            dmform.TopLevel = false;
-            dmform.FormBorderStyle = FormBorderStyle.None;
-            dmform.Dock = DockStyle.Fill;
-            panel10.Controls.Add(dmform);
-            dmform.Show();
+            
 
 
         }

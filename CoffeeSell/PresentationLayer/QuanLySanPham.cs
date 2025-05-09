@@ -1,6 +1,7 @@
 ﻿using CoffeeSell.BO;
 using CoffeeSell.ObjClass;
 using CoffeeSell.Ulti;
+using Microsoft.VisualBasic.ApplicationServices;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,12 +18,20 @@ namespace CoffeeSell
     {
         int foodId;
         string _NameCategory;
+        private Account user;
         private List<TextBox> textBoxes = new List<TextBox>();
         private string PhotoBase64;
 
         public QuanLySanPham()
         {
             InitializeComponent();
+            panelcontent.Controls.Clear();
+            QuanLyDanhMuc dmform = new QuanLyDanhMuc(user);
+            dmform.TopLevel = false;
+            dmform.FormBorderStyle = FormBorderStyle.None;
+            dmform.Dock = DockStyle.Fill;
+            panelcontent.Controls.Add(dmform);
+            dmform.Show();
             DataTable dt = BOCategory.GetCategory();
 
             // Add a new empty row at the top
@@ -39,7 +48,7 @@ namespace CoffeeSell
             textBoxes.Add(txtL);
             textBoxes.Add(txtM);
             textBoxes.Add(txtS);
-            foreach(TextBox txt in textBoxes)
+            foreach (TextBox txt in textBoxes)
             {
                 txt.KeyPress += KeyPressTien;
                 txt.TextChanged += Txt_TextChanged;
@@ -52,7 +61,7 @@ namespace CoffeeSell
         private void Txt_TextChanged(object? sender, EventArgs e)
         {
             TextBox txtBox = sender as TextBox;
-            txtBox.Text = TextHandling.InputRange(txtBox,0, 200);
+            txtBox.Text = TextHandling.InputRange(txtBox, 0, 200);
         }
 
         private void Reset()
@@ -258,6 +267,16 @@ namespace CoffeeSell
             {
                 e.Handled = true;  // Block the keypress if it's not valid
             }
+        }
+
+        private void panelcontent_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void QuanLySanPham_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -45,7 +45,7 @@ namespace CoffeeSell
         {
             Category category = new Category();
             category.SetCategoryName(textBox2.Text);
-            if(BOCategory.Add(category))
+            if (BOCategory.Add(category))
             {
                 MessageBox.Show("Thêm thành công");
                 BOActivityLog.Record(user.GetLoginName(), 'A', $"Đã thêm danh mục {category.GetCategoryName()}");
@@ -70,14 +70,19 @@ namespace CoffeeSell
             {
                 try
                 {
-                    CategoryId = (int) guna2DataGridView1.Rows[e.RowIndex].Cells[0].Value;
-                    name = (string) guna2DataGridView1.Rows[e.RowIndex].Cells[1].Value;
+                    CategoryId = (int)guna2DataGridView1.Rows[e.RowIndex].Cells[0].Value;
+                    name = (string)guna2DataGridView1.Rows[e.RowIndex].Cells[1].Value;
                 }
                 catch (Exception ex)
                 {
                     Reset();
                 }
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

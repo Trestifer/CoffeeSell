@@ -64,19 +64,17 @@
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = Color.White;
             dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle3.ForeColor = Color.FromArgb(71, 69, 94);
+            dataGridViewCellStyle3.ForeColor = Color.White;
             dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(231, 229, 255);
             dataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(71, 69, 94);
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
             guna2DataGridView1.DefaultCellStyle = dataGridViewCellStyle3;
             guna2DataGridView1.GridColor = Color.FromArgb(231, 229, 255);
-            guna2DataGridView1.Location = new Point(10, 46);
-            guna2DataGridView1.Margin = new Padding(3, 2, 3, 2);
+            guna2DataGridView1.Location = new Point(31, 207);
             guna2DataGridView1.Name = "guna2DataGridView1";
             guna2DataGridView1.RowHeadersVisible = false;
             guna2DataGridView1.RowHeadersWidth = 51;
-            guna2DataGridView1.RowTemplate.Height = 29;
-            guna2DataGridView1.Size = new Size(700, 512);
+            guna2DataGridView1.Size = new Size(679, 245);
             guna2DataGridView1.TabIndex = 0;
             guna2DataGridView1.ThemeStyle.AlternatingRowsStyle.BackColor = Color.White;
             guna2DataGridView1.ThemeStyle.AlternatingRowsStyle.Font = null;
@@ -104,19 +102,17 @@
             // textBox1
             // 
             textBox1.ForeColor = Color.Black;
-            textBox1.Location = new Point(10, 9);
-            textBox1.Margin = new Padding(3, 2, 3, 2);
+            textBox1.Location = new Point(31, 158);
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(180, 23);
+            textBox1.Size = new Size(205, 27);
             textBox1.TabIndex = 1;
             // 
             // button1
             // 
             button1.ForeColor = Color.Black;
-            button1.Location = new Point(220, 9);
-            button1.Margin = new Padding(3, 2, 3, 2);
+            button1.Location = new Point(271, 158);
             button1.Name = "button1";
-            button1.Size = new Size(88, 20);
+            button1.Size = new Size(101, 27);
             button1.TabIndex = 2;
             button1.Text = "Tìm kiếm";
             button1.UseVisualStyleBackColor = true;
@@ -124,23 +120,24 @@
             // panel1
             // 
             panel1.Controls.Add(button4);
+            panel1.Controls.Add(button1);
             panel1.Controls.Add(button2);
+            panel1.Controls.Add(textBox1);
             panel1.Controls.Add(textBox2);
+            panel1.Controls.Add(guna2DataGridView1);
             panel1.Controls.Add(label2);
             panel1.Controls.Add(panel2);
-            panel1.Location = new Point(784, 3);
-            panel1.Margin = new Padding(3, 2, 3, 2);
+            panel1.Location = new Point(12, 12);
             panel1.Name = "panel1";
-            panel1.Size = new Size(584, 555);
+            panel1.Size = new Size(784, 484);
             panel1.TabIndex = 3;
             // 
             // button4
             // 
             button4.ForeColor = Color.Black;
-            button4.Location = new Point(200, 212);
-            button4.Margin = new Padding(3, 2, 3, 2);
+            button4.Location = new Point(588, 83);
             button4.Name = "button4";
-            button4.Size = new Size(107, 28);
+            button4.Size = new Size(122, 37);
             button4.TabIndex = 5;
             button4.Text = "Xóa";
             button4.UseVisualStyleBackColor = true;
@@ -149,10 +146,9 @@
             // button2
             // 
             button2.ForeColor = Color.Black;
-            button2.Location = new Point(36, 212);
-            button2.Margin = new Padding(3, 2, 3, 2);
+            button2.Location = new Point(427, 81);
             button2.Name = "button2";
-            button2.Size = new Size(102, 31);
+            button2.Size = new Size(117, 41);
             button2.TabIndex = 3;
             button2.Text = "Thêm";
             button2.UseVisualStyleBackColor = true;
@@ -161,19 +157,18 @@
             // textBox2
             // 
             textBox2.ForeColor = Color.Black;
-            textBox2.Location = new Point(139, 136);
-            textBox2.Margin = new Padding(3, 2, 3, 2);
+            textBox2.Location = new Point(138, 88);
             textBox2.Name = "textBox2";
-            textBox2.Size = new Size(144, 23);
+            textBox2.Size = new Size(164, 27);
             textBox2.TabIndex = 2;
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.ForeColor = Color.Black;
-            label2.Location = new Point(36, 136);
+            label2.Location = new Point(20, 88);
             label2.Name = "label2";
-            label2.Size = new Size(83, 15);
+            label2.Size = new Size(101, 20);
             label2.TabIndex = 1;
             label2.Text = "Tên danh mục";
             // 
@@ -181,35 +176,30 @@
             // 
             panel2.BackColor = Color.Teal;
             panel2.Controls.Add(label1);
-            panel2.Location = new Point(0, 6);
-            panel2.Margin = new Padding(3, 2, 3, 2);
+            panel2.Location = new Point(0, 8);
             panel2.Name = "panel2";
-            panel2.Size = new Size(584, 41);
+            panel2.Size = new Size(781, 55);
             panel2.TabIndex = 0;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
-            label1.Location = new Point(245, 8);
+            label1.Location = new Point(327, 9);
             label1.Name = "label1";
-            label1.Size = new Size(101, 25);
+            label1.Size = new Size(120, 31);
             label1.TabIndex = 0;
             label1.Text = "Danh Mục";
             label1.Click += label1_Click;
             // 
             // QuanLyDanhMuc
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(1397, 567);
+            ClientSize = new Size(904, 549);
             Controls.Add(panel1);
-            Controls.Add(button1);
-            Controls.Add(textBox1);
-            Controls.Add(guna2DataGridView1);
             ForeColor = Color.White;
-            Margin = new Padding(3, 2, 3, 2);
             Name = "QuanLyDanhMuc";
             Text = "QuanLyDanhMuc";
             ((System.ComponentModel.ISupportInitialize)guna2DataGridView1).EndInit();
@@ -218,7 +208,6 @@
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
