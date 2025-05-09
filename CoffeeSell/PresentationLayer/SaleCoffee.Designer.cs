@@ -221,6 +221,7 @@
             button1.TabIndex = 7;
             button1.Text = "Tìm kiếm";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // flowLayoutPanelProducts
             // 
@@ -303,7 +304,7 @@
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
             guna2DataGridView1.DefaultCellStyle = dataGridViewCellStyle3;
             guna2DataGridView1.GridColor = Color.FromArgb(231, 229, 255);
-            guna2DataGridView1.Location = new Point(1321, 160);
+            guna2DataGridView1.Location = new Point(1344, 160);
             guna2DataGridView1.Name = "guna2DataGridView1";
             guna2DataGridView1.RowHeadersVisible = false;
             guna2DataGridView1.RowHeadersWidth = 51;
@@ -454,20 +455,22 @@
             // comboBox1
             // 
             comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(687, 92);
+            comboBox1.Location = new Point(1, 92);
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(219, 28);
             comboBox1.TabIndex = 16;
             comboBox1.Text = "Tên sản phẩm từ A-Z";
+            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             // 
             // comboBox2
             // 
             comboBox2.FormattingEnabled = true;
-            comboBox2.Location = new Point(687, 126);
+            comboBox2.Location = new Point(687, 95);
             comboBox2.Name = "comboBox2";
             comboBox2.Size = new Size(219, 28);
             comboBox2.TabIndex = 17;
             comboBox2.Text = "Kích Thước";
+            comboBox2.SelectedIndexChanged += comboBox2_SelectedIndexChanged;
             // 
             // label19
             // 
@@ -495,6 +498,7 @@
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(131, 27);
             textBox1.TabIndex = 19;
+            textBox1.TextChanged += textBox1_TextChanged;
             // 
             // textBox2
             // 
@@ -502,6 +506,7 @@
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(131, 27);
             textBox2.TabIndex = 20;
+            textBox2.TextChanged += textBox2_TextChanged;
             // 
             // SaleCoffee
             // 

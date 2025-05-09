@@ -31,7 +31,12 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProductUserControl));
             guna2ShadowPanel1 = new Guna.UI2.WinForms.Guna2ShadowPanel();
             panel1 = new Panel();
-            lblPrice = new Label();
+            lblPriceL = new Label();
+            lblPriceM = new Label();
+            label3 = new Label();
+            label2 = new Label();
+            label1 = new Label();
+            lblPriceS = new Label();
             lblProductName = new Label();
             picProductImage = new PictureBox();
             guna2ShadowPanel1.SuspendLayout();
@@ -48,34 +53,89 @@
             guna2ShadowPanel1.Location = new Point(3, 3);
             guna2ShadowPanel1.Name = "guna2ShadowPanel1";
             guna2ShadowPanel1.ShadowColor = Color.Black;
-            guna2ShadowPanel1.Size = new Size(259, 243);
+            guna2ShadowPanel1.Size = new Size(259, 282);
             guna2ShadowPanel1.TabIndex = 0;
             // 
             // panel1
             // 
-            panel1.Controls.Add(lblPrice);
+            panel1.Controls.Add(lblPriceL);
+            panel1.Controls.Add(lblPriceM);
+            panel1.Controls.Add(label3);
+            panel1.Controls.Add(label2);
+            panel1.Controls.Add(label1);
+            panel1.Controls.Add(lblPriceS);
             panel1.Controls.Add(lblProductName);
-            panel1.Location = new Point(3, 157);
+            panel1.Location = new Point(3, 150);
             panel1.Name = "panel1";
-            panel1.Size = new Size(253, 83);
+            panel1.Size = new Size(253, 129);
             panel1.TabIndex = 1;
             // 
-            // lblPrice
+            // lblPriceL
             // 
-            lblPrice.AutoSize = true;
-            lblPrice.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 163);
-            lblPrice.Location = new Point(20, 45);
-            lblPrice.Name = "lblPrice";
-            lblPrice.Size = new Size(35, 23);
-            lblPrice.TabIndex = 1;
-            lblPrice.Text = "Giá";
-            
+            lblPriceL.AutoSize = true;
+            lblPriceL.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 163);
+            lblPriceL.Location = new Point(84, 106);
+            lblPriceL.Name = "lblPriceL";
+            lblPriceL.Size = new Size(58, 23);
+            lblPriceL.TabIndex = 6;
+            lblPriceL.Text = "Size S:";
+            // 
+            // lblPriceM
+            // 
+            lblPriceM.AutoSize = true;
+            lblPriceM.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 163);
+            lblPriceM.Location = new Point(84, 71);
+            lblPriceM.Name = "lblPriceM";
+            lblPriceM.Size = new Size(58, 23);
+            lblPriceM.TabIndex = 5;
+            lblPriceM.Text = "Size S:";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 163);
+            label3.Location = new Point(20, 106);
+            label3.Name = "label3";
+            label3.Size = new Size(57, 23);
+            label3.TabIndex = 4;
+            label3.Text = "Size L:";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 163);
+            label2.Location = new Point(20, 71);
+            label2.Name = "label2";
+            label2.Size = new Size(65, 23);
+            label2.TabIndex = 3;
+            label2.Text = "Size M:";
+            label2.Click += label2_Click;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 163);
+            label1.Location = new Point(20, 38);
+            label1.Name = "label1";
+            label1.Size = new Size(58, 23);
+            label1.TabIndex = 2;
+            label1.Text = "Size S:";
+            // 
+            // lblPriceS
+            // 
+            lblPriceS.AutoSize = true;
+            lblPriceS.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 163);
+            lblPriceS.Location = new Point(84, 38);
+            lblPriceS.Name = "lblPriceS";
+            lblPriceS.Size = new Size(58, 23);
+            lblPriceS.TabIndex = 1;
+            lblPriceS.Text = "Size S:";
             // 
             // lblProductName
             // 
             lblProductName.AutoSize = true;
             lblProductName.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 163);
-            lblProductName.Location = new Point(20, 13);
+            lblProductName.Location = new Point(20, 4);
             lblProductName.Name = "lblProductName";
             lblProductName.Size = new Size(58, 23);
             lblProductName.TabIndex = 0;
@@ -98,7 +158,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(guna2ShadowPanel1);
             Name = "ProductUserControl";
-            Size = new Size(265, 246);
+            Size = new Size(265, 288);
             guna2ShadowPanel1.ResumeLayout(false);
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
@@ -111,7 +171,12 @@
         private Guna.UI2.WinForms.Guna2ShadowPanel guna2ShadowPanel1;
         private Panel panel1;
         private PictureBox picProductImage;
-        private Label lblPrice;
+        private Label lblPriceS;
         private Label lblProductName;
+        private Label label2;
+        private Label label1;
+        private Label lblPriceL;
+        private Label lblPriceM;
+        private Label label3;
     }
 }
