@@ -14,11 +14,71 @@ namespace CoffeeSell
 {
     public partial class SaleCoffee : Form
     {
+        private System.Windows.Forms.Timer searchTimer; // Dùng đúng loại Timer
+        private string connectionString = "Server=26.58.112.204,1433;Database=QuanLyBanCafe;User Id=trestifer;Password=tam73105;Encrypt=False";
         public SaleCoffee()
         {
             InitializeComponent();
             guna2TextBox1.Font = new Font("Segoe UI", 14); // 14pt, chữ bự
             guna2TextBox1.PlaceholderText = "Tìm kiếm...";
+            // Khởi tạo Timer
+            searchTimer = new System.Windows.Forms.Timer();
+            searchTimer.Interval = 300; // Đợi 300ms sau khi người dùng ngừng gõ
+            searchTimer.Tick += (s, args) =>
+            {
+                searchTimer.Stop();
+                SearchProducts(guna2TextBox1.Text.Trim());
+            };
+
+            // Đảm bảo sự kiện TextChanged được gán
+            guna2TextBox1.TextChanged += guna2TextBox1_TextChanged;
+        }
+        private void SearchProducts(string keyword)
+        {
+            try
+            {
+                flowLayoutPanelProducts.Controls.Clear(); // Xóa danh sách sản phẩm hiện tại
+
+                // Câu truy vấn SQL
+                string query = string.IsNullOrEmpty(keyword)
+                    ? "SELECT * FROM Food"
+                    : "SELECT * FROM Food WHERE NameFood LIKE @keyword";
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    SqlCommand cmd = new SqlCommand(query, connection);
+
+                    // Thêm tham số để tránh SQL Injection
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        cmd.Parameters.AddWithValue("@keyword", $"%{keyword}%");
+                    }
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    // Đọc dữ liệu và hiển thị sản phẩm
+                    while (reader.Read())
+                    {
+                        string productName = reader["NameFood"].ToString();
+                        string relativePath = reader["Photo"].ToString();
+                        string imageUrl = Path.Combine(Application.StartupPath, "Images", relativePath);
+                        decimal price = Convert.ToDecimal(reader["Price_S"]);
+
+                        // Tạo ProductUserControl và thêm vào FlowLayoutPanel
+                        ProductUserControl productControl = new ProductUserControl(productName, imageUrl, price);
+                        flowLayoutPanelProducts.Controls.Add(productControl);
+                    }
+                }
+
+                // Làm mới giao diện
+                flowLayoutPanelProducts.Refresh();
+                flowLayoutPanelProducts.Invalidate();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi tìm kiếm sản phẩm: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void label4_Click(object sender, EventArgs e)
@@ -63,11 +123,13 @@ namespace CoffeeSell
                 connection.Open();
                 SqlCommand cmd = new SqlCommand(query, connection);
                 reader = cmd.ExecuteReader();
+                cmd.Parameters.AddWithValue("@CategoryId", categoryId);
 
                 while (reader.Read())
                 {
                     string productName = reader["NameFood"].ToString();
-                    string imageUrl = "C:\\Users\\letan\\source\\repos\\CoffeeSell\\CoffeeSell\\CoffeeSell\\Images\\output-onlinepngtools.png"; // Replace with actual image path
+                    string relativePath = reader["Photo"].ToString(); // Ví dụ: "espresso.png"
+                    string imageUrl = Path.Combine(Application.StartupPath, "Images", relativePath);
                     decimal price = Convert.ToDecimal(reader["Price_S"]);
                     ProductUserControl productControl = new ProductUserControl(productName, imageUrl, price);
                     flowLayoutPanelProducts.Controls.Add(productControl);
@@ -106,7 +168,7 @@ namespace CoffeeSell
 
                     // --- Thiết lập giá trị ---
                     b.Text = reader["NameCategory"].ToString();
-                    
+                    b.Tag = Convert.ToInt32(reader["CategoryId"]); // Gắn ID vào nút
 
                     // --- Sự kiện click ---
                     b.Click += CategoryButton_Click;
@@ -119,9 +181,11 @@ namespace CoffeeSell
 
         private void CategoryButton_Click(object sender, EventArgs e)
         {
-            Button clickedButton = sender as Button;
+            var clickedButton = sender as Guna.UI2.WinForms.Guna2Button;
+            if (clickedButton == null) return;
+
             int categoryId = (int)clickedButton.Tag;
-            LoadProducts(categoryId); // Load products for the selected category
+            LoadProducts(categoryId); // Lọc sản phẩm theo danh mục
         }
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
@@ -132,5 +196,19 @@ namespace CoffeeSell
         {
 
         }
+
+        private void guna2Button1_Click(object sender, EventArgs e)
+        {
+            LoadProducts();
+        }
+
+        private void guna2TextBox1_TextChanged(object sender, EventArgs e)
+        {
+            // Dừng timer hiện tại và bắt đầu lại
+            searchTimer.Stop();
+            searchTimer.Start();
+
+        }
+
     }
 }

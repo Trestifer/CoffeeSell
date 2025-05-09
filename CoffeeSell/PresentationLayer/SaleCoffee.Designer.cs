@@ -52,6 +52,11 @@
             guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(components);
             button1 = new Button();
             flowLayoutPanelProducts = new FlowLayoutPanel();
+            productUserControl1 = new ProductUserControl();
+            productUserControl2 = new ProductUserControl();
+            productUserControl3 = new ProductUserControl();
+            productUserControl4 = new ProductUserControl();
+            productUserControl5 = new ProductUserControl();
             label5 = new Label();
             guna2DataGridView1 = new Guna.UI2.WinForms.Guna2DataGridView();
             guna2PictureBox7 = new Guna.UI2.WinForms.Guna2PictureBox();
@@ -75,6 +80,7 @@
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             flowLayoutPanelCategories.SuspendLayout();
+            flowLayoutPanelProducts.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)guna2DataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)guna2PictureBox7).BeginInit();
             panel8.SuspendLayout();
@@ -163,22 +169,23 @@
             guna2TextBox1.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 163);
             guna2TextBox1.ForeColor = Color.FromArgb(64, 64, 64);
             guna2TextBox1.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            guna2TextBox1.Location = new Point(330, 91);
+            guna2TextBox1.Location = new Point(223, 92);
             guna2TextBox1.Margin = new Padding(3, 4, 3, 4);
             guna2TextBox1.Name = "guna2TextBox1";
             guna2TextBox1.PlaceholderForeColor = Color.LightGray;
-            guna2TextBox1.PlaceholderText = "Tìm kiếm";
+            guna2TextBox1.PlaceholderText = "Tìm kiếm theo tên sản phẩm";
             guna2TextBox1.SelectedText = "";
             guna2TextBox1.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            guna2TextBox1.Size = new Size(458, 56);
+            guna2TextBox1.Size = new Size(458, 60);
             guna2TextBox1.TabIndex = 5;
+            guna2TextBox1.TextChanged += guna2TextBox1_TextChanged;
             // 
             // flowLayoutPanelCategories
             // 
             flowLayoutPanelCategories.Controls.Add(guna2Button1);
             flowLayoutPanelCategories.Location = new Point(0, 160);
             flowLayoutPanelCategories.Name = "flowLayoutPanelCategories";
-            flowLayoutPanelCategories.Size = new Size(324, 894);
+            flowLayoutPanelCategories.Size = new Size(220, 894);
             flowLayoutPanelCategories.TabIndex = 6;
             // 
             // guna2Button1
@@ -193,9 +200,10 @@
             guna2Button1.Location = new Point(3, 3);
             guna2Button1.Name = "guna2Button1";
             guna2Button1.ShadowDecoration.CustomizableEdges = customizableEdges4;
-            guna2Button1.Size = new Size(321, 78);
+            guna2Button1.Size = new Size(214, 78);
             guna2Button1.TabIndex = 0;
             guna2Button1.Text = "Tất Cả";
+            guna2Button1.Click += guna2Button1_Click;
             // 
             // guna2BorderlessForm1
             // 
@@ -207,20 +215,60 @@
             // 
             button1.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 163);
             button1.ForeColor = SystemColors.ButtonShadow;
-            button1.Location = new Point(5, 91);
+            button1.Location = new Point(1177, 89);
             button1.Name = "button1";
-            button1.Size = new Size(204, 54);
+            button1.Size = new Size(137, 65);
             button1.TabIndex = 7;
             button1.Text = "Tìm kiếm";
             button1.UseVisualStyleBackColor = true;
             // 
             // flowLayoutPanelProducts
             // 
-            flowLayoutPanelProducts.Location = new Point(330, 160);
+            flowLayoutPanelProducts.Controls.Add(productUserControl1);
+            flowLayoutPanelProducts.Controls.Add(productUserControl2);
+            flowLayoutPanelProducts.Controls.Add(productUserControl3);
+            flowLayoutPanelProducts.Controls.Add(productUserControl4);
+            flowLayoutPanelProducts.Controls.Add(productUserControl5);
+            flowLayoutPanelProducts.Location = new Point(223, 160);
             flowLayoutPanelProducts.Name = "flowLayoutPanelProducts";
-            flowLayoutPanelProducts.Size = new Size(969, 894);
+            flowLayoutPanelProducts.Size = new Size(1091, 894);
             flowLayoutPanelProducts.TabIndex = 8;
             flowLayoutPanelProducts.Paint += flpProducts_Paint;
+            // 
+            // productUserControl1
+            // 
+            productUserControl1.Location = new Point(3, 3);
+            productUserControl1.Name = "productUserControl1";
+            productUserControl1.Size = new Size(270, 253);
+            productUserControl1.TabIndex = 0;
+            // 
+            // productUserControl2
+            // 
+            productUserControl2.Location = new Point(279, 3);
+            productUserControl2.Name = "productUserControl2";
+            productUserControl2.Size = new Size(266, 253);
+            productUserControl2.TabIndex = 1;
+            // 
+            // productUserControl3
+            // 
+            productUserControl3.Location = new Point(551, 3);
+            productUserControl3.Name = "productUserControl3";
+            productUserControl3.Size = new Size(263, 238);
+            productUserControl3.TabIndex = 2;
+            // 
+            // productUserControl4
+            // 
+            productUserControl4.Location = new Point(820, 3);
+            productUserControl4.Name = "productUserControl4";
+            productUserControl4.Size = new Size(263, 238);
+            productUserControl4.TabIndex = 3;
+            // 
+            // productUserControl5
+            // 
+            productUserControl5.Location = new Point(3, 262);
+            productUserControl5.Name = "productUserControl5";
+            productUserControl5.Size = new Size(270, 253);
+            productUserControl5.TabIndex = 4;
             // 
             // label5
             // 
@@ -406,7 +454,7 @@
             // comboBox1
             // 
             comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(799, 91);
+            comboBox1.Location = new Point(687, 92);
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(219, 28);
             comboBox1.TabIndex = 16;
@@ -415,7 +463,7 @@
             // comboBox2
             // 
             comboBox2.FormattingEnabled = true;
-            comboBox2.Location = new Point(799, 125);
+            comboBox2.Location = new Point(687, 126);
             comboBox2.Name = "comboBox2";
             comboBox2.Size = new Size(219, 28);
             comboBox2.TabIndex = 17;
@@ -425,7 +473,7 @@
             // 
             label19.AutoSize = true;
             label19.Font = new Font("Segoe UI", 12F);
-            label19.Location = new Point(1039, 87);
+            label19.Location = new Point(911, 91);
             label19.Name = "label19";
             label19.Size = new Size(123, 28);
             label19.TabIndex = 9;
@@ -435,7 +483,7 @@
             // 
             label20.AutoSize = true;
             label20.Font = new Font("Segoe UI", 12F);
-            label20.Location = new Point(1039, 121);
+            label20.Location = new Point(911, 125);
             label20.Name = "label20";
             label20.Size = new Size(101, 28);
             label20.TabIndex = 18;
@@ -443,14 +491,14 @@
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(1168, 88);
+            textBox1.Location = new Point(1040, 92);
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(131, 27);
             textBox1.TabIndex = 19;
             // 
             // textBox2
             // 
-            textBox2.Location = new Point(1168, 127);
+            textBox2.Location = new Point(1040, 125);
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(131, 27);
             textBox2.TabIndex = 20;
@@ -490,6 +538,7 @@
             panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             flowLayoutPanelCategories.ResumeLayout(false);
+            flowLayoutPanelProducts.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)guna2DataGridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)guna2PictureBox7).EndInit();
             panel8.ResumeLayout(false);
@@ -532,5 +581,10 @@
         private Label label20;
         private Label label19;
         private Guna.UI2.WinForms.Guna2Button guna2Button1;
+        private ProductUserControl productUserControl1;
+        private ProductUserControl productUserControl2;
+        private ProductUserControl productUserControl3;
+        private ProductUserControl productUserControl4;
+        private ProductUserControl productUserControl5;
     }
 }
