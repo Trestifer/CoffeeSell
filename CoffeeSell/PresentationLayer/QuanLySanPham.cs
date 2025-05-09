@@ -28,13 +28,11 @@ namespace CoffeeSell
         public QuanLySanPham(Account _user)
         {
             InitializeComponent();
-            panelcontent.Controls.Clear();
             user = _user;
             QuanLyDanhMuc dmform = new QuanLyDanhMuc(user);
             dmform.TopLevel = false;
             dmform.FormBorderStyle = FormBorderStyle.None;
             dmform.Dock = DockStyle.Fill;
-            panelcontent.Controls.Add(dmform);
             dmform.Show();
 
             // Add a new empty row at the top
