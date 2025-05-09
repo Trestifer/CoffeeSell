@@ -1,6 +1,7 @@
 ﻿using CoffeeSell.BO;
 using CoffeeSell.ObjClass;
 using CoffeeSell.Ulti;
+using Guna.UI2.WinForms;
 using Microsoft.VisualBasic.ApplicationServices;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,8 +18,10 @@ namespace CoffeeSell
 {
     public partial class QuanLySanPham : Form
     {
+
         int foodId;
         string _NameCategory;
+        int CategoryId;
         private Account user;
         private List<TextBox> textBoxes = new List<TextBox>();
         private string PhotoBase64;
@@ -32,19 +36,11 @@ namespace CoffeeSell
             dmform.Dock = DockStyle.Fill;
             panelcontent.Controls.Add(dmform);
             dmform.Show();
-            DataTable dt = BOCategory.GetCategory();
 
             // Add a new empty row at the top
-            DataRow newRow = dt.NewRow();
-            newRow["NameCategory"] = "";  // Display text
-            newRow["CategoryId"] = -1;    // Value
-            dt.Rows.InsertAt(newRow, 0);
-
-            // Bind to ComboBox
-            cbcDanhMuc.DataSource = dt;
-            cbcDanhMuc.DisplayMember = "NameCategory";
-            cbcDanhMuc.ValueMember = "CategoryId";
-            Reset();
+            guna2DataGridView2.CellClick += Guna2DataGridView2_CellClick;
+            Reset_SanPham();
+            Reset_DanhMuc();
             textBoxes.Add(txtL);
             textBoxes.Add(txtM);
             textBoxes.Add(txtS);
@@ -58,13 +54,41 @@ namespace CoffeeSell
 
         }
 
+        private void Guna2DataGridView2_CellClick(object? sender, DataGridViewCellEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
         private void Txt_TextChanged(object? sender, EventArgs e)
         {
             TextBox txtBox = sender as TextBox;
             txtBox.Text = TextHandling.InputRange(txtBox, 0, 200);
         }
+        private void Reset_DanhMuc()
+        {
 
-        private void Reset()
+            DataTable dt = BOCategory.GetCategory();
+            DataRow newRow = dt.NewRow();
+            newRow["NameCategory"] = "";  // Display text
+            newRow["CategoryId"] = -1;    // Value
+            dt.Rows.InsertAt(newRow, 0);
+            // Bind to ComboBox
+            cbcDanhMuc.DataSource = dt;
+            cbcDanhMuc.DisplayMember = "NameCategory";
+            cbcDanhMuc.ValueMember = "CategoryId";
+
+            cbcDanhMuc.SelectedIndex = 0;
+            textBox2.Text = "";
+            _NameCategory = "";
+            CategoryId = -1;
+            guna2DataGridView2.DataSource = BOCategory.GetCategory();
+            guna2DataGridView2.Refresh();
+            guna2DataGridView2.Columns[0].HeaderText = "Mã danh mục";
+            guna2DataGridView2.Columns[1].HeaderText = "Tên danh mục";
+            guna2DataGridView2.ColumnHeadersHeight = 30;
+
+        }
+        private void Reset_SanPham()
         {
             pictureBox1.Image = null;
             foodId = -1;
@@ -74,7 +98,6 @@ namespace CoffeeSell
             txtM.Text = "";
             txtS.Text = "";
             txtName.Text = "";
-            cbcDanhMuc.SelectedIndex = 0;
             // Bind data to DataGridView
             DataTable dt = BOFood.GetAllFood();
             dtgrid.DataSource = dt;
@@ -166,7 +189,7 @@ namespace CoffeeSell
                 MessageBox.Show("Thêm thành công");
                 BOActivityLog.Record(user.GetLoginName(), 'A', $"Đã thêm vào {_NameCategory} sản phẩm {info.GetNameFood()}");
             }
-            Reset();
+            Reset_SanPham();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -181,7 +204,7 @@ namespace CoffeeSell
                 MessageBox.Show("Sủa thành công");
                 BOActivityLog.Record(user.GetLoginName(), 'E', $"Sửa sản phẩm có mã {foodId}");
             }
-            Reset();
+            Reset_SanPham();
 
         }
 
@@ -209,7 +232,8 @@ namespace CoffeeSell
                 catch (Exception ex)
                 {
 
-                    Reset();
+                    Reset_DanhMuc();
+                    Reset_SanPham();
                 }
             }
         }
@@ -227,7 +251,7 @@ namespace CoffeeSell
                 MessageBox.Show("Xóa thành công");
                 BOActivityLog.Record(user.GetLoginName(), 'D', $"Đã xóa từ {_NameCategory} sản phẩm {info.GetNameFood()}");
             }
-            Reset();
+            Reset_SanPham();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -277,6 +301,49 @@ namespace CoffeeSell
         private void QuanLySanPham_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            Category category = new Category();
+            category.SetCategoryName(textBox2.Text);
+            if (BOCategory.Add(category))
+            {
+                MessageBox.Show("Thêm thành công");
+                BOActivityLog.Record(user.GetLoginName(), 'A', $"Đã thêm danh mục {category.GetCategoryName()}");
+            }
+            Reset_DanhMuc();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            if (BOCategory.Delete(CategoryId))
+            {
+                MessageBox.Show("Xóa thành công");
+                BOActivityLog.Record(user.GetLoginName(), 'D', $"Đã xóa danh mục {_NameCategory}");
+
+            }
+            Reset_DanhMuc();
+        }
+        private void guna2DataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                try
+                {
+                    CategoryId = (int)guna2DataGridView2.Rows[e.RowIndex].Cells[0].Value;
+                    _NameCategory = (string)guna2DataGridView2.Rows[e.RowIndex].Cells[1].Value;
+                    textBox2.Text = _NameCategory;
+
+                    // Optionally scroll the selected row into view
+                    guna2DataGridView2.FirstDisplayedScrollingRowIndex = e.RowIndex;
+                }
+                catch (Exception ex)
+                {
+                    Reset_SanPham();
+                    Reset_DanhMuc();
+                }
+            }
         }
     }
 }
