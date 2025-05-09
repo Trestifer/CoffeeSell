@@ -110,7 +110,7 @@ namespace CoffeeSell
             
             
             panel10.Controls.Clear();
-            TestForm testform = new TestForm();
+            LogForm testform = new LogForm();
             testform.TopLevel = false; // Đặt TopLevel thành false để Form có thể được nhúng
             testform.FormBorderStyle = FormBorderStyle.None; // Xóa viền của Form (tùy chọn)
             testform.Dock = DockStyle.Fill; // Đảm bảo Form lấp đầy panel10
@@ -150,7 +150,7 @@ namespace CoffeeSell
         private void Panel4_Click(object sender, EventArgs e)
         {
             panel10.Controls.Clear();
-            QuanLySanPham spform = new QuanLySanPham();
+            QuanLySanPham spform = new QuanLySanPham(user);
             spform.TopLevel = false;
             spform.FormBorderStyle = FormBorderStyle.None;
             spform.Dock = DockStyle.Fill;

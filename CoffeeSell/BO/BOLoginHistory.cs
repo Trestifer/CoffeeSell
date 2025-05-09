@@ -45,5 +45,9 @@ namespace CoffeeSell.BO
 
             return sortedRows;
         }
+        public static DataTable GetSpecialLoginHistory()
+        {
+            return lgh.GetLoginHistoryWithUsernames();
+        }
     }
 }

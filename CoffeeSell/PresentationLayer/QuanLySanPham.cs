@@ -21,11 +21,11 @@ namespace CoffeeSell
         private Account user;
         private List<TextBox> textBoxes = new List<TextBox>();
         private string PhotoBase64;
-
-        public QuanLySanPham()
+        public QuanLySanPham(Account _user)
         {
             InitializeComponent();
             panelcontent.Controls.Clear();
+            user = _user;
             QuanLyDanhMuc dmform = new QuanLyDanhMuc(user);
             dmform.TopLevel = false;
             dmform.FormBorderStyle = FormBorderStyle.None;
@@ -164,7 +164,7 @@ namespace CoffeeSell
             if (BOFood.Add(info))
             {
                 MessageBox.Show("Thêm thành công");
-                BOActivityLog.Record("trestifer", 'A', $"Đã thêm vào {_NameCategory} sản phẩm {info.GetNameFood()}");
+                BOActivityLog.Record(user.GetLoginName(), 'A', $"Đã thêm vào {_NameCategory} sản phẩm {info.GetNameFood()}");
             }
             Reset();
         }
@@ -179,7 +179,7 @@ namespace CoffeeSell
             if (BOFood.Update(info))
             {
                 MessageBox.Show("Sủa thành công");
-                BOActivityLog.Record("trestifer", 'E', $"Sửa sản phẩm có mã {foodId}");
+                BOActivityLog.Record(user.GetLoginName(), 'E', $"Sửa sản phẩm có mã {foodId}");
             }
             Reset();
 
@@ -225,7 +225,7 @@ namespace CoffeeSell
             if (BOFood.Delete(info.GetFoodId()))
             {
                 MessageBox.Show("Xóa thành công");
-                BOActivityLog.Record("trestifer", 'D', $"Đã xóa từ {_NameCategory} sản phẩm {info.GetNameFood()}");
+                BOActivityLog.Record(user.GetLoginName(), 'D', $"Đã xóa từ {_NameCategory} sản phẩm {info.GetNameFood()}");
             }
             Reset();
         }

@@ -17,7 +17,6 @@ namespace CoffeeSell
             if (!dao.TestConnection())
                 MessageBox.Show("Database hiện đang tắt hoặc cúp điện");
             ApplicationConfiguration.Initialize();
-            new TestForm().Show();
             Application.Run(new Login());
         }
     }

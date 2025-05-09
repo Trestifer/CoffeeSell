@@ -1,6 +1,6 @@
 ﻿namespace CoffeeSell.PresentationLayer
 {
-    partial class TestForm
+    partial class LogForm
     {
         /// <summary>
         /// Required designer variable.
