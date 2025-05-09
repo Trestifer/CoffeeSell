@@ -26,9 +26,8 @@ namespace CoffeeSell
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            //TrangChu trangchuForm = new TrangChu();
-           // trangchuForm.Show();
-            //this.Hide();
+            
+            this.Hide();
 
         }
 
