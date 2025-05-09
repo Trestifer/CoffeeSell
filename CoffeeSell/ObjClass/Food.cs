@@ -10,12 +10,12 @@ namespace CoffeeSell.ObjClass
     {
         
 
-        private int FoodId { get; set; }
-        private string NameFood { get; set; }
-        private int CategoryId { get; set; }
-        private decimal[] Price{ get; set; }
-        private int Sold {  get; set; }
-        private string Photo {  get; set; }
+        public int FoodId { get; set; }
+        public string NameFood { get; set; }
+        public int CategoryId { get; set; }
+        public decimal[] Price{ get; set; }
+        public int Sold {  get; set; }
+        public string Photo {  get; set; }
 
         public Food()
         {

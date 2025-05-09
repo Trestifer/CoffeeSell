@@ -32,11 +32,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SaleCoffee));
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             panel1 = new Panel();
@@ -47,20 +47,11 @@
             label2 = new Label();
             label4 = new Label();
             guna2TextBox1 = new Guna.UI2.WinForms.Guna2TextBox();
-            flowLayoutPanel1 = new FlowLayoutPanel();
-            panel4 = new Panel();
-            label7 = new Label();
-            panel3 = new Panel();
-            label6 = new Label();
-            panel5 = new Panel();
-            label8 = new Label();
-            panel6 = new Panel();
-            label9 = new Label();
-            panel7 = new Panel();
-            label10 = new Label();
+            flowLayoutPanelCategories = new FlowLayoutPanel();
+            guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
             guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(components);
             button1 = new Button();
-            flowLayoutPanel2 = new FlowLayoutPanel();
+            flowLayoutPanelProducts = new FlowLayoutPanel();
             label5 = new Label();
             guna2DataGridView1 = new Guna.UI2.WinForms.Guna2DataGridView();
             guna2PictureBox7 = new Guna.UI2.WinForms.Guna2PictureBox();
@@ -74,8 +65,6 @@
             label13 = new Label();
             label12 = new Label();
             label11 = new Label();
-            panel9 = new Panel();
-            guna2PictureBox2 = new Guna.UI2.WinForms.Guna2PictureBox();
             comboBox1 = new ComboBox();
             comboBox2 = new ComboBox();
             label19 = new Label();
@@ -85,18 +74,10 @@
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            flowLayoutPanel1.SuspendLayout();
-            panel4.SuspendLayout();
-            panel3.SuspendLayout();
-            panel5.SuspendLayout();
-            panel6.SuspendLayout();
-            panel7.SuspendLayout();
-            flowLayoutPanel2.SuspendLayout();
+            flowLayoutPanelCategories.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)guna2DataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)guna2PictureBox7).BeginInit();
             panel8.SuspendLayout();
-            panel9.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)guna2PictureBox2).BeginInit();
             SuspendLayout();
             // 
             // panel1
@@ -107,6 +88,7 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(1926, 35);
             panel1.TabIndex = 0;
+            panel1.Paint += panel1_Paint;
             // 
             // label1
             // 
@@ -127,6 +109,7 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(1926, 50);
             panel2.TabIndex = 1;
+            panel2.Paint += panel2_Paint;
             // 
             // label3
             // 
@@ -190,107 +173,29 @@
             guna2TextBox1.Size = new Size(458, 56);
             guna2TextBox1.TabIndex = 5;
             // 
-            // flowLayoutPanel1
+            // flowLayoutPanelCategories
             // 
-            flowLayoutPanel1.Controls.Add(panel4);
-            flowLayoutPanel1.Controls.Add(panel3);
-            flowLayoutPanel1.Controls.Add(panel5);
-            flowLayoutPanel1.Controls.Add(panel6);
-            flowLayoutPanel1.Controls.Add(panel7);
-            flowLayoutPanel1.Location = new Point(0, 160);
-            flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(324, 894);
-            flowLayoutPanel1.TabIndex = 6;
+            flowLayoutPanelCategories.Controls.Add(guna2Button1);
+            flowLayoutPanelCategories.Location = new Point(0, 160);
+            flowLayoutPanelCategories.Name = "flowLayoutPanelCategories";
+            flowLayoutPanelCategories.Size = new Size(324, 894);
+            flowLayoutPanelCategories.TabIndex = 6;
             // 
-            // panel4
+            // guna2Button1
             // 
-            panel4.Controls.Add(label7);
-            panel4.Location = new Point(3, 3);
-            panel4.Name = "panel4";
-            panel4.Size = new Size(317, 59);
-            panel4.TabIndex = 8;
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 163);
-            label7.Location = new Point(29, 9);
-            label7.Name = "label7";
-            label7.Size = new Size(115, 41);
-            label7.TabIndex = 7;
-            label7.Text = "TẤT CẢ";
-            // 
-            // panel3
-            // 
-            panel3.Controls.Add(label6);
-            panel3.Location = new Point(3, 68);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(317, 59);
-            panel3.TabIndex = 7;
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 163);
-            label6.Location = new Point(29, 9);
-            label6.Name = "label6";
-            label6.Size = new Size(117, 41);
-            label6.TabIndex = 7;
-            label6.Text = "CÀ PHÊ";
-            // 
-            // panel5
-            // 
-            panel5.Controls.Add(label8);
-            panel5.Location = new Point(3, 133);
-            panel5.Name = "panel5";
-            panel5.Size = new Size(317, 59);
-            panel5.TabIndex = 8;
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 163);
-            label8.Location = new Point(29, 9);
-            label8.Name = "label8";
-            label8.Size = new Size(143, 41);
-            label8.TabIndex = 7;
-            label8.Text = "CÀ PHÁO";
-            // 
-            // panel6
-            // 
-            panel6.Controls.Add(label9);
-            panel6.Location = new Point(3, 198);
-            panel6.Name = "panel6";
-            panel6.Size = new Size(317, 59);
-            panel6.TabIndex = 9;
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 163);
-            label9.Location = new Point(29, 9);
-            label9.Name = "label9";
-            label9.Size = new Size(117, 41);
-            label9.TabIndex = 7;
-            label9.Text = "CÀ PHÊ";
-            // 
-            // panel7
-            // 
-            panel7.Controls.Add(label10);
-            panel7.Location = new Point(3, 263);
-            panel7.Name = "panel7";
-            panel7.Size = new Size(317, 59);
-            panel7.TabIndex = 10;
-            // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 163);
-            label10.Location = new Point(29, 9);
-            label10.Name = "label10";
-            label10.Size = new Size(117, 41);
-            label10.TabIndex = 7;
-            label10.Text = "CÀ PHÊ";
+            guna2Button1.CustomizableEdges = customizableEdges3;
+            guna2Button1.DisabledState.BorderColor = Color.DarkGray;
+            guna2Button1.DisabledState.CustomBorderColor = Color.DarkGray;
+            guna2Button1.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            guna2Button1.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            guna2Button1.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 163);
+            guna2Button1.ForeColor = Color.White;
+            guna2Button1.Location = new Point(3, 3);
+            guna2Button1.Name = "guna2Button1";
+            guna2Button1.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            guna2Button1.Size = new Size(321, 78);
+            guna2Button1.TabIndex = 0;
+            guna2Button1.Text = "Tất Cả";
             // 
             // guna2BorderlessForm1
             // 
@@ -309,13 +214,13 @@
             button1.Text = "Tìm kiếm";
             button1.UseVisualStyleBackColor = true;
             // 
-            // flowLayoutPanel2
+            // flowLayoutPanelProducts
             // 
-            flowLayoutPanel2.Controls.Add(panel9);
-            flowLayoutPanel2.Location = new Point(330, 160);
-            flowLayoutPanel2.Name = "flowLayoutPanel2";
-            flowLayoutPanel2.Size = new Size(969, 894);
-            flowLayoutPanel2.TabIndex = 8;
+            flowLayoutPanelProducts.Location = new Point(330, 160);
+            flowLayoutPanelProducts.Name = "flowLayoutPanelProducts";
+            flowLayoutPanelProducts.Size = new Size(969, 894);
+            flowLayoutPanelProducts.TabIndex = 8;
+            flowLayoutPanelProducts.Paint += flpProducts_Paint;
             // 
             // label5
             // 
@@ -381,12 +286,12 @@
             // guna2PictureBox7
             // 
             guna2PictureBox7.BackColor = Color.Transparent;
-            guna2PictureBox7.CustomizableEdges = customizableEdges3;
+            guna2PictureBox7.CustomizableEdges = customizableEdges5;
             guna2PictureBox7.Image = (Image)resources.GetObject("guna2PictureBox7.Image");
             guna2PictureBox7.ImageRotate = 0F;
             guna2PictureBox7.Location = new Point(1787, 98);
             guna2PictureBox7.Name = "guna2PictureBox7";
-            guna2PictureBox7.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            guna2PictureBox7.ShadowDecoration.CustomizableEdges = customizableEdges6;
             guna2PictureBox7.Size = new Size(40, 35);
             guna2PictureBox7.SizeMode = PictureBoxSizeMode.Zoom;
             guna2PictureBox7.TabIndex = 13;
@@ -498,28 +403,6 @@
             label11.TabIndex = 0;
             label11.Text = "SDT:";
             // 
-            // panel9
-            // 
-            panel9.Controls.Add(guna2PictureBox2);
-            panel9.Location = new Point(3, 3);
-            panel9.Name = "panel9";
-            panel9.Size = new Size(287, 231);
-            panel9.TabIndex = 0;
-            // 
-            // guna2PictureBox2
-            // 
-            guna2PictureBox2.BackColor = Color.Transparent;
-            guna2PictureBox2.CustomizableEdges = customizableEdges5;
-            guna2PictureBox2.Image = (Image)resources.GetObject("guna2PictureBox2.Image");
-            guna2PictureBox2.ImageRotate = 0F;
-            guna2PictureBox2.Location = new Point(-3, 9);
-            guna2PictureBox2.Name = "guna2PictureBox2";
-            guna2PictureBox2.ShadowDecoration.CustomizableEdges = customizableEdges6;
-            guna2PictureBox2.Size = new Size(275, 155);
-            guna2PictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
-            guna2PictureBox2.TabIndex = 14;
-            guna2PictureBox2.TabStop = false;
-            // 
             // comboBox1
             // 
             comboBox1.FormattingEnabled = true;
@@ -588,9 +471,9 @@
             Controls.Add(guna2PictureBox7);
             Controls.Add(guna2DataGridView1);
             Controls.Add(label5);
-            Controls.Add(flowLayoutPanel2);
+            Controls.Add(flowLayoutPanelProducts);
             Controls.Add(button1);
-            Controls.Add(flowLayoutPanel1);
+            Controls.Add(flowLayoutPanelCategories);
             Controls.Add(guna2TextBox1);
             Controls.Add(label4);
             Controls.Add(panel2);
@@ -606,24 +489,11 @@
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            flowLayoutPanel1.ResumeLayout(false);
-            panel4.ResumeLayout(false);
-            panel4.PerformLayout();
-            panel3.ResumeLayout(false);
-            panel3.PerformLayout();
-            panel5.ResumeLayout(false);
-            panel5.PerformLayout();
-            panel6.ResumeLayout(false);
-            panel6.PerformLayout();
-            panel7.ResumeLayout(false);
-            panel7.PerformLayout();
-            flowLayoutPanel2.ResumeLayout(false);
+            flowLayoutPanelCategories.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)guna2DataGridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)guna2PictureBox7).EndInit();
             panel8.ResumeLayout(false);
             panel8.PerformLayout();
-            panel9.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)guna2PictureBox2).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -638,22 +508,12 @@
         private Label label4;
         private Guna.UI2.WinForms.Guna2TextBox guna2TextBox1;
         private Label label3;
-        private FlowLayoutPanel flowLayoutPanel1;
-        private Panel panel4;
-        private Label label7;
-        private Panel panel3;
-        private Label label6;
-        private Panel panel5;
-        private Label label8;
-        private Panel panel6;
-        private Label label9;
-        private Panel panel7;
-        private Label label10;
+        private FlowLayoutPanel flowLayoutPanelCategories;
         private Guna.UI2.WinForms.Guna2BorderlessForm guna2BorderlessForm1;
         private Button button1;
         private Guna.UI2.WinForms.Guna2DataGridView guna2DataGridView1;
         private Label label5;
-        private FlowLayoutPanel flowLayoutPanel2;
+        private FlowLayoutPanel flowLayoutPanelProducts;
         private Panel panel8;
         private Label label12;
         private Label label11;
@@ -667,11 +527,10 @@
         private Button button2;
         private ComboBox comboBox1;
         private ComboBox comboBox2;
-        private Panel panel9;
-        private Guna.UI2.WinForms.Guna2PictureBox guna2PictureBox2;
         private TextBox textBox1;
         private TextBox textBox2;
         private Label label20;
         private Label label19;
+        private Guna.UI2.WinForms.Guna2Button guna2Button1;
     }
 }
