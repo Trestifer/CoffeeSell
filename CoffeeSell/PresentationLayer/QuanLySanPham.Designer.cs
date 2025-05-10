@@ -87,14 +87,13 @@
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
             dtgrid.DefaultCellStyle = dataGridViewCellStyle3;
             dtgrid.GridColor = Color.FromArgb(231, 229, 255);
-            dtgrid.Location = new Point(27, 62);
-            dtgrid.Margin = new Padding(3, 2, 3, 2);
+            dtgrid.Location = new Point(31, 83);
             dtgrid.MultiSelect = false;
             dtgrid.Name = "dtgrid";
             dtgrid.ReadOnly = true;
             dtgrid.RowHeadersVisible = false;
             dtgrid.RowHeadersWidth = 51;
-            dtgrid.RowTemplate.Height = 29;
+            dtgrid.Size = new Size(894, 913);
             dtgrid.Size = new Size(663, 685);
             dtgrid.TabIndex = 0;
             dtgrid.ThemeStyle.AlternatingRowsStyle.BackColor = Color.White;

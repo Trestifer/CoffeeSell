@@ -79,9 +79,9 @@ namespace CoffeeSell
             dtgrid.Columns["FoodId"].HeaderText = "Mã món";
             dtgrid.Columns["NameFood"].HeaderText = "Tên món";
             dtgrid.Columns["NameCategory"].HeaderText = "Danh mục";
-            dtgrid.Columns["Price_S"].HeaderText = "Giá nhỏ";
-            dtgrid.Columns["Price_M"].HeaderText = "Giá vừa";
-            dtgrid.Columns["Price_L"].HeaderText = "Giá lớn";
+            dtgrid.Columns["Price_S"].HeaderText = "Giá size nhỏ";
+            dtgrid.Columns["Price_M"].HeaderText = "Giá size vừa";
+            dtgrid.Columns["Price_L"].HeaderText = "Giá size lớn";
             dtgrid.Columns["Sold"].HeaderText = "Đã bán";
 
             // Add "Bán chạy" checkbox column
