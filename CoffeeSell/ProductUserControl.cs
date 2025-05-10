@@ -17,6 +17,10 @@ namespace CoffeeSell
         // Sự kiện để thông báo khi chọn sản phẩm
         public event EventHandler<FoodInCart> ProductSelected;
         private int _foodId; // Lưu FoodId để sử dụng trong FoodInCart
+        private decimal _priceS;
+        private decimal _priceM;
+        private decimal _priceL;
+        private string _productName;
         public ProductUserControl()
         {
             InitializeComponent();
@@ -30,16 +34,20 @@ namespace CoffeeSell
             lblPriceM.Text = price2.ToString("N0") + " VNĐ";
             lblPriceL.Text = price3.ToString("N0") + " VNĐ";
         }
-        public ProductUserControl(int foodId, string productName, string imageUrl, decimal price1, decimal price2, decimal price3)
+        public ProductUserControl(int foodId, string productName, decimal price1, decimal price2, decimal price3)
         {
             InitializeComponent();
             _foodId = foodId;
+            _productName = productName;
+            _priceS = price1;
+            _priceM = price2;
+            _priceL = price3;
             lblProductName.Text = productName;
-            picProductImage.ImageLocation = imageUrl;
             lblPriceS.Text = price1.ToString("N0") + " VNĐ";
             lblPriceM.Text = price2.ToString("N0") + " VNĐ";
             lblPriceL.Text = price3.ToString("N0") + " VNĐ";
         }
+
 
 
         private void pictureBox1_Click(object sender, EventArgs e)
@@ -53,29 +61,40 @@ namespace CoffeeSell
         }
         private void RaiseProductSelected(string size, decimal price)
         {
+            if (_foodId == 0)
+            {
+                MessageBox.Show("FoodId không hợp lệ. Vui lòng sử dụng constructor có tham số foodId.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             var foodInCart = new FoodInCart
             {
                 FoodId = _foodId,
-                NameFood = lblProductName.Text,
+                NameFood = _productName,
                 Size = size,
                 Price = price,
                 Quantity = 1
             };
+
+            if (ProductSelected == null)
+            {
+                MessageBox.Show("Sự kiện ProductSelected chưa được gán!", "Debug", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
             ProductSelected?.Invoke(this, foodInCart);
         }
         private void pbPriceS_Click(object sender, EventArgs e)
         {
-            RaiseProductSelected("M", decimal.Parse(lblPriceM.Text.Replace(" VNĐ", "").Replace(",", "")));
+            RaiseProductSelected("S", _priceS);
         }
 
         private void pbPriceM_Click(object sender, EventArgs e)
         {
-            RaiseProductSelected("M", decimal.Parse(lblPriceM.Text.Replace(" VNĐ", "").Replace(",", "")));
+            RaiseProductSelected("M", _priceM);
         }
 
         private void pbPriceL_Click(object sender, EventArgs e)
         {
-            RaiseProductSelected("L", decimal.Parse(lblPriceL.Text.Replace(" VNĐ", "").Replace(",", "")));
+            RaiseProductSelected("L", _priceL);
         }
     }
 }

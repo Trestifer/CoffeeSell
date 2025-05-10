@@ -28,6 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            
+            
+            
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProductUserControl));
             guna2ShadowPanel1 = new Guna.UI2.WinForms.Guna2ShadowPanel();
             panel1 = new Panel();
@@ -89,6 +92,7 @@
             pbPriceL.TabIndex = 9;
             pbPriceL.TabStop = false;
             pbPriceL.Click += pbPriceL_Click;
+            
             // 
             // pbPriceM
             // 
@@ -100,6 +104,7 @@
             pbPriceM.TabIndex = 8;
             pbPriceM.TabStop = false;
             pbPriceM.Click += pbPriceM_Click;
+            
             // 
             // pbPriceS
             // 
@@ -111,6 +116,7 @@
             pbPriceS.TabIndex = 7;
             pbPriceS.TabStop = false;
             pbPriceS.Click += pbPriceS_Click;
+            
             // 
             // lblPriceL
             // 

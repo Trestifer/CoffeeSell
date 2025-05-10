@@ -83,6 +83,7 @@
             label20 = new Label();
             textBox1 = new TextBox();
             textBox2 = new TextBox();
+            labeltotal = new Label();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -122,7 +123,6 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(1926, 50);
             panel2.TabIndex = 1;
-            panel2.Paint += panel2_Paint;
             // 
             // label3
             // 
@@ -162,7 +162,6 @@
             label4.Name = "label4";
             label4.Size = new Size(0, 31);
             label4.TabIndex = 2;
-            label4.Click += label4_Click;
             // 
             // guna2TextBox1
             // 
@@ -242,7 +241,6 @@
             flowLayoutPanelProducts.Name = "flowLayoutPanelProducts";
             flowLayoutPanelProducts.Size = new Size(1091, 894);
             flowLayoutPanelProducts.TabIndex = 8;
-            flowLayoutPanelProducts.Paint += flpProducts_Paint;
             // 
             // productUserControl1
             // 
@@ -250,7 +248,6 @@
             productUserControl1.Name = "productUserControl1";
             productUserControl1.Size = new Size(270, 253);
             productUserControl1.TabIndex = 0;
-            productUserControl1.Load += productUserControl1_Load;
             // 
             // productUserControl2
             // 
@@ -398,9 +395,11 @@
             guna2PictureBox7.SizeMode = PictureBoxSizeMode.Zoom;
             guna2PictureBox7.TabIndex = 13;
             guna2PictureBox7.TabStop = false;
+            guna2PictureBox7.Click += guna2PictureBox7_Click;
             // 
             // panel8
             // 
+            panel8.Controls.Add(labeltotal);
             panel8.Controls.Add(button2);
             panel8.Controls.Add(label18);
             panel8.Controls.Add(label17);
@@ -561,6 +560,17 @@
             textBox2.TabIndex = 20;
             textBox2.TextChanged += textBox2_TextChanged;
             // 
+            // labeltotal
+            // 
+            labeltotal.AutoSize = true;
+            labeltotal.Font = new Font("Segoe UI", 12F);
+            labeltotal.ForeColor = Color.Red;
+            labeltotal.Location = new Point(425, 22);
+            labeltotal.Name = "labeltotal";
+            labeltotal.Size = new Size(99, 28);
+            labeltotal.TabIndex = 9;
+            labeltotal.Text = "Tổng tiền:";
+            // 
             // SaleCoffee
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -651,5 +661,6 @@
         private DataGridViewTextBoxColumn Column3;
         private DataGridViewTextBoxColumn column;
         private DataGridViewTextBoxColumn Column4;
+        private Label labeltotal;
     }
 }
