@@ -8,7 +8,7 @@ namespace CoffeeSell.DataAccessLayer
     public class DAOUsedDiscount : DAO
     {
         // Create a new individual discount
-        public bool CreateIndividualDiscount(IndividualDiscount ind)
+        public bool CreateIndividualDiscount(UsedDiscount ind)
         {
             string cmString = @"
                 INSERT INTO UsedDiscount (CustomerId, DiscountId, DateEnd)
@@ -73,7 +73,7 @@ namespace CoffeeSell.DataAccessLayer
         }
 
         // Get a specific individual discount by customerId and discountId
-        public IndividualDiscount GetIndividualDiscount(int customerId, int discountId)
+        public UsedDiscount GetIndividualDiscount(int customerId, int discountId)
         {
             string cmString = @"
                 SELECT * FROM UsedDiscount
@@ -89,7 +89,7 @@ namespace CoffeeSell.DataAccessLayer
                 if (dt.Rows.Count == 1)
                 {
                     DataRow r = dt.Rows[0];
-                    IndividualDiscount ind = new IndividualDiscount();
+                    UsedDiscount ind = new UsedDiscount();
                     ind.SetCustomerId(Convert.ToInt32(r["CustomerId"]));
                     ind.SetDiscountId(Convert.ToInt32(r["DiscountId"]));
                     ind.SetDateEnd(Convert.ToDateTime(r["DateEnd"]));

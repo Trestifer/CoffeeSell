@@ -225,7 +225,8 @@ namespace CoffeeSell
                     txtS.Text = TextHandling.CustomDecimalToString(row.Cells["Price_S"].Value.ToString());
                     txtL.Text = TextHandling.CustomDecimalToString(row.Cells["Price_L"].Value.ToString());
                     txtM.Text = TextHandling.CustomDecimalToString(row.Cells["Price_M"].Value.ToString());
-                    pictureBox1.Image = PhotoFunction.Base64ToImage(row.Cells["Photo"].Value.ToString());
+                    string fileName = row.Cells["Photo"].Value.ToString();
+                    pictureBox1.Image = ImageCache.GetImage(Path.Combine("Images", fileName));
                 }
                 catch (Exception ex)
                 {
@@ -262,8 +263,9 @@ namespace CoffeeSell
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     string sourcePath = openFileDialog.FileName;
-                    PhotoBase64 = PhotoFunction.ImageToBase64(sourcePath);
-                    pictureBox1.Image = PhotoFunction.Base64ToImage(PhotoBase64);
+                    string fileName = PhotoFunction.SaveImageToImagesFolder(sourcePath, foodId);
+                    PhotoBase64 = fileName; // lưu tên file ảnh vào biến PhotoBase64 để SetPhoto
+                    pictureBox1.Image = ImageCache.GetImage(Path.Combine("Images", fileName));
 
                 }
             }

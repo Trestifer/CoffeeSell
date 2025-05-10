@@ -2,17 +2,17 @@
 
 namespace CoffeeSell.ObjClass
 {
-    public class IndividualDiscount
+    public class UsedDiscount
     {
         private int CustomerId { get; set; }
         private int DiscountId { get; set; }
         private DateTime DateEnd { get; set; }
 
         // Default constructor
-        public IndividualDiscount() { }
+        public UsedDiscount() { }
 
         // Parameterized constructor
-        public IndividualDiscount(int customerId, int discountId, DateTime dateEnd)
+        public UsedDiscount(int customerId, int discountId, DateTime dateEnd)
         {
             CustomerId = customerId;
             DiscountId = discountId;
