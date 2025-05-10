@@ -1,32 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CoffeeSell.ObjClass
+﻿namespace CoffeeSell.ObjClass
 {
     public class DiscountBillInfo
     {
-        // Private auto-properties matching SQL columns
-        private int DiscountInfoId { get; set; }
-        private int DiscountId { get; set; }
+        private int? _billId;
+        private int? _discountId;
+        private decimal _saved;
 
-        // Default constructor
         public DiscountBillInfo() { }
 
-        // Parameterized constructor
-        public DiscountBillInfo(int discountInfoId, int discountId)
+        public DiscountBillInfo(int? billId, int? discountId, decimal saved)
         {
-            DiscountInfoId = discountInfoId;
-            DiscountId = discountId;
+            _billId = billId;
+            _discountId = discountId;
+            _saved = saved;
         }
 
-        // Public getter methods
-        public int GetDiscountInfoId() => DiscountInfoId;
-        public int GetDiscountId() => DiscountId;
-        public void SetDiscountInfoId(int discountInfoId) => DiscountInfoId = discountInfoId;
-        public void SetDiscountId(int discountId) => DiscountId = discountId;
+        public int? GetBillId() => _billId;
+        public void SetBillId(int? value) => _billId = value;
+
+        public int? GetDiscountId() => _discountId;
+        public void SetDiscountId(int? value) => _discountId = value;
+
+        public decimal GetSaved() => _saved;
+        public void SetSaved(decimal value) => _saved = value;
     }
 }
-

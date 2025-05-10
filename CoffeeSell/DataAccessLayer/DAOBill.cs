@@ -10,22 +10,21 @@ namespace CoffeeSell.DataAccessLayer
         public int CreateBill(Bill bill)
         {
             string cmString = @"
-                INSERT INTO Bill (DateCheckIn, DateCheckOut, TotalPrice, StatusBill, CustomerId)
+                INSERT INTO Bill (DateCheckIn, TotalPrice, StatusBill, CustomerId)
                 OUTPUT INSERTED.BillId
-                VALUES (@CheckIn, @CheckOut, @Total, @Status, @CustomerId)";
+                VALUES (@CheckIn, @Total, @Status, @CustomerId)";
 
             try
             {
                 object result = ExecuteScalar(
                     cmString,
-                    new string[] { "@CheckIn", "@CheckOut", "@Total", "@Status", "@CustomerId" },
+                    new string[] { "@CheckIn", "@Total", "@Status", "@CustomerId" },
                     new object[]
                     {
-                        bill.GetDateCheckIn(),
-                        bill.GetDateCheckOut() ?? (object)DBNull.Value,
-                        bill.GetTotalPrice(),
-                        bill.GetStatusBill(),
-                        bill.GetCustomerId() ?? (object)DBNull.Value
+                        bill.DateCheckIn,
+                        bill.TotalPrice,
+                        bill.StatusBill,
+                        bill.CustomerId ?? (object)DBNull.Value
                     });
 
                 return result != null ? Convert.ToInt32(result) : -1;
@@ -41,23 +40,24 @@ namespace CoffeeSell.DataAccessLayer
         {
             string cmString = @"
                 UPDATE Bill
-                SET DateCheckIn = @CheckIn, DateCheckOut = @CheckOut,
-                    TotalPrice = @Total, StatusBill = @Status, CustomerId = @CustomerId
+                SET DateCheckIn = @CheckIn,
+                    TotalPrice = @Total,
+                    StatusBill = @Status,
+                    CustomerId = @CustomerId
                 WHERE BillId = @Id";
 
             try
             {
                 int rows = ExecuteNonQuery(
                     cmString,
-                    new string[] { "@CheckIn", "@CheckOut", "@Total", "@Status", "@CustomerId", "@Id" },
+                    new string[] { "@CheckIn", "@Total", "@Status", "@CustomerId", "@Id" },
                     new object[]
                     {
-                        bill.GetDateCheckIn(),
-                        bill.GetDateCheckOut() ?? (object)DBNull.Value,
-                        bill.GetTotalPrice(),
-                        bill.GetStatusBill(),
-                        bill.GetCustomerId() ?? (object)DBNull.Value,
-                        bill.GetBillId()
+                        bill.DateCheckIn,
+                        bill.TotalPrice,
+                        bill.StatusBill,
+                        bill.CustomerId ?? (object)DBNull.Value,
+                        bill.BillId
                     });
 
                 return rows > 0;
@@ -114,14 +114,14 @@ namespace CoffeeSell.DataAccessLayer
                 if (dt.Rows.Count == 1)
                 {
                     DataRow r = dt.Rows[0];
-                    Bill b = new Bill();
-                    b.SetBillId(Convert.ToInt32(r["BillId"]));
-                    b.SetDateCheckIn(Convert.ToDateTime(r["DateCheckIn"]));
-                    b.SetDateCheckOut(r["DateCheckOut"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(r["DateCheckOut"]));
-                    b.SetTotalPrice(Convert.ToDecimal(r["TotalPrice"]));
-                    b.SetStatusBill(Convert.ToInt32(r["StatusBill"]));
-                    b.SetCustomerId(r["CustomerId"] == DBNull.Value ? (int?)null : Convert.ToInt32(r["CustomerId"]));
-                    return b;
+                    return new Bill
+                    {
+                        BillId = Convert.ToInt32(r["BillId"]),
+                        DateCheckIn = Convert.ToDateTime(r["DateCheckIn"]),
+                        TotalPrice = Convert.ToDecimal(r["TotalPrice"]),
+                        StatusBill = Convert.ToInt32(r["StatusBill"]),
+                        CustomerId = r["CustomerId"] == DBNull.Value ? (int?)null : Convert.ToInt32(r["CustomerId"])
+                    };
                 }
 
                 return null;
@@ -146,5 +146,31 @@ namespace CoffeeSell.DataAccessLayer
                 return -1;
             }
         }
+        public DataTable GetBillWithCustomerInfo()
+        {
+            string query = @"
+        SELECT 
+            b.BillId,
+            b.DateCheckIn,
+            b.TotalPrice,
+            b.StatusBill,
+            c.NameCustomer,
+            c.PhoneNumber
+        FROM 
+            Bill b
+        LEFT JOIN 
+            Customer c ON b.CustomerId = c.CustomerId";
+
+            try
+            {
+                return ExecuteQuery(query);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"GetBillWithCustomerInfo error: {ex.Message}");
+                return new DataTable();
+            }
+        }
+
     }
 }

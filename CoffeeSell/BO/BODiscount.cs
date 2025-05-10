@@ -35,6 +35,9 @@ namespace CoffeeSell.BO
         }
         public static bool Delete(int id)
         { return discount.DeleteDiscount(id); }
-
+        public static DataTable GetDiscountForCustomer(int id)
+        {
+            return discount.GetAvailableDiscountsForCustomer(id);
+        }
     }
 }

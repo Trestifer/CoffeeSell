@@ -149,5 +149,33 @@ namespace CoffeeSell.DataAccessLayer
                 return -1;
             }
         }
+
+
+        public List<Customer> GetCustomerList()
+        {
+            List<Customer> customers = new List<Customer>();
+            string query = "SELECT * FROM Customer";
+
+            // Call your existing method
+            DataTable dt = ExecuteQuery(query, new string[] { }, new object[] { });
+
+            foreach (DataRow row in dt.Rows)
+            {
+                Customer cus = new Customer(
+                    customerId: Convert.ToInt32(row["CustomerId"]),
+                    nameCustomer: row["NameCustomer"].ToString(),
+                    phoneNumber: row["PhoneNumber"].ToString(),
+                    points: row["Points"] != DBNull.Value ? Convert.ToInt32(row["Points"]) : 0,
+                    registerDate: row["RegisterDate"] != DBNull.Value ? Convert.ToDateTime(row["RegisterDate"]) : DateTime.MinValue,
+                    lattestBuy: row["LattestBuy"] != DBNull.Value ? Convert.ToDateTime(row["LattestBuy"]) : DateTime.MinValue
+                );
+
+                customers.Add(cus);
+            }
+
+            return customers;
+        }
+
+
     }
 }

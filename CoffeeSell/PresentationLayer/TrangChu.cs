@@ -119,7 +119,7 @@ namespace CoffeeSell
         }
         private void Panel2_Click(object sender, EventArgs e)
         {
-            SaleCoffee saleform = new SaleCoffee();
+            SaleCoffee saleform = new SaleCoffee(user);
             saleform.Show();
             
 
@@ -193,7 +193,7 @@ namespace CoffeeSell
         private void Panel8_Click(object sender, EventArgs e)
         {
             panel10.Controls.Clear();
-            QuanLyKhachHang khform = new QuanLyKhachHang();
+            QuanLyKhachHang khform = new QuanLyKhachHang(user);
             khform.TopLevel = false;
             khform.FormBorderStyle = FormBorderStyle.None;
             khform.Dock = DockStyle.Fill;

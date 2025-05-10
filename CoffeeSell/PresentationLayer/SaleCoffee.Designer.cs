@@ -68,12 +68,16 @@
             Column4 = new DataGridViewTextBoxColumn();
             guna2PictureBox7 = new Guna.UI2.WinForms.Guna2PictureBox();
             panel8 = new Panel();
+            lblTien = new Label();
+            lblTienGiam = new Label();
+            button3 = new Button();
+            label7 = new Label();
+            label6 = new Label();
+            txtKhachHang = new TextBox();
+            txtSDT = new TextBox();
+            labeltotal = new Label();
             button2 = new Button();
             label18 = new Label();
-            label17 = new Label();
-            label16 = new Label();
-            label15 = new Label();
-            label14 = new Label();
             label13 = new Label();
             label12 = new Label();
             label11 = new Label();
@@ -83,7 +87,6 @@
             label20 = new Label();
             textBox1 = new TextBox();
             textBox2 = new TextBox();
-            labeltotal = new Label();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -399,13 +402,16 @@
             // 
             // panel8
             // 
+            panel8.Controls.Add(lblTien);
+            panel8.Controls.Add(lblTienGiam);
+            panel8.Controls.Add(button3);
+            panel8.Controls.Add(label7);
+            panel8.Controls.Add(label6);
+            panel8.Controls.Add(txtKhachHang);
+            panel8.Controls.Add(txtSDT);
             panel8.Controls.Add(labeltotal);
             panel8.Controls.Add(button2);
             panel8.Controls.Add(label18);
-            panel8.Controls.Add(label17);
-            panel8.Controls.Add(label16);
-            panel8.Controls.Add(label15);
-            panel8.Controls.Add(label14);
             panel8.Controls.Add(label13);
             panel8.Controls.Add(label12);
             panel8.Controls.Add(label11);
@@ -414,17 +420,91 @@
             panel8.Size = new Size(569, 374);
             panel8.TabIndex = 14;
             // 
+            // lblTien
+            // 
+            lblTien.AutoSize = true;
+            lblTien.Font = new Font("Segoe UI", 12F);
+            lblTien.Location = new Point(420, 44);
+            lblTien.Name = "lblTien";
+            lblTien.Size = new Size(0, 28);
+            lblTien.TabIndex = 16;
+            // 
+            // lblTienGiam
+            // 
+            lblTienGiam.AutoSize = true;
+            lblTienGiam.Font = new Font("Segoe UI", 12F);
+            lblTienGiam.Location = new Point(420, 92);
+            lblTienGiam.Name = "lblTienGiam";
+            lblTienGiam.Size = new Size(0, 28);
+            lblTienGiam.TabIndex = 15;
+            // 
+            // button3
+            // 
+            button3.Location = new Point(229, 201);
+            button3.Name = "button3";
+            button3.Size = new Size(121, 34);
+            button3.TabIndex = 14;
+            button3.Text = "Khuyến mãi";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new Font("Segoe UI", 12F);
+            label7.Location = new Point(318, 148);
+            label7.Name = "label7";
+            label7.Size = new Size(82, 28);
+            label7.TabIndex = 13;
+            label7.Text = "Phải trả:";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI", 12F);
+            label6.Location = new Point(338, 92);
+            label6.Name = "label6";
+            label6.Size = new Size(62, 28);
+            label6.TabIndex = 12;
+            label6.Text = "Giảm:";
+            // 
+            // txtKhachHang
+            // 
+            txtKhachHang.Location = new Point(134, 92);
+            txtKhachHang.Name = "txtKhachHang";
+            txtKhachHang.Size = new Size(135, 27);
+            txtKhachHang.TabIndex = 11;
+            // 
+            // txtSDT
+            // 
+            txtSDT.Location = new Point(134, 45);
+            txtSDT.Name = "txtSDT";
+            txtSDT.Size = new Size(135, 27);
+            txtSDT.TabIndex = 10;
+            txtSDT.TextChanged += txtSDT_TextChanged;
+            // 
+            // labeltotal
+            // 
+            labeltotal.AutoSize = true;
+            labeltotal.Font = new Font("Segoe UI", 12F);
+            labeltotal.ForeColor = Color.Red;
+            labeltotal.Location = new Point(420, 148);
+            labeltotal.Name = "labeltotal";
+            labeltotal.Size = new Size(0, 28);
+            labeltotal.TabIndex = 9;
+            // 
             // button2
             // 
             button2.BackColor = Color.FromArgb(84, 125, 224);
             button2.Font = new Font("Segoe UI Semibold", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 163);
             button2.ForeColor = Color.White;
-            button2.Location = new Point(28, 247);
+            button2.Location = new Point(28, 255);
             button2.Name = "button2";
-            button2.Size = new Size(523, 114);
+            button2.Size = new Size(523, 106);
             button2.TabIndex = 8;
             button2.Text = "Thanh toán";
             button2.UseVisualStyleBackColor = false;
+            button2.Click += button2_Click;
             // 
             // label18
             // 
@@ -434,51 +514,11 @@
             label18.Size = new Size(0, 20);
             label18.TabIndex = 7;
             // 
-            // label17
-            // 
-            label17.AutoSize = true;
-            label17.Font = new Font("Segoe UI", 12F);
-            label17.Location = new Point(298, 159);
-            label17.Name = "label17";
-            label17.Size = new Size(82, 28);
-            label17.TabIndex = 6;
-            label17.Text = "Ghi chú:";
-            // 
-            // label16
-            // 
-            label16.AutoSize = true;
-            label16.Font = new Font("Segoe UI", 12F);
-            label16.Location = new Point(28, 159);
-            label16.Name = "label16";
-            label16.Size = new Size(199, 28);
-            label16.TabIndex = 5;
-            label16.Text = "Qui đổi điểm tích lũy ";
-            // 
-            // label15
-            // 
-            label15.AutoSize = true;
-            label15.Font = new Font("Segoe UI", 12F);
-            label15.Location = new Point(458, 90);
-            label15.Name = "label15";
-            label15.Size = new Size(88, 28);
-            label15.TabIndex = 4;
-            label15.Text = "Tiền thối";
-            // 
-            // label14
-            // 
-            label14.AutoSize = true;
-            label14.Font = new Font("Segoe UI", 12F);
-            label14.Location = new Point(294, 90);
-            label14.Name = "label14";
-            label14.Size = new Size(137, 28);
-            label14.TabIndex = 3;
-            label14.Text = "Tiền khách trả:";
-            // 
             // label13
             // 
             label13.AutoSize = true;
             label13.Font = new Font("Segoe UI", 12F);
-            label13.Location = new Point(294, 22);
+            label13.Location = new Point(301, 45);
             label13.Name = "label13";
             label13.Size = new Size(99, 28);
             label13.TabIndex = 2;
@@ -488,7 +528,7 @@
             // 
             label12.AutoSize = true;
             label12.Font = new Font("Segoe UI", 12F);
-            label12.Location = new Point(28, 90);
+            label12.Location = new Point(10, 92);
             label12.Name = "label12";
             label12.Size = new Size(118, 28);
             label12.TabIndex = 1;
@@ -498,7 +538,7 @@
             // 
             label11.AutoSize = true;
             label11.Font = new Font("Segoe UI", 12F);
-            label11.Location = new Point(28, 22);
+            label11.Location = new Point(78, 41);
             label11.Name = "label11";
             label11.Size = new Size(50, 28);
             label11.TabIndex = 0;
@@ -560,17 +600,6 @@
             textBox2.TabIndex = 20;
             textBox2.TextChanged += textBox2_TextChanged;
             // 
-            // labeltotal
-            // 
-            labeltotal.AutoSize = true;
-            labeltotal.Font = new Font("Segoe UI", 12F);
-            labeltotal.ForeColor = Color.Red;
-            labeltotal.Location = new Point(425, 22);
-            labeltotal.Name = "labeltotal";
-            labeltotal.Size = new Size(99, 28);
-            labeltotal.TabIndex = 9;
-            labeltotal.Text = "Tổng tiền:";
-            // 
             // SaleCoffee
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -595,7 +624,7 @@
             Controls.Add(panel2);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
-            
+            Name = "SaleCoffee";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "SaleCoffee";
             WindowState = FormWindowState.Maximized;
@@ -635,12 +664,8 @@
         private Label label12;
         private Label label11;
         private Guna.UI2.WinForms.Guna2PictureBox guna2PictureBox7;
-        private Label label14;
         private Label label13;
         private Label label18;
-        private Label label17;
-        private Label label16;
-        private Label label15;
         private Button button2;
         private ComboBox comboBox1;
         private ComboBox comboBox2;
@@ -662,5 +687,12 @@
         private DataGridViewTextBoxColumn column;
         private DataGridViewTextBoxColumn Column4;
         private Label labeltotal;
+        private TextBox txtKhachHang;
+        private TextBox txtSDT;
+        private Label label6;
+        private Label label7;
+        private Button button3;
+        private Label lblTien;
+        private Label lblTienGiam;
     }
 }

@@ -1,15 +1,20 @@
-﻿using CoffeeSell.ObjClass;
+﻿using CoffeeSell.BO;
+using CoffeeSell.ObjClass;
 using CoffeeSell.ObjClass.CoffeeSell.ObjClass;
+using CoffeeSell.PresentationLayer;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace CoffeeSell
 {
+
+
     public partial class SaleCoffee : Form
     {
         private string selectedSize = "Tất cả";
@@ -18,13 +23,19 @@ namespace CoffeeSell
         private System.Windows.Forms.Timer searchTimer;
         private string connectionString = "Server=26.58.112.204,1433;Database=QuanLyBanCafe;User Id=trestifer;Password=tam73105;Encrypt=False";
         private int orderIndex = 1;
+        private Account user;
+        private List<Customer> fullCustomer;
+        private DataTable DiscountApplied;
 
-        public SaleCoffee()
+        public SaleCoffee(Account _user)
         {
+            this.user = _user;
             InitializeComponent();
             SetupDataGridViewColumns();
 
             LoadProducts();
+            button3.Enabled = false;
+            ReloadCustomer();
             guna2DataGridView1.ColumnHeadersHeight = 40;
             guna2DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
             comboBox1.Items.AddRange(new string[] { "A-Z", "Z-A", "Tất cả" });
@@ -43,6 +54,27 @@ namespace CoffeeSell
             };
 
             guna2TextBox1.TextChanged += guna2TextBox1_TextChanged;
+            txtKhachHang.ReadOnly= true;
+
+
+        }
+        private void ReloadCustomer()
+        {
+            fullCustomer = BOCustomer.GetAllCustomerList();
+
+            List<string> phoneNumbers = fullCustomer
+             .Where(c => !string.IsNullOrEmpty(c.GetPhoneNumber()))
+             .Select(c => c.GetPhoneNumber())
+             .ToList();
+
+            // Convert to AutoCompleteStringCollection
+            AutoCompleteStringCollection autoSource = new AutoCompleteStringCollection();
+            autoSource.AddRange(phoneNumbers.ToArray());
+
+            // Set up txtSDT for autocomplete
+            txtSDT.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            txtSDT.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            txtSDT.AutoCompleteCustomSource = autoSource;
         }
 
         private void SetupDataGridViewColumns()
@@ -56,7 +88,13 @@ namespace CoffeeSell
                 HeaderText = "STT",
                 Width = 50
             });
-
+            guna2DataGridView1.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "FoodId",
+                HeaderText = "Mã food",
+                Width = 50
+            });
+            guna2DataGridView1.Columns["FoodId"].Visible = false;
             guna2DataGridView1.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "ProductName",
@@ -265,6 +303,7 @@ namespace CoffeeSell
 
             guna2DataGridView1.Rows.Add(
                 orderIndex++,
+                foodInCart.FoodId,
                 foodInCart.NameFood,
                 foodInCart.Size,
                 foodInCart.Price,
@@ -278,57 +317,61 @@ namespace CoffeeSell
 
         private void guna2DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
-
-            // Xử lý nút "Sửa"
-            if (guna2DataGridView1.Columns[e.ColumnIndex].Name == "Edit")
+            try
             {
-                string productName = guna2DataGridView1.Rows[e.RowIndex].Cells["ProductName"].Value.ToString();
-                decimal price = Convert.ToDecimal(guna2DataGridView1.Rows[e.RowIndex].Cells["Price"].Value);
+                if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
 
-                string input = Microsoft.VisualBasic.Interaction.InputBox(
-                    $"Nhập số lượng mới cho {productName}:",
-                    "Sửa số lượng",
-                    guna2DataGridView1.Rows[e.RowIndex].Cells["Quantity"].Value.ToString()
-                );
-
-                if (int.TryParse(input, out int newQuantity) && newQuantity > 0)
+                // Xử lý nút "Sửa"
+                if (guna2DataGridView1.Columns[e.ColumnIndex].Name == "Edit")
                 {
-                    guna2DataGridView1.Rows[e.RowIndex].Cells["Quantity"].Value = newQuantity;
-                    guna2DataGridView1.Rows[e.RowIndex].Cells["Total"].Value = newQuantity * price;
-                    UpdateTotalLabel();
-                }
-                else if (!string.IsNullOrEmpty(input))
-                {
-                    MessageBox.Show("Vui lòng nhập số lượng hợp lệ!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            // Xử lý nút "Xóa" (trừ 1 đơn vị số lượng)
-            else if (guna2DataGridView1.Columns[e.ColumnIndex].Name == "Delete")
-            {
-                int currentQuantity = int.Parse(guna2DataGridView1.Rows[e.RowIndex].Cells["Quantity"].Value.ToString());
-                if (currentQuantity > 1)
-                {
-                    // Trừ 1 đơn vị số lượng
-                    guna2DataGridView1.Rows[e.RowIndex].Cells["Quantity"].Value = currentQuantity - 1;
+                    string productName = guna2DataGridView1.Rows[e.RowIndex].Cells["ProductName"].Value.ToString();
                     decimal price = Convert.ToDecimal(guna2DataGridView1.Rows[e.RowIndex].Cells["Price"].Value);
-                    guna2DataGridView1.Rows[e.RowIndex].Cells["Total"].Value = (currentQuantity - 1) * price;
-                    UpdateTotalLabel();
-                }
-                else
-                {
-                    // Nếu số lượng là 1, xóa dòng
-                    guna2DataGridView1.Rows.RemoveAt(e.RowIndex);
-                    // Cập nhật lại số thứ tự
-                    orderIndex = 1;
-                    foreach (DataGridViewRow row in guna2DataGridView1.Rows)
+
+                    string input = Microsoft.VisualBasic.Interaction.InputBox(
+                        $"Nhập số lượng mới cho {productName}:",
+                        "Sửa số lượng",
+                        guna2DataGridView1.Rows[e.RowIndex].Cells["Quantity"].Value.ToString()
+                    );
+
+                    if (int.TryParse(input, out int newQuantity) && newQuantity > 0)
                     {
-                        row.Cells["OrderIndex"].Value = orderIndex++;
-                        
+                        guna2DataGridView1.Rows[e.RowIndex].Cells["Quantity"].Value = newQuantity;
+                        guna2DataGridView1.Rows[e.RowIndex].Cells["Total"].Value = newQuantity * price;
+                        UpdateTotalLabel();
                     }
-                    UpdateTotalLabel();
+                    else if (!string.IsNullOrEmpty(input))
+                    {
+                        MessageBox.Show("Vui lòng nhập số lượng hợp lệ!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                // Xử lý nút "Xóa" (trừ 1 đơn vị số lượng)
+                else if (guna2DataGridView1.Columns[e.ColumnIndex].Name == "Delete")
+                {
+                    int currentQuantity = int.Parse(guna2DataGridView1.Rows[e.RowIndex].Cells["Quantity"].Value.ToString());
+                    if (currentQuantity > 1)
+                    {
+                        // Trừ 1 đơn vị số lượng
+                        guna2DataGridView1.Rows[e.RowIndex].Cells["Quantity"].Value = currentQuantity - 1;
+                        decimal price = Convert.ToDecimal(guna2DataGridView1.Rows[e.RowIndex].Cells["Price"].Value);
+                        guna2DataGridView1.Rows[e.RowIndex].Cells["Total"].Value = (currentQuantity - 1) * price;
+                        UpdateTotalLabel();
+                    }
+                    else
+                    {
+                        // Nếu số lượng là 1, xóa dòng
+                        guna2DataGridView1.Rows.RemoveAt(e.RowIndex);
+                        // Cập nhật lại số thứ tự
+                        orderIndex = 1;
+                        foreach (DataGridViewRow row in guna2DataGridView1.Rows)
+                        {
+                            row.Cells["OrderIndex"].Value = orderIndex++;
+
+                        }
+                        UpdateTotalLabel();
+                    }
                 }
             }
+            catch (Exception ex) { }
         }
 
 
@@ -386,6 +429,8 @@ namespace CoffeeSell
         private void UpdateTotalLabel()
         {
             decimal total = 0;
+            decimal discount = 0;
+            decimal finalPrice = 0;
             foreach (DataGridViewRow row in guna2DataGridView1.Rows)
             {
                 if (row.Cells["Total"].Value != null && decimal.TryParse(row.Cells["Total"].Value.ToString().Replace(" VNĐ", "").Replace(",", ""), out decimal rowTotal))
@@ -393,7 +438,21 @@ namespace CoffeeSell
                     total += rowTotal;
                 }
             }
-            labeltotal.Text = total.ToString("N0") + " VNĐ"; // Hiển thị tổng tiền với định dạng
+            if(DiscountApplied !=null)
+            {
+                int totalDiscount = 0;
+                foreach(DataRow row in DiscountApplied.Rows)
+                {
+                    totalDiscount += Convert.ToInt32(row["DiscountPercent"]);
+                    MessageBox.Show(totalDiscount.ToString());
+                }
+                discount = Math.Min((totalDiscount * total) / 100, total);
+            }
+            finalPrice = total - discount;
+
+            lblTien.Text = total.ToString("N0") + " VNĐ"; // Hiển thị tổng tiền với định dạng
+            lblTienGiam.Text = discount.ToString("N0") + "VNĐ";
+            labeltotal.Text = finalPrice.ToString("N0") + "VNĐ";
         }
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -506,6 +565,148 @@ namespace CoffeeSell
             // Đặt lại orderIndex về 1
             orderIndex = 1;
             UpdateTotalLabel();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Customer customerinfo = new Customer();
+            customerinfo.SetNameCustomer(txtKhachHang.Text);
+            customerinfo.SetPhoneNumber(txtSDT.Text);
+            bool exists = fullCustomer.Any(cus => cus.GetPhoneNumber() == txtSDT.Text);
+            if (exists)
+            {
+                customerinfo = fullCustomer.FirstOrDefault(cus => cus.GetPhoneNumber() == txtSDT.Text);
+            }
+            else if (txtSDT.Text != "")
+            {
+                customerinfo.SetCustomerId(BOCustomer.Add(customerinfo));
+                MessageBox.Show(customerinfo.GetCustomerId().ToString());
+                ReloadCustomer();
+            }
+            else
+            {
+                customerinfo.SetCustomerId(-1);
+            }
+            string cleaned = labeltotal.Text.Replace("VNĐ", "").Trim();
+
+            // Remove thousand separator
+            cleaned = cleaned.Replace(",", "");
+
+            // Parse to decimal
+            decimal price = decimal.Parse(cleaned);
+
+            if (price > 0)
+            {
+                Bill bill = new Bill();
+                bill.CustomerId = customerinfo.GetCustomerId() == -1 ? null : customerinfo.GetCustomerId();
+                bill.TotalPrice = price;
+                bill.BillId = BOBill.Add(bill);
+                if (bill.BillId > 0)
+                {
+                    foreach (DataGridViewRow row in guna2DataGridView1.Rows)
+                    {
+                        BillInfo billInfo = new BillInfo();
+                        billInfo.SetIdBill(bill.BillId);
+                        billInfo.SetIdFood(Convert.ToInt32(row.Cells["FoodId"].Value));
+                        billInfo.SetQuantity(Convert.ToInt32(row.Cells["Quantity"].Value));
+                        if (billInfo.GetIdFood() == 0)
+                            break;
+                        if (!BOBIllInfo.Add(billInfo))
+                        {
+                            MessageBox.Show("Có lỗi xãy ra!");
+                            return;
+                        }
+                    }
+                   
+                    if(DiscountApplied!=null)
+                    {
+                        string cleanedd = lblTien.Text.Replace("VNĐ", "").Trim();
+
+                        // Remove thousand separator
+                        cleanedd = cleanedd.Replace(",", "");
+
+                        // Parse to decimal
+                        decimal pricee = decimal.Parse(cleanedd);
+                        foreach(DataRow row in DiscountApplied.Rows)
+                        {
+                            decimal sv = pricee * (decimal)row["DiscountPercent"] / 100;
+                            DiscountBillInfo billInfo = new DiscountBillInfo();
+                            billInfo.SetSaved(sv);
+                            billInfo.SetBillId(bill.BillId);
+                            billInfo.SetDiscountId((int)row["DiscountId"]);
+                            if(!BOBillDiscountInfo.Add(billInfo))
+                            {
+                                MessageBox.Show("SOS");
+                            }
+                            if (!(bool)row["IsReuseable"])
+                            {
+                                UsedDiscount newDiscount = new UsedDiscount();
+                                newDiscount.SetDiscountId((int)row["DiscountId"]);
+                                newDiscount.SetCustomerId(customerinfo.GetCustomerId());
+                                BOUsedDiscount.Add(newDiscount);
+                            }
+                        }
+                    }
+                    if (customerinfo.GetCustomerId() != -1)
+                    { BOCustomer.UpdatePoint(customerinfo.GetCustomerId(), (int)price); }
+
+                    MessageBox.Show("Thanh toán thành công");
+                    guna2DataGridView1.Rows.Clear();
+
+                }
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Customer customerinfo = new Customer();
+            customerinfo.SetNameCustomer(txtKhachHang.Text);
+            customerinfo.SetPhoneNumber(txtSDT.Text);
+            bool exists = fullCustomer.Any(cus => cus.GetPhoneNumber() == txtSDT.Text);
+            if (exists)
+            {
+                customerinfo = fullCustomer.FirstOrDefault(cus => cus.GetPhoneNumber() == txtSDT.Text);
+            }
+            else if (txtSDT.Text != "")
+            {
+                customerinfo.SetCustomerId(BOCustomer.Add(customerinfo));
+                ReloadCustomer();
+            }
+            else
+            {
+                customerinfo.SetCustomerId(-1);
+            }
+            KhuyenMaiSellect kmForm = new KhuyenMaiSellect(customerinfo.GetCustomerId());
+            if (kmForm.ShowDialog() == DialogResult.OK)
+            {
+                DiscountApplied = kmForm.ChoosenDiscount;
+            }
+            UpdateTotalLabel();
+        }
+
+
+        private void txtSDT_TextChanged(object sender, EventArgs e)
+        {
+            DiscountApplied = null;
+            Customer customerinfo = fullCustomer.FirstOrDefault(cus => cus.GetPhoneNumber() == txtSDT.Text);
+            if (customerinfo != null)
+            {
+
+                txtKhachHang.Text = customerinfo.GetNameCustomer();
+                txtKhachHang.ReadOnly = true;
+                button3.Enabled = true;
+            }
+            else if(txtSDT.Text.Length!=10)
+            {
+                txtKhachHang.Text = "";
+                txtKhachHang.ReadOnly = true;
+                button3.Enabled = false;
+            }
+            else
+            {
+                txtKhachHang.ReadOnly = false;
+                button3.Enabled = true;
+            }
         }
     }
 }

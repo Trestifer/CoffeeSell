@@ -25,15 +25,7 @@ namespace CoffeeSell
         {
             InitializeComponent();
         }
-        public ProductUserControl(string productName, string imageUrl, decimal price1, decimal price2, decimal price3)
-        {
-            InitializeComponent();
-            lblProductName.Text = productName;
-            picProductImage.ImageLocation = imageUrl;
-            lblPriceS.Text = price1.ToString("N0") + " VNĐ";
-            lblPriceM.Text = price2.ToString("N0") + " VNĐ";
-            lblPriceL.Text = price3.ToString("N0") + " VNĐ";
-        }
+        
         public ProductUserControl(int foodId, string productName, decimal price1, decimal price2, decimal price3)
         {
             InitializeComponent();

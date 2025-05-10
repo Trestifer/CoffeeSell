@@ -11,19 +11,18 @@ namespace CoffeeSell.DataAccessLayer
         public bool CreateIndividualDiscount(UsedDiscount ind)
         {
             string cmString = @"
-                INSERT INTO UsedDiscount (CustomerId, DiscountId, DateEnd)
-                VALUES (@CustomerId, @DiscountId, @DateEnd)";
+                INSERT INTO UsedDiscount (CustomerId, DiscountId)
+                VALUES (@CustomerId, @DiscountId)";
 
             try
             {
                 int rows = ExecuteNonQuery(
                     cmString,
-                    new[] { "@CustomerId", "@DiscountId", "@DateEnd" },
+                    new[] { "@CustomerId", "@DiscountId"},
                     new object[]
                     {
                         ind.GetCustomerId(),
                         ind.GetDiscountId(),
-                        ind.GetDateEnd()
                     });
 
                 return rows > 0;
@@ -92,7 +91,6 @@ namespace CoffeeSell.DataAccessLayer
                     UsedDiscount ind = new UsedDiscount();
                     ind.SetCustomerId(Convert.ToInt32(r["CustomerId"]));
                     ind.SetDiscountId(Convert.ToInt32(r["DiscountId"]));
-                    ind.SetDateEnd(Convert.ToDateTime(r["DateEnd"]));
                     return ind;
                 }
 
@@ -104,40 +102,6 @@ namespace CoffeeSell.DataAccessLayer
                 return null;
             }
         }
-        public DataTable GetAvailableDiscountsForCustomer(int customerId)
-        {
-            string cmString = @"
-        SELECT * FROM Discount d
-        WHERE IsUseable = 1 AND (
-            d.IsReuseable = 1
-            OR NOT EXISTS (
-                SELECT 1 FROM UsedDiscount ud
-                WHERE ud.CustomerId = @CustomerId AND ud.DiscountId = d.DiscountId
-            )
-        )
-        AND (
-            d.PointRequire = 0
-            OR d.PointRequire = (
-                SELECT MAX(PointRequire)
-                FROM Discount
-                WHERE PointRequire <= (
-                    SELECT Points FROM Customer WHERE CustomerId = @CustomerId
-                )
-            )
-        )";
-
-            try
-            {
-                return ExecuteQuery(
-                    cmString,
-                    new[] { "@CustomerId" },
-                    new object[] { customerId });
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"GetAvailableDiscountsForCustomer error: {ex.Message}");
-                return new DataTable();
-            }
-        }
+        
     }
 }

@@ -34,7 +34,12 @@ namespace CoffeeSell
             txtName.Text = "";
             txtPercent.Text = "";
             cbcCustomer.Items.Clear();
+            Ranking ranking = BOCustomer.GetRanking();
             cbcCustomer.Items.Add(new KeyValuePair<string, int>("Mọi người", 0));
+            cbcCustomer.Items.Add(new KeyValuePair<string, int>("Thành viên Đồng", ranking.Dong));
+            cbcCustomer.Items.Add(new KeyValuePair<string, int>("Thành viên Bạc", ranking.Bac));
+            cbcCustomer.Items.Add(new KeyValuePair<string, int>("Thành Viên Vàng", ranking.Vang));
+            cbcCustomer.Items.Add(new KeyValuePair<string, int>("Thành viên KC", ranking.KiemCuong));
 
             DataTable dt = BODiscount.GetDiscountInfo();
 
@@ -52,7 +57,7 @@ namespace CoffeeSell
                     if (endDate == DateTime.MaxValue)
                         row["RemainingDays"] = "Không giới hạn";
                     else
-                        row["RemainingDays"] = ((endDate - DateTime.Now).Days+1) + " ngày";
+                        row["RemainingDays"] = ((endDate - DateTime.Now).Days + 1) + " ngày";
                 }
             }
 
@@ -100,7 +105,7 @@ namespace CoffeeSell
             discountInfo.SetDetail(guna2TextBox1.Text);
             discountInfo.SetDiscountPercent(decimal.Parse(txtPercent.Text));
             discountInfo.SetNameDiscount(txtName.Text);
-            discountInfo.SetPointRequire(0);
+            discountInfo.SetPointRequire(((KeyValuePair<string, int>)cbcCustomer.SelectedItem).Value);
             discountInfo.SetIsReuseable(!checkBox1.Checked);
             return discountInfo;
 
@@ -146,7 +151,7 @@ namespace CoffeeSell
                 }
             }
 
-            if (BODiscount.UpdateState(id, true,endDate))
+            if (BODiscount.UpdateState(id, true, endDate))
             {
                 MessageBox.Show("Kích hoạt khuyến mãi thành công");
                 BOActivityLog.Record(user.GetLoginName(), 'E', $"Kích hoạt khuyến mãi mã {id}");
@@ -220,5 +225,9 @@ namespace CoffeeSell
             }
         }
 
+        private void cbcCustomer_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

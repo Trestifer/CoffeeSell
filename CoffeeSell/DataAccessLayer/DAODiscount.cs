@@ -172,5 +172,41 @@ namespace CoffeeSell.DataAccessLayer
             }
         }
 
+        public DataTable GetAvailableDiscountsForCustomer(int customerId)
+        {
+            string cmString = @"
+        SELECT * FROM Discount d
+        WHERE IsUseable = 1 AND (
+            d.IsReuseable = 1
+            OR NOT EXISTS (
+                SELECT 1 FROM UsedDiscount ud
+                WHERE ud.CustomerId = @CustomerId AND ud.DiscountId = d.DiscountId
+            )
+        )
+        AND (
+            d.PointRequire = 0
+            OR d.PointRequire = (
+                SELECT MAX(PointRequire)
+                FROM Discount
+                WHERE PointRequire <= (
+                    SELECT Points FROM Customer WHERE CustomerId = @CustomerId
+                )
+            )
+        )";
+
+            try
+            {
+                return ExecuteQuery(
+                    cmString,
+                    new[] { "@CustomerId" },
+                    new object[] { customerId });
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"GetAvailableDiscountsForCustomer error: {ex.Message}");
+                return new DataTable();
+            }
+        }
+
     }
 }
