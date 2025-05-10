@@ -55,7 +55,7 @@ namespace CoffeeSell.Ulti
 
             // Block space
             if (keyChar == ' ')
-                return false;
+                return true;
 
             // Otherwise, block
             return false;

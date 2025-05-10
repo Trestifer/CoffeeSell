@@ -25,6 +25,8 @@ namespace CoffeeSell
             lblPriceS.Text = price1.ToString("N0") + " VN đ";
             lblPriceM.Text = price2.ToString("N0") + " VN đ";
             lblPriceL.Text = price3.ToString("N0") + " VN đ";
+
+
         }
 
 
