@@ -24,7 +24,7 @@ namespace CoffeeSell
         int CategoryId;
         private Account user;
         private List<TextBox> textBoxes = new List<TextBox>();
-        private string PhotoBase64;
+        private string PhotoPath;
         public QuanLySanPham(Account _user)
         {
             InitializeComponent();
@@ -91,7 +91,7 @@ namespace CoffeeSell
             pictureBox1.Image = null;
             foodId = -1;
             _NameCategory = "";
-            PhotoBase64 = "";
+            PhotoPath = "";
             txtL.Text = "";
             txtM.Text = "";
             txtS.Text = "";
@@ -163,7 +163,7 @@ namespace CoffeeSell
                 food.SetPriceMedium(Convert.ToDecimal(txtM.Text));
                 food.SetPriceSmall(Convert.ToDecimal(txtS.Text));
                 food.SetCategoryId((int)cbcDanhMuc.SelectedValue);
-                food.SetPhoto(PhotoBase64);
+                food.SetPhoto(PhotoPath);
             }
             catch { }
             return food;
@@ -226,7 +226,7 @@ namespace CoffeeSell
                     txtL.Text = TextHandling.CustomDecimalToString(row.Cells["Price_L"].Value.ToString());
                     txtM.Text = TextHandling.CustomDecimalToString(row.Cells["Price_M"].Value.ToString());
                     string fileName = row.Cells["Photo"].Value.ToString();
-                    pictureBox1.Image = ImageCache.GetImage(Path.Combine("Images", fileName));
+                    pictureBox1.Image = PhotoFunction.LoadImage(fileName);
                 }
                 catch (Exception ex)
                 {
@@ -264,8 +264,8 @@ namespace CoffeeSell
                 {
                     string sourcePath = openFileDialog.FileName;
                     string fileName = PhotoFunction.SaveImageToImagesFolder(sourcePath, foodId);
-                    PhotoBase64 = fileName; // lưu tên file ảnh vào biến PhotoBase64 để SetPhoto
-                    pictureBox1.Image = ImageCache.GetImage(Path.Combine("Images", fileName));
+                    PhotoPath = fileName; 
+                    pictureBox1.Image = PhotoFunction.LoadImage(fileName);
 
                 }
             }

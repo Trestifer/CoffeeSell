@@ -6,12 +6,12 @@ namespace CoffeeSell.Ulti
 {
     public class PhotoFunction
     {
-       
+        // ✅ Đường dẫn tới thư mục Images trong thư mục gốc của project
         private static readonly string ImageFolder = Path.Combine(
-            AppDomain.CurrentDomain.BaseDirectory, "Images"
+            Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.FullName,"Images"
         );
 
-        // Load ảnh từ file (tên ảnh là file name: food_5.jpg)
+        // 📌 Load ảnh từ file (nếu không có thì load fallback ảnh mặc định)
         public static Image LoadImage(string fileName)
         {
             try
@@ -20,6 +20,7 @@ namespace CoffeeSell.Ulti
                 if (File.Exists(fullPath))
                     return Image.FromFile(fullPath);
 
+                // fallback ảnh mặc định nếu không tìm thấy
                 return Image.FromFile(Path.Combine(ImageFolder, "no_image.png"));
             }
             catch
@@ -28,7 +29,7 @@ namespace CoffeeSell.Ulti
             }
         }
 
-        // Lưu ảnh vào thư mục Images, trả về tên file đã lưu
+        // 📌 Lưu ảnh mới vào thư mục Images, trả về tên file ảnh để lưu trong CSDL
         public static string SaveImageToImagesFolder(string sourcePath, int foodId)
         {
             try
@@ -37,16 +38,18 @@ namespace CoffeeSell.Ulti
                     Directory.CreateDirectory(ImageFolder);
 
                 string ext = Path.GetExtension(sourcePath);
-                string fileName = $"food_{foodId}{ext}";
+                string uniqueId = DateTime.Now.ToString("yyyyMMddHHmmssfff"); // thời gian chính xác đến mili giây
+                string fileName = $"food_{foodId}_{uniqueId}{ext}";
                 string destPath = Path.Combine(ImageFolder, fileName);
 
                 File.Copy(sourcePath, destPath, overwrite: true);
-                return fileName; // ví dụ: food_5.jpg
+                return fileName; // ví dụ: "food_5_20240510144502123.jpg"
             }
             catch
             {
                 return "no_image.png";
             }
         }
+
     }
 }
