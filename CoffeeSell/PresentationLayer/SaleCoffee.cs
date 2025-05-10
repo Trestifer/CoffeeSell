@@ -22,6 +22,9 @@ namespace CoffeeSell
         public SaleCoffee()
         {
             InitializeComponent();
+            // Tăng chiều cao của header
+            guna2DataGridView1.ColumnHeadersHeight = 40; // Chiều cao 40 pixel, có thể tăng thêm nếu muốn
+            guna2DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
             comboBox1.Items.AddRange(new string[] { "A-Z", "Z-A", "Tất cả" });
             comboBox1.SelectedIndex = 0;
             guna2TextBox1.Font = new Font("Segoe UI", 14); // 14pt, chữ bự
@@ -362,6 +365,131 @@ namespace CoffeeSell
             {
                 MessageBox.Show($"Lỗi khi lọc sản phẩm: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void guna2DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            // Xử lý nút Sửa
+            if (guna2DataGridView1.Columns[e.ColumnIndex].Name == "Actions" && guna2DataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value?.ToString() == "Sửa")
+            {
+                string productName = guna2DataGridView1.Rows[e.RowIndex].Cells["ProductName"].Value.ToString();
+                decimal price = decimal.Parse(guna2DataGridView1.Rows[e.RowIndex].Cells["Price"].Value.ToString());
+
+                // Hiển thị hộp thoại để nhập số lượng mới
+                string input = Microsoft.VisualBasic.Interaction.InputBox($"Nhập số lượng mới cho {productName}:", "Sửa số lượng", guna2DataGridView1.Rows[e.RowIndex].Cells["Quantity"].Value.ToString());
+                if (int.TryParse(input, out int newQuantity) && newQuantity > 0)
+                {
+                    guna2DataGridView1.Rows[e.RowIndex].Cells["Quantity"].Value = newQuantity;
+                    guna2DataGridView1.Rows[e.RowIndex].Cells["Total"].Value = newQuantity * price;
+                }
+                else if (!string.IsNullOrEmpty(input))
+                {
+                    MessageBox.Show("Vui lòng nhập số lượng hợp lệ!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            // Xử lý nút Xóa
+            else if (guna2DataGridView1.Columns[e.ColumnIndex].Name == "Actions" && guna2DataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value?.ToString() == "Xóa")
+            {
+                guna2DataGridView1.Rows.RemoveAt(e.RowIndex);
+                // Cập nhật lại số thứ tự
+                orderIndex = 1;
+                foreach (DataGridViewRow row in guna2DataGridView1.Rows)
+                {
+                    row.Cells["OrderIndex"].Value = orderIndex++;
+                }
+            }
+        }
+         private void guna2DataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (guna2DataGridView1.Columns[e.ColumnIndex].Name == "Actions")
+            {
+                e.Value = "Sửa | Xóa";
+                e.FormattingApplied = true;
+            }
+        }
+
+        private void productUserControl1_Load(object sender, EventArgs e)
+        {
+
+        }
+        private void SetupDataGridViewColumns()
+        {
+            guna2DataGridView1.Columns.Clear();
+            guna2DataGridView1.AutoGenerateColumns = false;
+
+            // Cột Số thứ tự
+            guna2DataGridView1.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "OrderIndex",
+                HeaderText = "STT",
+                Width = 50
+            });
+
+            // Cột Tên sản phẩm
+            guna2DataGridView1.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "ProductName",
+                HeaderText = "Tên sản phẩm",
+                Width = 150
+            });
+
+            // Cột Số lượng
+            guna2DataGridView1.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "Quantity",
+                HeaderText = "Số lượng",
+                Width = 80
+            });
+
+            // Cột Giá tiền
+            guna2DataGridView1.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "Price",
+                HeaderText = "Giá tiền",
+                Width = 100,
+                DefaultCellStyle = new DataGridViewCellStyle { Format = "N0" }
+            });
+
+            // Cột Thành tiền
+            guna2DataGridView1.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "Total",
+                HeaderText = "Thành tiền",
+                Width = 100,
+                DefaultCellStyle = new DataGridViewCellStyle { Format = "N0" }
+            });
+
+            // Cột Hành động
+            DataGridViewButtonColumn actionColumn = new DataGridViewButtonColumn
+            {
+                Name = "Actions",
+                HeaderText = "Hành động",
+                Width = 150,
+                UseColumnTextForButtonValue = false
+            };
+            guna2DataGridView1.Columns.Add(actionColumn);
+        }
+        private int orderIndex = 1; // Biến đếm số thứ tự
+        private void AddOrUpdateProductToGrid(string productName, decimal price)
+        {
+            // Kiểm tra xem sản phẩm đã tồn tại trong DataGridView chưa
+            foreach (DataGridViewRow row in guna2DataGridView1.Rows)
+            {
+                if (row.Cells["ProductName"].Value?.ToString() == productName)
+                {
+                    // Tăng số lượng
+                    int currentQuantity = int.Parse(row.Cells["Quantity"].Value.ToString());
+                    row.Cells["Quantity"].Value = currentQuantity + 1;
+                    // Cập nhật thành tiền
+                    row.Cells["Total"].Value = (currentQuantity + 1) * price;
+                    return;
+                }
+            }
+
+            // Thêm sản phẩm mới
+            guna2DataGridView1.Rows.Add(orderIndex++, productName, 1, price, price);
         }
     }
 }
