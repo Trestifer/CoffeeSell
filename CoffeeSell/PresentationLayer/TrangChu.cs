@@ -1,5 +1,6 @@
 ﻿using CoffeeSell.BO;
 using CoffeeSell.ObjClass;
+using CoffeeSell.PresentationLayer;
 using Guna.UI2.WinForms;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,7 @@ namespace CoffeeSell
             panel10.Controls.Add(tcform);
             tcform.Show();
             // Tạo danh sách các panel
-            List<Panel> panels = new List<Panel> { panel1, panel2, panel3, panel4, panel5, panel6, panel7, panel8, panel9 };
+            List<Panel> panels = new List<Panel> { panel1, panel2, panel3, panel4, panel6, panel7, panel8, panel9, panel11 };
 
             // Dùng vòng lặp để gán sự kiện cho tất cả các panel
             foreach (var p in panels)
@@ -42,7 +43,7 @@ namespace CoffeeSell
             lblStaff.Text = user.GetTypeAccount() ? "Quản lý" : "Nhân viên";
             UpdateDateTime();
             timer1.Start();
-            if (!user.GetTypeAccount()) new[] { panel4, panel5, panel6, panel7, panel9 }.ToList().ForEach(p => p.Visible = false);
+            if (!user.GetTypeAccount()) new[] { panel4, panel6, panel7, panel9, panel11 }.ToList().ForEach(p => p.Visible = false);
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -92,22 +93,35 @@ namespace CoffeeSell
             panel2.Click += Panel2_Click;
             panel3.Click += Panel3_Click;
             panel4.Click += Panel4_Click;
-            panel5.Click += Panel5_Click;
+            
             panel6.Click += Panel6_Click;
             panel7.Click += Panel7_Click;
             panel8.Click += Panel8_Click;
             panel9.Click += Panel9_Click;
+            panel11.Click += Panel11_Click;
             timer1.Interval = 10000; // 10 seconds
             timer1.Tick += timer1_Tick;
             timer1.Start(); // Start the timer
 
             UpdateDateTime(); // Initial update when form loads
         }
+        private void Panel11_Click(object sender, EventArgs e)
+        {
+            
+            
+            panel10.Controls.Clear();
+            LogForm testform = new LogForm();
+            testform.TopLevel = false; // Đặt TopLevel thành false để Form có thể được nhúng
+            testform.FormBorderStyle = FormBorderStyle.None; // Xóa viền của Form (tùy chọn)
+            testform.Dock = DockStyle.Fill; // Đảm bảo Form lấp đầy panel10
+            panel10.Controls.Add(testform);
+            testform.Show();
+        }
         private void Panel2_Click(object sender, EventArgs e)
         {
             SaleCoffee saleform = new SaleCoffee();
             saleform.Show();
-            this.Hide();
+            
 
         }
         private void Panel1_Click(object sender, EventArgs e)
@@ -136,7 +150,7 @@ namespace CoffeeSell
         private void Panel4_Click(object sender, EventArgs e)
         {
             panel10.Controls.Clear();
-            QuanLySanPham spform = new QuanLySanPham();
+            QuanLySanPham spform = new QuanLySanPham(user);
             spform.TopLevel = false;
             spform.FormBorderStyle = FormBorderStyle.None;
             spform.Dock = DockStyle.Fill;
@@ -147,20 +161,14 @@ namespace CoffeeSell
         }
         private void Panel5_Click(object sender, EventArgs e)
         {
-            panel10.Controls.Clear();
-            QuanLyDanhMuc dmform = new QuanLyDanhMuc(user);
-            dmform.TopLevel = false;
-            dmform.FormBorderStyle = FormBorderStyle.None;
-            dmform.Dock = DockStyle.Fill;
-            panel10.Controls.Add(dmform);
-            dmform.Show();
+            
 
 
         }
         private void Panel6_Click(object sender, EventArgs e)
         {
             panel10.Controls.Clear();
-            QuanLyKhuyenMai kmform = new QuanLyKhuyenMai();
+            QuanLyKhuyenMai kmform = new QuanLyKhuyenMai(user);
             kmform.TopLevel = false;
             kmform.FormBorderStyle = FormBorderStyle.None;
             kmform.Dock = DockStyle.Fill;
@@ -319,10 +327,10 @@ namespace CoffeeSell
 
         private void guna2Button1_Click(object sender, EventArgs e)
         {
-            if(user.GetTypeAccount())
+            if (user.GetTypeAccount())
             {
                 new DoiMatKhau(user).Show();
-                
+
             }
             else
             {
@@ -330,6 +338,11 @@ namespace CoffeeSell
             }
             BOLoginHistory.Logout(user.GetAccountId());
             this.Close();
+        }
+
+        private void panel11_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

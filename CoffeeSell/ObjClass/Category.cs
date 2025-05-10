@@ -8,8 +8,8 @@ namespace CoffeeSell.ObjClass
 {
     public class Category
     {
-        private int CategoryID { get; set; }
-        private string CategoryName { get; set; }
+        public int CategoryID { get; set; }
+        public string CategoryName { get; set; }
 
         public Category(int categoryID, string categoryName)
         {

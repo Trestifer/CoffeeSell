@@ -1,32 +1,53 @@
 ﻿using System;
-using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 
 namespace CoffeeSell.Ulti
 {
     public class PhotoFunction
     {
-        public static string ImageToBase64(string imagePath)
+        // ✅ Lấy đường dẫn thư mục Images trong thư mục project (không phải bin/)
+        private static readonly string ImageFolder = Path.Combine(
+            Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.FullName,
+            "Images"
+        );
+
+        // 📌 Load ảnh từ file (tên ảnh là file name: food_5.jpg)
+        public static Image LoadImage(string fileName)
         {
-            using (Image image = Image.FromFile(imagePath))
-            using (MemoryStream ms = new MemoryStream())
+            try
             {
-                image.Save(ms, image.RawFormat);
-                byte[] imageBytes = ms.ToArray();
-                return Convert.ToBase64String(imageBytes);
+                string fullPath = Path.Combine(ImageFolder, fileName);
+                if (File.Exists(fullPath))
+                    return Image.FromFile(fullPath);
+
+                return Image.FromFile(Path.Combine(ImageFolder, "no_image.png"));
             }
-        }
-        public static Image Base64ToImage(string base64String)
-        {
-            byte[] imageBytes = Convert.FromBase64String(base64String);
-            using (var ms = new MemoryStream(imageBytes))
+            catch
             {
-                using (var original = Image.FromStream(ms))
-                {
-                    return new Bitmap(original); // Return a copy that doesn't depend on the stream
-                }
+                return null;
             }
         }
 
+        // 📌 Lưu ảnh vào thư mục Images, trả về tên file đã lưu
+        public static string SaveImageToImagesFolder(string sourcePath, int foodId)
+        {
+            try
+            {
+                if (!Directory.Exists(ImageFolder))
+                    Directory.CreateDirectory(ImageFolder);
+
+                string ext = Path.GetExtension(sourcePath);
+                string fileName = $"food_{foodId}{ext}";
+                string destPath = Path.Combine(ImageFolder, fileName);
+
+                File.Copy(sourcePath, destPath, overwrite: true);
+                return fileName; // ví dụ: food_5.jpg
+            }
+            catch
+            {
+                return "no_image.png";
+            }
+        }
     }
 }

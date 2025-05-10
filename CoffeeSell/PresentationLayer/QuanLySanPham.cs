@@ -1,12 +1,15 @@
 ﻿using CoffeeSell.BO;
 using CoffeeSell.ObjClass;
 using CoffeeSell.Ulti;
+using Guna.UI2.WinForms;
+using Microsoft.VisualBasic.ApplicationServices;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -15,31 +18,31 @@ namespace CoffeeSell
 {
     public partial class QuanLySanPham : Form
     {
+
         int foodId;
         string _NameCategory;
+        int CategoryId;
+        private Account user;
         private List<TextBox> textBoxes = new List<TextBox>();
         private string PhotoBase64;
-
-        public QuanLySanPham()
+        public QuanLySanPham(Account _user)
         {
             InitializeComponent();
-            DataTable dt = BOCategory.GetCategory();
+            user = _user;
+            QuanLyDanhMuc dmform = new QuanLyDanhMuc(user);
+            dmform.TopLevel = false;
+            dmform.FormBorderStyle = FormBorderStyle.None;
+            dmform.Dock = DockStyle.Fill;
+            dmform.Show();
 
             // Add a new empty row at the top
-            DataRow newRow = dt.NewRow();
-            newRow["NameCategory"] = "";  // Display text
-            newRow["CategoryId"] = -1;    // Value
-            dt.Rows.InsertAt(newRow, 0);
-
-            // Bind to ComboBox
-            cbcDanhMuc.DataSource = dt;
-            cbcDanhMuc.DisplayMember = "NameCategory";
-            cbcDanhMuc.ValueMember = "CategoryId";
-            Reset();
+            guna2DataGridView2.CellClick += Guna2DataGridView2_CellClick;
+            Reset_SanPham();
+            Reset_DanhMuc();
             textBoxes.Add(txtL);
             textBoxes.Add(txtM);
             textBoxes.Add(txtS);
-            foreach(TextBox txt in textBoxes)
+            foreach (TextBox txt in textBoxes)
             {
                 txt.KeyPress += KeyPressTien;
                 txt.TextChanged += Txt_TextChanged;
@@ -49,13 +52,41 @@ namespace CoffeeSell
 
         }
 
+        private void Guna2DataGridView2_CellClick(object? sender, DataGridViewCellEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
         private void Txt_TextChanged(object? sender, EventArgs e)
         {
             TextBox txtBox = sender as TextBox;
-            txtBox.Text = TextHandling.InputRange(txtBox,0, 200);
+            txtBox.Text = TextHandling.InputRange(txtBox, 0, 200);
         }
+        private void Reset_DanhMuc()
+        {
 
-        private void Reset()
+            DataTable dt = BOCategory.GetCategory();
+            DataRow newRow = dt.NewRow();
+            newRow["NameCategory"] = "";  // Display text
+            newRow["CategoryId"] = -1;    // Value
+            dt.Rows.InsertAt(newRow, 0);
+            // Bind to ComboBox
+            cbcDanhMuc.DataSource = dt;
+            cbcDanhMuc.DisplayMember = "NameCategory";
+            cbcDanhMuc.ValueMember = "CategoryId";
+
+            cbcDanhMuc.SelectedIndex = 0;
+            textBox2.Text = "";
+            _NameCategory = "";
+            CategoryId = -1;
+            guna2DataGridView2.DataSource = BOCategory.GetCategory();
+            guna2DataGridView2.Refresh();
+            guna2DataGridView2.Columns[0].HeaderText = "Mã danh mục";
+            guna2DataGridView2.Columns[1].HeaderText = "Tên danh mục";
+            guna2DataGridView2.ColumnHeadersHeight = 30;
+
+        }
+        private void Reset_SanPham()
         {
             pictureBox1.Image = null;
             foodId = -1;
@@ -65,7 +96,6 @@ namespace CoffeeSell
             txtM.Text = "";
             txtS.Text = "";
             txtName.Text = "";
-            cbcDanhMuc.SelectedIndex = 0;
             // Bind data to DataGridView
             DataTable dt = BOFood.GetAllFood();
             dtgrid.DataSource = dt;
@@ -155,9 +185,9 @@ namespace CoffeeSell
             if (BOFood.Add(info))
             {
                 MessageBox.Show("Thêm thành công");
-                BOActivityLog.Record("trestifer", 'A', $"Đã thêm vào {_NameCategory} sản phẩm {info.GetNameFood()}");
+                BOActivityLog.Record(user.GetLoginName(), 'A', $"Đã thêm vào {_NameCategory} sản phẩm {info.GetNameFood()}");
             }
-            Reset();
+            Reset_SanPham();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -170,9 +200,9 @@ namespace CoffeeSell
             if (BOFood.Update(info))
             {
                 MessageBox.Show("Sủa thành công");
-                BOActivityLog.Record("trestifer", 'E', $"Sửa sản phẩm có mã {foodId}");
+                BOActivityLog.Record(user.GetLoginName(), 'E', $"Sửa sản phẩm có mã {foodId}");
             }
-            Reset();
+            Reset_SanPham();
 
         }
 
@@ -195,12 +225,14 @@ namespace CoffeeSell
                     txtS.Text = TextHandling.CustomDecimalToString(row.Cells["Price_S"].Value.ToString());
                     txtL.Text = TextHandling.CustomDecimalToString(row.Cells["Price_L"].Value.ToString());
                     txtM.Text = TextHandling.CustomDecimalToString(row.Cells["Price_M"].Value.ToString());
-                    pictureBox1.Image = PhotoFunction.Base64ToImage(row.Cells["Photo"].Value.ToString());
+                    string fileName = row.Cells["Photo"].Value.ToString();
+                    pictureBox1.Image = ImageCache.GetImage(Path.Combine("Images", fileName));
                 }
                 catch (Exception ex)
                 {
 
-                    Reset();
+                    Reset_DanhMuc();
+                    Reset_SanPham();
                 }
             }
         }
@@ -216,9 +248,9 @@ namespace CoffeeSell
             if (BOFood.Delete(info.GetFoodId()))
             {
                 MessageBox.Show("Xóa thành công");
-                BOActivityLog.Record("trestifer", 'D', $"Đã xóa từ {_NameCategory} sản phẩm {info.GetNameFood()}");
+                BOActivityLog.Record(user.GetLoginName(), 'D', $"Đã xóa từ {_NameCategory} sản phẩm {info.GetNameFood()}");
             }
-            Reset();
+            Reset_SanPham();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -231,8 +263,9 @@ namespace CoffeeSell
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     string sourcePath = openFileDialog.FileName;
-                    PhotoBase64 = PhotoFunction.ImageToBase64(sourcePath);
-                    pictureBox1.Image = PhotoFunction.Base64ToImage(PhotoBase64);
+                    string fileName = PhotoFunction.SaveImageToImagesFolder(sourcePath, foodId);
+                    PhotoBase64 = fileName; // lưu tên file ảnh vào biến PhotoBase64 để SetPhoto
+                    pictureBox1.Image = ImageCache.GetImage(Path.Combine("Images", fileName));
 
                 }
             }
@@ -257,6 +290,59 @@ namespace CoffeeSell
             if (!TextHandling.IsValidAlphabeticInput(e.KeyChar, txtBox.Text))
             {
                 e.Handled = true;  // Block the keypress if it's not valid
+            }
+        }
+
+        private void panelcontent_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void QuanLySanPham_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            Category category = new Category();
+            category.SetCategoryName(textBox2.Text);
+            if (BOCategory.Add(category))
+            {
+                MessageBox.Show("Thêm thành công");
+                BOActivityLog.Record(user.GetLoginName(), 'A', $"Đã thêm danh mục {category.GetCategoryName()}");
+            }
+            Reset_DanhMuc();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            if (BOCategory.Delete(CategoryId))
+            {
+                MessageBox.Show("Xóa thành công");
+                BOActivityLog.Record(user.GetLoginName(), 'D', $"Đã xóa danh mục {_NameCategory}");
+
+            }
+            Reset_DanhMuc();
+        }
+        private void guna2DataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                try
+                {
+                    CategoryId = (int)guna2DataGridView2.Rows[e.RowIndex].Cells[0].Value;
+                    _NameCategory = (string)guna2DataGridView2.Rows[e.RowIndex].Cells[1].Value;
+                    textBox2.Text = _NameCategory;
+
+                    // Optionally scroll the selected row into view
+                    guna2DataGridView2.FirstDisplayedScrollingRowIndex = e.RowIndex;
+                }
+                catch (Exception ex)
+                {
+                    Reset_SanPham();
+                    Reset_DanhMuc();
+                }
             }
         }
     }

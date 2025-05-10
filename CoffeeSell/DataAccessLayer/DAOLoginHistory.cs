@@ -151,6 +151,33 @@ namespace CoffeeSell.DataAccessLayer
                 return null;
             }
         }
+        public DataTable GetLoginHistoryWithUsernames()
+        {
+            string cmString = @"
+        SELECT 
+            lh.Id AS LoginHistoryId,
+            acc.LoginName,
+            lh.LoginTime,
+            lh.LogoutTime,
+            lh.SuccessfulLogin
+        FROM 
+            LoginHistory lh
+        INNER JOIN 
+            Account acc ON lh.IdAccount = acc.AccountId
+        ORDER BY 
+            lh.LoginTime DESC"; // Change to ASC for oldest first
+
+            try
+            {
+                return ExecuteQuery(cmString);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"GetLoginHistoryWithUsernames error: {ex.Message}");
+                return new DataTable();
+            }
+        }
+
 
     }
 }

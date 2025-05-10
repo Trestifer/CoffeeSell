@@ -1,6 +1,7 @@
 ﻿using CoffeeSell.BO;
 using CoffeeSell.ObjClass;
 using Guna.UI2.WinForms;
+using Microsoft.Identity.Client;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,6 +26,11 @@ namespace CoffeeSell
             Reset();
             this.user = _user;
         }
+        public QuanLyDanhMuc()
+        {
+            InitializeComponent();
+            Reset();
+        }
 
         private void label1_Click(object sender, EventArgs e)
         {
@@ -37,31 +43,21 @@ namespace CoffeeSell
             textBox2.Text = "";
             name = "";
             CategoryId = -1;
-            guna2DataGridView1.DataSource = BOCategory.GetCategory();
-            guna2DataGridView1.Show();
+            guna2DataGridView2.DataSource = BOCategory.GetCategory();
+            guna2DataGridView2.Refresh();
+            guna2DataGridView2.Columns[0].HeaderText = "Mã danh mục";
+            guna2DataGridView2.Columns[1].HeaderText = "Tên danh mục";
+            guna2DataGridView2.ColumnHeadersHeight = 30;
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Category category = new Category();
-            category.SetCategoryName(textBox2.Text);
-            if(BOCategory.Add(category))
-            {
-                MessageBox.Show("Thêm thành công");
-                BOActivityLog.Record(user.GetLoginName(), 'A', $"Đã thêm danh mục {category.GetCategoryName()}");
-            }
-            Reset();
+            
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            if (BOCategory.Delete(CategoryId))
-            {
-                MessageBox.Show("Xóa thành công");
-                BOActivityLog.Record(user.GetLoginName(), 'D', $"Đã xóa danh mục {name}");
-
-            }
-            Reset();
+            
         }
 
         private void guna2DataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -70,14 +66,24 @@ namespace CoffeeSell
             {
                 try
                 {
-                    CategoryId = (int) guna2DataGridView1.Rows[e.RowIndex].Cells[0].Value;
-                    name = (string) guna2DataGridView1.Rows[e.RowIndex].Cells[1].Value;
+                    CategoryId = (int)guna2DataGridView1.Rows[e.RowIndex].Cells[0].Value;
+                    name = (string)guna2DataGridView1.Rows[e.RowIndex].Cells[1].Value;
+                    textBox2.Text = name;
+
+                    // Optionally scroll the selected row into view
+                    guna2DataGridView1.FirstDisplayedScrollingRowIndex = e.RowIndex;
                 }
                 catch (Exception ex)
                 {
                     Reset();
                 }
             }
+        }
+
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
