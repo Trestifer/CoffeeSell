@@ -101,12 +101,12 @@
             dtgrid.ReadOnly = true;
             dtgrid.RowHeadersVisible = false;
             dtgrid.RowHeadersWidth = 51;
-<<<<<<< HEAD
+
             dtgrid.Size = new Size(894, 913);
             dtgrid.Size = new Size(663, 685);
-=======
+
             dtgrid.Size = new Size(715, 913);
->>>>>>> bb670295ba9765f7e9727b5afb1bf45ff4fd549d
+
             dtgrid.TabIndex = 0;
             dtgrid.ThemeStyle.AlternatingRowsStyle.BackColor = Color.White;
             dtgrid.ThemeStyle.AlternatingRowsStyle.Font = null;

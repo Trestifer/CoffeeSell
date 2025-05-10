@@ -1,4 +1,6 @@
-﻿using CoffeeSell.ObjClass;
+﻿using CoffeeSell.DataAccessLayer;
+using CoffeeSell.ObjClass;
+using CoffeeSell.ObjClass.CoffeeSell.ObjClass;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
@@ -14,6 +16,8 @@ namespace CoffeeSell
 {
     public partial class SaleCoffee : Form
     {
+        private DAOFood daoFood = new DAOFood();
+        private DAOCategory daoCategory = new DAOCategory();
         private string selectedSize = "Tất cả"; // Biến lưu size được chọn
         private decimal? minPrice = null; // Giá thấp nhất
         private decimal? maxPrice = null; // Giá cao nhất
@@ -23,6 +27,8 @@ namespace CoffeeSell
         {
             InitializeComponent();
             // Tăng chiều cao của header
+            //InitializeDataGridView();
+            LoadProducts();
             guna2DataGridView1.ColumnHeadersHeight = 40; // Chiều cao 40 pixel, có thể tăng thêm nếu muốn
             guna2DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
             comboBox1.Items.AddRange(new string[] { "A-Z", "Z-A", "Tất cả" });
@@ -119,8 +125,66 @@ namespace CoffeeSell
         {
 
         }
+        // Khởi tạo cấu trúc DataGridView
+        //private void InitializeDataGridView()
+        //{
+        //    guna2DataGridView1.Columns.Clear();
+        //    guna2DataGridView1.Columns.Add("ProductName", "Tên sản phẩm");
+        //    guna2DataGridView1.Columns.Add("Quantity", "Số lượng");
+        //    guna2DataGridView1.Columns.Add("Size", "Size");
+        //    guna2DataGridView1.Columns.Add("Price", "Giá (VNĐ)");
+        //    guna2DataGridView1.Columns.Add("Total", "Thành tiền (VNĐ)");
 
+        //    // Thêm cột Hành động với nút Sửa và Xóa
+        //    var actionColumn = new Guna2DataGridViewButtonColumn
+        //    {
+        //        Name = "Actions",
+        //        HeaderText = "Hành động",
+        //        Text = "Sửa|Xóa",
+        //        UseColumnTextForButtonValue = false
+        //    };
+        //    guna2DataGridView1.Columns.Add(actionColumn);
 
+        //    // Định dạng cột
+        //    guna2DataGridView1.Columns["Price"].DefaultCellStyle.Format = "N0";
+        //    guna2DataGridView1.Columns["Total"].DefaultCellStyle.Format = "N0";
+        //    guna2DataGridView1.Columns["Quantity"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        //    guna2DataGridView1.Columns["Size"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+        //    // Gắn sự kiện CellContentClick
+        //    guna2DataGridView1.CellContentClick += guna2DataGridView1_CellContentClick;
+        //}
+        //private void LoadProducts()
+        //{
+        //    var foods = daoFood.GetAllFood();
+        //    foreach (System.Data.DataRow row in foods.Rows)
+        //    {
+        //        var product = new ProductUserControl(
+        //            Convert.ToInt32(row["FoodId"]),
+        //            row["NameFood"].ToString(),
+        //            row["Photo"].ToString(),
+        //            Convert.ToDecimal(row["Price_S"]),
+        //            Convert.ToDecimal(row["Price_M"]),
+        //            Convert.ToDecimal(row["Price_L"])
+        //        );
+        //        product.ProductSelected += ProductUserControl_ProductSelected;
+        //        flowLayoutPanel1.Controls.Add(product); // Giả định flowLayoutPanel1 chứa các ProductUserControl
+        //    }
+        //}
+
+        // Xử lý sự kiện khi chọn sản phẩm
+        private void ProductUserControl_ProductSelected(object sender, FoodInCart foodInCart)
+        {
+            // Thêm dòng mới vào DataGridView
+            guna2DataGridView1.Rows.Add(
+                foodInCart.NameFood,
+                foodInCart.Quantity,
+                foodInCart.Size,
+                foodInCart.Price,
+                foodInCart.Amount,
+                "Sửa|Xóa" // Giá trị cho cột Hành động
+            );
+        }
         private void LoadProducts(int? categoryId = null)
         {
             string query = categoryId.HasValue
