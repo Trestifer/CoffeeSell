@@ -6,13 +6,12 @@ namespace CoffeeSell.Ulti
 {
     public class PhotoFunction
     {
-        // ✅ Lấy đường dẫn thư mục Images trong thư mục project (không phải bin/)
+       
         private static readonly string ImageFolder = Path.Combine(
-            Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.FullName,
-            "Images"
+            AppDomain.CurrentDomain.BaseDirectory, "Images"
         );
 
-        // 📌 Load ảnh từ file (tên ảnh là file name: food_5.jpg)
+        // Load ảnh từ file (tên ảnh là file name: food_5.jpg)
         public static Image LoadImage(string fileName)
         {
             try
@@ -29,7 +28,7 @@ namespace CoffeeSell.Ulti
             }
         }
 
-        // 📌 Lưu ảnh vào thư mục Images, trả về tên file đã lưu
+        // Lưu ảnh vào thư mục Images, trả về tên file đã lưu
         public static string SaveImageToImagesFolder(string sourcePath, int foodId)
         {
             try
