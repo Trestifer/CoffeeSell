@@ -433,7 +433,7 @@
             // 
             lblTienGiam.AutoSize = true;
             lblTienGiam.Font = new Font("Segoe UI", 12F);
-            lblTienGiam.Location = new Point(420, 92);
+            lblTienGiam.Location = new Point(420, 88);
             lblTienGiam.Name = "lblTienGiam";
             lblTienGiam.Size = new Size(0, 28);
             lblTienGiam.TabIndex = 15;
@@ -488,7 +488,7 @@
             labeltotal.AutoSize = true;
             labeltotal.Font = new Font("Segoe UI", 12F);
             labeltotal.ForeColor = Color.Red;
-            labeltotal.Location = new Point(420, 148);
+            labeltotal.Location = new Point(420, 144);
             labeltotal.Name = "labeltotal";
             labeltotal.Size = new Size(0, 28);
             labeltotal.TabIndex = 9;
@@ -624,7 +624,7 @@
             Controls.Add(panel2);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
-            
+//            Name = "SaleCoffee";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "SaleCoffee";
             WindowState = FormWindowState.Maximized;

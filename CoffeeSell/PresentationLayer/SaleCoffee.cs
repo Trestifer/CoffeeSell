@@ -2,6 +2,7 @@
 using CoffeeSell.ObjClass;
 using CoffeeSell.ObjClass.CoffeeSell.ObjClass;
 using CoffeeSell.PresentationLayer;
+using CoffeeSell.Ulti;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
@@ -443,7 +444,6 @@ namespace CoffeeSell
                 foreach(DataRow row in DiscountApplied.Rows)
                 {
                     totalDiscount += Convert.ToInt32(row["DiscountPercent"]);
-                    MessageBox.Show(totalDiscount.ToString());
                 }
                 discount = Math.Min((totalDiscount * total) / 100, total);
             }
@@ -579,6 +579,7 @@ namespace CoffeeSell
             else if (txtSDT.Text != "")
             {
                 customerinfo.SetCustomerId(BOCustomer.Add(customerinfo));
+                customerinfo.SetPoints(0);
                 MessageBox.Show(customerinfo.GetCustomerId().ToString());
                 ReloadCustomer();
             }
@@ -593,35 +594,69 @@ namespace CoffeeSell
 
             // Parse to decimal
             decimal price = decimal.Parse(cleaned);
+            string cleanedd = lblTien.Text.Replace("VNĐ", "").Trim();
+
+            // Remove thousand separator
+            cleanedd = cleanedd.Replace(",", "");
+
+            // Parse to decimal
+            decimal pricee = decimal.Parse(cleanedd);
+
+            string cleaneddd = lblTienGiam.Text.Replace("VNĐ", "").Trim();
+
+            // Remove thousand separator
+            cleaneddd = cleaneddd.Replace(",", "");
+
+            // Parse to decimal
+            decimal priceee = decimal.Parse(cleaneddd);
 
             if (price > 0)
             {
                 Bill bill = new Bill();
                 bill.CustomerId = customerinfo.GetCustomerId() == -1 ? null : customerinfo.GetCustomerId();
                 bill.TotalPrice = price;
-                ////////////////////////////////////////////////////////////////////////////////////////////////////////
-                /*
-                 * Gọi ThoiTienForm để lấy dữ liệu số tiền khách hàng
-                 * Tạo ảnh tại đây lấy thông tin từ khách hàng nếu cần bằng ID
-                 * Lưu thông shop, wifi trên textfile,... trích xuất và tạo hóa đơn lưu vào ảnh vào 1 folder trên project
-                 * Lấy displayname hoặc Login name từ user đã đc định nghĩa từ trc
-                 * Lấy tên thức uống-size ví dụ Nước cam-S
-                 * Lấy giá thêm vào và tạo png lưu vào 1 folder trên project(tương tự hàm save trong PhotoFunction)
-                 * Lưu tên file vào csdl
-                 * 
-                 * 
-                 * 
-                 */
-                /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                decimal TienDua =0;
+                ThoiTienForm tempForm = new ThoiTienForm(price);
+                if(tempForm.ShowDialog() == DialogResult.OK )
+                {
+                    TienDua = tempForm.TienDua;
+                }
+                decimal TienThoi = TienDua - price;
+                Receipt receipt = new Receipt();
+                receipt.receive = TienDua;
+                receipt.changeDue = TienThoi;
+                receipt.totalPrice = pricee;
+                receipt.totalDiscount = priceee;
+                receipt.finalPrice = price;
                 bill.BillId = BOBill.Add(bill);
+                receipt.id = bill.BillId;
                 if (bill.BillId > 0)
                 {
+                    List<Products> list = new List<Products>();
                     foreach (DataGridViewRow row in guna2DataGridView1.Rows)
                     {
                         BillInfo billInfo = new BillInfo();
                         billInfo.SetIdBill(bill.BillId);
                         billInfo.SetIdFood(Convert.ToInt32(row.Cells["FoodId"].Value));
                         billInfo.SetQuantity(Convert.ToInt32(row.Cells["Quantity"].Value));
+                        string productName = row.Cells["ProductName"].Value?.ToString() ?? "";
+                        string size = row.Cells["Size"].Value?.ToString() ?? "";
+                        string fullName = productName + "-" + size;
+
+                        decimal pricextz = 0;
+                        if (decimal.TryParse(row.Cells["Total"].Value?.ToString(), out decimal parsedPrice))
+                            pricextz = parsedPrice;
+                        // Else keep price = 0 or handle error accordingly
+
+                        Products product = new Products(
+                            fullName,
+                            billInfo.GetQuantity(),
+                            pricextz
+                        );
+
+
+                        list.Add(product);
                         if (billInfo.GetIdFood() == 0)
                             break;
                         if (!BOBIllInfo.Add(billInfo))
@@ -630,16 +665,13 @@ namespace CoffeeSell
                             return;
                         }
                     }
+                    receipt.Items = list;
+                    string path = PhotoFunction.GenerateReceipt(receipt, user.GetLoginName(), customerinfo);
+                    BOBill.UpdatePhoto(bill.BillId, path);
                    
                     if(DiscountApplied!=null)
                     {
-                        string cleanedd = lblTien.Text.Replace("VNĐ", "").Trim();
-
-                        // Remove thousand separator
-                        cleanedd = cleanedd.Replace(",", "");
-
-                        // Parse to decimal
-                        decimal pricee = decimal.Parse(cleanedd);
+                        
                         foreach(DataRow row in DiscountApplied.Rows)
                         {
                             decimal sv = pricee * (decimal)row["DiscountPercent"] / 100;

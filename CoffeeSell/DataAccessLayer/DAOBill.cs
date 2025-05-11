@@ -154,6 +154,7 @@ namespace CoffeeSell.DataAccessLayer
             b.DateCheckIn,
             b.TotalPrice,
             b.StatusBill,
+            b.Photo,
             c.NameCustomer,
             c.PhoneNumber
         FROM 
@@ -169,6 +170,28 @@ namespace CoffeeSell.DataAccessLayer
             {
                 System.Diagnostics.Debug.WriteLine($"GetBillWithCustomerInfo error: {ex.Message}");
                 return new DataTable();
+            }
+        }
+        public bool UpdateBillPhoto(int billId, string photo)
+        {
+            string cmString = @"
+        UPDATE Bill
+        SET Photo = @Photo
+        WHERE BillId = @Id";
+
+            try
+            {
+                int rows = ExecuteNonQuery(
+                    cmString,
+                    new string[] { "@Photo", "@Id" },
+                    new object[] { photo, billId });
+
+                return rows > 0;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"UpdateBillPhoto error: {ex.Message}");
+                return false;
             }
         }
 

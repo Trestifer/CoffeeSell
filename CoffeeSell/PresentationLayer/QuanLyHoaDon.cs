@@ -1,5 +1,6 @@
 ﻿using CoffeeSell.BO;
 using CoffeeSell.DataAccessLayer;
+using CoffeeSell.Ulti;
 using System;
 using System.Data;
 using System.Windows.Forms;
@@ -145,6 +146,8 @@ namespace CoffeeSell
                 try
                 {
                     int maHoaDon = Convert.ToInt32(guna2DataGridView1.SelectedRows[0].Cells["BillId"].Value);
+                    string path = (guna2DataGridView1.SelectedRows[0].Cells["Photo"].Value).ToString();
+                    PhotoFunction.OpenImageByName(path);
                     HienThiChiTietHoaDon(maHoaDon);
                 }
                 catch (Exception ex)

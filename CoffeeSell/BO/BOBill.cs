@@ -24,5 +24,9 @@ namespace CoffeeSell.BO
         {
             return bil.GetBillWithCustomerInfo();
         }
+        public static bool UpdatePhoto(int id,string photo)
+        {
+            return bil.UpdateBillPhoto(id,photo);
+        }
     }
 }
