@@ -600,6 +600,19 @@ namespace CoffeeSell
                 Bill bill = new Bill();
                 bill.CustomerId = customerinfo.GetCustomerId() == -1 ? null : customerinfo.GetCustomerId();
                 bill.TotalPrice = price;
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////
+                /*
+                 * Tạo ảnh tại đây lấy thông tin từ khách hàng nếu cần bằng ID
+                 * Lưu thông shop, wifi trên textfile,... trích xuất và tạo hóa đơn lưu vào ảnh vào 1 folder trên project
+                 * Lấy displayname hoặc Login name từ user đã đc định nghĩa từ trc
+                 * Lấy tên thức uống-size ví dụ Nước cam-S
+                 * Lấy giá thêm vào và tạo png lưu vào 1 folder trên project(tương tự hàm save trong PhotoFunction)
+                 * Lưu tên file vào csdl
+                 * 
+                 * 
+                 * 
+                 */
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////
                 bill.BillId = BOBill.Add(bill);
                 if (bill.BillId > 0)
                 {
