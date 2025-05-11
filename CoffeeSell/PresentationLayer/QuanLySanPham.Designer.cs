@@ -418,6 +418,7 @@
             guna2DataGridView2.ThemeStyle.RowsStyle.Height = 25;
             guna2DataGridView2.ThemeStyle.RowsStyle.SelectionBackColor = Color.FromArgb(231, 229, 255);
             guna2DataGridView2.ThemeStyle.RowsStyle.SelectionForeColor = Color.FromArgb(71, 69, 94);
+            guna2DataGridView2.CellContentClick += guna2DataGridView2_CellContentClick;
             // 
             // textBox2
             // 

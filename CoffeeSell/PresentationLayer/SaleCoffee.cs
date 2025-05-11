@@ -601,6 +601,7 @@ namespace CoffeeSell
                 bill.TotalPrice = price;
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////
                 /*
+                 * Gọi ThoiTienForm để lấy dữ liệu số tiền khách hàng
                  * Tạo ảnh tại đây lấy thông tin từ khách hàng nếu cần bằng ID
                  * Lưu thông shop, wifi trên textfile,... trích xuất và tạo hóa đơn lưu vào ảnh vào 1 folder trên project
                  * Lấy displayname hoặc Login name từ user đã đc định nghĩa từ trc

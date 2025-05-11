@@ -29,6 +29,7 @@ namespace CoffeeSell
         {
             InitializeComponent();
             user = _user;
+            guna2DataGridView2.CellClick += Guna2DataGridView1_CellClick;
             QuanLyDanhMuc dmform = new QuanLyDanhMuc(user);
             dmform.TopLevel = false;
             dmform.FormBorderStyle = FormBorderStyle.None;
@@ -52,9 +53,30 @@ namespace CoffeeSell
 
         }
 
+        private void Guna2DataGridView1_CellClick(object? sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                try
+                {
+                    CategoryId = (int)guna2DataGridView2.Rows[e.RowIndex].Cells[0].Value;
+                    _NameCategory = (string)guna2DataGridView2.Rows[e.RowIndex].Cells[1].Value;
+                    textBox2.Text = _NameCategory;
+                    MessageBox.Show(CategoryId.ToString());
+                    // Optionally scroll the selected row into view
+                    guna2DataGridView2.FirstDisplayedScrollingRowIndex = e.RowIndex;
+                }
+                catch (Exception ex)
+                {
+                    Reset_SanPham();
+                    Reset_DanhMuc();
+                }
+            }
+        }
+
         private void Guna2DataGridView2_CellClick(object? sender, DataGridViewCellEventArgs e)
         {
-            //throw new NotImplementedException();
+            
         }
 
         private void Txt_TextChanged(object? sender, EventArgs e)
@@ -264,7 +286,7 @@ namespace CoffeeSell
                 {
                     string sourcePath = openFileDialog.FileName;
                     string fileName = PhotoFunction.SaveImageToImagesFolder(sourcePath, foodId);
-                    PhotoPath = fileName; 
+                    PhotoPath = fileName;
                     pictureBox1.Image = PhotoFunction.LoadImage(fileName);
 
                 }
@@ -325,25 +347,11 @@ namespace CoffeeSell
             }
             Reset_DanhMuc();
         }
-        private void guna2DataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0)
-            {
-                try
-                {
-                    CategoryId = (int)guna2DataGridView2.Rows[e.RowIndex].Cells[0].Value;
-                    _NameCategory = (string)guna2DataGridView2.Rows[e.RowIndex].Cells[1].Value;
-                    textBox2.Text = _NameCategory;
+   
 
-                    // Optionally scroll the selected row into view
-                    guna2DataGridView2.FirstDisplayedScrollingRowIndex = e.RowIndex;
-                }
-                catch (Exception ex)
-                {
-                    Reset_SanPham();
-                    Reset_DanhMuc();
-                }
-            }
+        private void guna2DataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }
