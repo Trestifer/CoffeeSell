@@ -101,7 +101,7 @@
             dtgrid.ReadOnly = true;
             dtgrid.RowHeadersVisible = false;
             dtgrid.RowHeadersWidth = 51;
-            dtgrid.Size = new Size(715, 913);
+            dtgrid.Size = new Size(764, 831);
             dtgrid.TabIndex = 0;
             dtgrid.ThemeStyle.AlternatingRowsStyle.BackColor = Color.White;
             dtgrid.ThemeStyle.AlternatingRowsStyle.Font = null;
@@ -138,6 +138,7 @@
             // 
             // comboBox3
             // 
+            comboBox3.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox3.FormattingEnabled = true;
             comboBox3.Items.AddRange(new object[] { "Mã SP", "Tên SP" });
             comboBox3.Location = new Point(398, 27);

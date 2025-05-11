@@ -92,7 +92,7 @@
             tabPage1.Location = new Point(4, 37);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(1655, 759);
+            tabPage1.Size = new Size(1886, 1029);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Hóa đơn pha chế";
             tabPage1.Click += tabPage1_Click;
@@ -335,6 +335,7 @@
             // 
             // comboBox3
             // 
+            comboBox3.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox3.FormattingEnabled = true;
             comboBox3.Location = new Point(126, 111);
             comboBox3.Name = "comboBox3";

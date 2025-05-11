@@ -42,11 +42,11 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges9 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges10 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             guna2GradientPanel4 = new Guna.UI2.WinForms.Guna2GradientPanel();
-            label3 = new Label();
+            label2 = new Label();
             guna2PictureBox4 = new Guna.UI2.WinForms.Guna2PictureBox();
             label17 = new Label();
+            label3 = new Label();
             guna2GradientPanel3 = new Guna.UI2.WinForms.Guna2GradientPanel();
-            label2 = new Label();
             guna2PictureBox3 = new Guna.UI2.WinForms.Guna2PictureBox();
             label16 = new Label();
             guna2GradientPanel1 = new Guna.UI2.WinForms.Guna2GradientPanel();
@@ -77,16 +77,17 @@
             guna2GradientPanel4.Size = new Size(309, 192);
             guna2GradientPanel4.TabIndex = 16;
             // 
-            // label3
+            // label2
             // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI Emoji", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.ForeColor = Color.White;
-            label3.Location = new Point(121, 117);
-            label3.Name = "label3";
-            label3.Size = new Size(109, 31);
-            label3.TabIndex = 2;
-            label3.Text = "Hóa đơn";
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI Emoji", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2.ForeColor = Color.White;
+            label2.Location = new Point(121, 117);
+            label2.Name = "label2";
+            label2.Size = new Size(144, 31);
+            label2.TabIndex = 3;
+            label2.Text = "Khách hàng";
+            label2.Click += label2_Click;
             // 
             // guna2PictureBox4
             // 
@@ -112,6 +113,17 @@
             label17.TabIndex = 0;
             label17.Text = "Hóa đơn";
             // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI Emoji", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label3.ForeColor = Color.White;
+            label3.Location = new Point(121, 117);
+            label3.Name = "label3";
+            label3.Size = new Size(109, 31);
+            label3.TabIndex = 2;
+            label3.Text = "Hóa đơn";
+            // 
             // guna2GradientPanel3
             // 
             guna2GradientPanel3.BackColor = Color.FromArgb(0, 94, 165);
@@ -124,18 +136,6 @@
             guna2GradientPanel3.ShadowDecoration.CustomizableEdges = customizableEdges8;
             guna2GradientPanel3.Size = new Size(309, 192);
             guna2GradientPanel3.TabIndex = 15;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI Emoji", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.ForeColor = Color.White;
-            label2.Location = new Point(121, 117);
-            label2.Name = "label2";
-            label2.Size = new Size(144, 31);
-            label2.TabIndex = 3;
-            label2.Text = "Khách hàng";
-            label2.Click += label2_Click;
             // 
             // guna2PictureBox3
             // 
@@ -223,6 +223,7 @@
             // 
             // comboBox1
             // 
+            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox1.FormattingEnabled = true;
             comboBox1.Location = new Point(1351, 156);
             comboBox1.Name = "comboBox1";

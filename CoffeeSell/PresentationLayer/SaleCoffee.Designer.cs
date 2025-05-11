@@ -546,22 +546,22 @@
             // 
             // comboBox1
             // 
+            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox1.FormattingEnabled = true;
             comboBox1.Location = new Point(1, 92);
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(219, 28);
             comboBox1.TabIndex = 16;
-            comboBox1.Text = "Tên sản phẩm từ A-Z";
             comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             // 
             // comboBox2
             // 
+            comboBox2.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox2.FormattingEnabled = true;
             comboBox2.Location = new Point(687, 95);
             comboBox2.Name = "comboBox2";
             comboBox2.Size = new Size(219, 28);
             comboBox2.TabIndex = 17;
-            comboBox2.Text = "Kích Thước";
             comboBox2.SelectedIndexChanged += comboBox2_SelectedIndexChanged;
             // 
             // label19

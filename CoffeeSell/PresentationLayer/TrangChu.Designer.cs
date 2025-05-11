@@ -690,6 +690,8 @@
             Controls.Add(panel10);
             Controls.Add(guna2CustomGradientPanel2);
             Controls.Add(guna2CustomGradientPanel1);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
             Name = "TrangChu";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "TrangChu";
