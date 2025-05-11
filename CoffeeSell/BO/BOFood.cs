@@ -28,5 +28,9 @@ namespace CoffeeSell.BO
         {
             return food.UpdateFood(foodInfo);
         }
+        public static bool HasProductsInCategory(int categoryId)
+        {
+            return food.CountProductsInCategory(categoryId) > 0;
+        }
     }
 }

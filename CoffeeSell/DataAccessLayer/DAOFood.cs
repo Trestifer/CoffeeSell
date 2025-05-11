@@ -126,6 +126,7 @@ namespace CoffeeSell.DataAccessLayer
                 return -1;
             }
         }
+
         public DataTable GetAllFoodWithCategory()
         {
             string query = @"
@@ -152,6 +153,24 @@ namespace CoffeeSell.DataAccessLayer
                 return new DataTable();
             }
         }
+        public int CountProductsInCategory(int categoryId)
+        {
+            string query = "SELECT COUNT(*) FROM Food WHERE CategoryId = @CategoryId";
 
+            try
+            {
+                object result = ExecuteScalar(
+                    query,
+                    new string[] { "@CategoryId" },
+                    new object[] { categoryId }
+                );
+                return result != null ? Convert.ToInt32(result) : 0;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"CountProductsInCategory error: {ex.Message}");
+                return 0;
+            }
+        }
     }
 }
