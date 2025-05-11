@@ -3,6 +3,7 @@ using System;
 using System.Data;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Collections.Generic;
 
 namespace CoffeeSell
 {
@@ -27,7 +28,7 @@ namespace CoffeeSell
             chartRevenueByMonth = new Chart();
             chartRevenueByMonth.Size = new System.Drawing.Size(900, 600); // Tăng kích thước biểu đồ
             // Đặt vị trí ở góc dưới cùng bên phải, giả định form có kích thước 1000x600
-            chartRevenueByMonth.Location = new System.Drawing.Point(1000 -400, 600-400 ); // Căn sát góc phải và đáy
+            chartRevenueByMonth.Location = new System.Drawing.Point(1000 - 400, 600 - 400); // Căn sát góc phải và đáy
             chartRevenueByMonth.Name = "chartRevenueByMonth";
 
             ChartArea chartArea = new ChartArea();
@@ -50,11 +51,8 @@ namespace CoffeeSell
         {
             try
             {
-                DateTime currentDate = DateTime.Now.Date;
-                System.Diagnostics.Debug.WriteLine($"Đang tải số liệu cho ngày: {currentDate:yyyy-MM-dd}");
-
                 DataTable billTable = daoBill.GetAllBill();
-                DataTable billInfoTable = daoBillInfo.GetBillInfoByDate(currentDate);
+                DataTable billInfoTable = daoBillInfo.GetAllBillInfo(); // Lấy tất cả BillInfo, không giới hạn ngày
                 DataTable foodTable = daoFood.GetAllFood();
 
                 if (billTable == null || billInfoTable == null || foodTable == null)
@@ -69,8 +67,34 @@ namespace CoffeeSell
                 System.Diagnostics.Debug.WriteLine($"Số hàng - Bill: {billTable.Rows.Count}, BillInfo: {billInfoTable.Rows.Count}, Food: {foodTable.Rows.Count}");
 
                 decimal totalRevenue = 0;
-                int totalProducts = 0;
+                int totalUniqueBills = 0;
+                int totalUniqueFoods = 0;
 
+                // Đếm số lượng duy nhất BillId trong toàn bộ cơ sở dữ liệu
+                var uniqueBillIds = new HashSet<int>();
+                foreach (DataRow billRow in billTable.Rows)
+                {
+                    if (billRow.Table.Columns.Contains("BillId"))
+                    {
+                        uniqueBillIds.Add(Convert.ToInt32(billRow["BillId"]));
+                    }
+                }
+                totalUniqueBills = uniqueBillIds.Count;
+                System.Diagnostics.Debug.WriteLine($"Tổng số hóa đơn duy nhất trong cơ sở dữ liệu: {totalUniqueBills}");
+
+                // Đếm số lượng duy nhất FoodId trong toàn bộ cơ sở dữ liệu (từ bảng Food)
+                var uniqueFoodIds = new HashSet<int>();
+                foreach (DataRow foodRow in foodTable.Rows)
+                {
+                    if (foodRow.Table.Columns.Contains("FoodId"))
+                    {
+                        uniqueFoodIds.Add(Convert.ToInt32(foodRow["FoodId"]));
+                    }
+                }
+                totalUniqueFoods = uniqueFoodIds.Count;
+                System.Diagnostics.Debug.WriteLine($"Tổng số loại món ăn duy nhất trong cơ sở dữ liệu: {totalUniqueFoods}");
+
+                // Tính tổng doanh thu của tất cả hóa đơn
                 foreach (DataRow billInfoRow in billInfoTable.Rows)
                 {
                     if (!billInfoRow.Table.Columns.Contains("IdBill") || !billInfoRow.Table.Columns.Contains("IdFood") || !billInfoRow.Table.Columns.Contains("Quantity"))
@@ -86,13 +110,6 @@ namespace CoffeeSell
                     DataRow[] billRows = billTable.Select($"BillId = {billId}");
                     if (billRows.Length > 0)
                     {
-                        DateTime dateCheckIn = Convert.ToDateTime(billRows[0]["DateCheckIn"]);
-                        if (dateCheckIn.Date != currentDate)
-                        {
-                            System.Diagnostics.Debug.WriteLine($"Hóa đơn BillId {billId} không thuộc ngày {currentDate:yyyy-MM-dd}.");
-                            continue;
-                        }
-
                         DataRow[] foodRows = foodTable.Select($"FoodId = {foodId}");
                         if (foodRows.Length > 0)
                         {
@@ -113,26 +130,17 @@ namespace CoffeeSell
                                 price = 0;
                             }
                             totalRevenue += price * quantity;
-                            totalProducts += quantity;
                         }
                         else
                         {
                             System.Diagnostics.Debug.WriteLine($"Không tìm thấy FoodId {foodId} trong bảng Food.");
                         }
                     }
-                    else
-                    {
-                        System.Diagnostics.Debug.WriteLine($"Không tìm thấy BillId {billId} trong bảng Bill.");
-                    }
                 }
 
-                int totalBills = billTable.AsEnumerable()
-                    .Count(row => row.Field<DateTime>("DateCheckIn").Date == currentDate);
-                System.Diagnostics.Debug.WriteLine($"Tổng số hóa đơn: {totalBills}");
-
-                label1.Text = totalRevenue.ToString("N0") + "K VNĐ";
-                label2.Text = totalBills.ToString();
-                label3.Text = totalProducts.ToString();
+                label1.Text = totalRevenue.ToString("N0") + " VNĐ"; // Tổng doanh thu tất cả hóa đơn
+                label2.Text = totalUniqueBills.ToString(); // Số lượng duy nhất BillId trong toàn cơ sở dữ liệu
+                label3.Text = totalUniqueFoods.ToString(); // Số lượng duy nhất FoodId trong toàn cơ sở dữ liệu
             }
             catch (Exception ex)
             {

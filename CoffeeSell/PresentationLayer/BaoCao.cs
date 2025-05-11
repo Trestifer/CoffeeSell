@@ -223,5 +223,15 @@ namespace CoffeeSell
         {
 
         }
+
+        private void label11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void guna2DataGridView3_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }
