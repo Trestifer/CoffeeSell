@@ -169,6 +169,7 @@
             // 
             guna2PictureBox1.BackColor = Color.Transparent;
             guna2PictureBox1.CustomizableEdges = customizableEdges1;
+            guna2PictureBox1.Image = Properties.Resources.settings;
             guna2PictureBox1.ImageRotate = 0F;
             guna2PictureBox1.Location = new Point(18, 8);
             guna2PictureBox1.Name = "guna2PictureBox1";
@@ -404,6 +405,7 @@
             // 
             guna2PictureBox9.BackColor = Color.Transparent;
             guna2PictureBox9.CustomizableEdges = customizableEdges15;
+            guna2PictureBox9.Image = Properties.Resources.invoice;
             guna2PictureBox9.ImageRotate = 0F;
             guna2PictureBox9.Location = new Point(18, 8);
             guna2PictureBox9.Name = "guna2PictureBox9";
@@ -438,6 +440,7 @@
             // 
             guna2PictureBox8.BackColor = Color.Transparent;
             guna2PictureBox8.CustomizableEdges = customizableEdges17;
+            guna2PictureBox8.Image = Properties.Resources.grocery_store;
             guna2PictureBox8.ImageRotate = 0F;
             guna2PictureBox8.Location = new Point(18, 8);
             guna2PictureBox8.Name = "guna2PictureBox8";
@@ -483,6 +486,7 @@
             // 
             guna2PictureBox7.BackColor = Color.Transparent;
             guna2PictureBox7.CustomizableEdges = customizableEdges19;
+            guna2PictureBox7.Image = Properties.Resources.home;
             guna2PictureBox7.ImageRotate = 0F;
             guna2PictureBox7.Location = new Point(18, 12);
             guna2PictureBox7.Name = "guna2PictureBox7";
@@ -624,7 +628,7 @@
             // guna2CirclePictureBox1
             // 
             guna2CirclePictureBox1.BackColor = Color.Transparent;
-            guna2CirclePictureBox1.Image = (Image)resources.GetObject("guna2CirclePictureBox1.Image");
+            guna2CirclePictureBox1.Image = Properties.Resources.people;
             guna2CirclePictureBox1.ImageRotate = 0F;
             guna2CirclePictureBox1.Location = new Point(30, 37);
             guna2CirclePictureBox1.Name = "guna2CirclePictureBox1";

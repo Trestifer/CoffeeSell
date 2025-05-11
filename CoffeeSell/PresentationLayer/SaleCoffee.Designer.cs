@@ -191,6 +191,7 @@
             // 
             // flowLayoutPanelCategories
             // 
+            flowLayoutPanelCategories.AutoScroll = true;
             flowLayoutPanelCategories.Controls.Add(guna2Button1);
             flowLayoutPanelCategories.Location = new Point(0, 160);
             flowLayoutPanelCategories.Name = "flowLayoutPanelCategories";
@@ -624,7 +625,7 @@
             Controls.Add(panel2);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
-//            Name = "SaleCoffee";
+            Name = "SaleCoffee";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "SaleCoffee";
             WindowState = FormWindowState.Maximized;
