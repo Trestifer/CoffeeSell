@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using CoffeeSell.ObjClass;
 using CoffeeSell.ObjClass.CoffeeSell.ObjClass;
+using CoffeeSell.Ulti;
 
 namespace CoffeeSell
 {
@@ -21,12 +22,14 @@ namespace CoffeeSell
         private decimal _priceM;
         private decimal _priceL;
         private string _productName;
+        private string _imageFileName;
+
         public ProductUserControl()
         {
             InitializeComponent();
         }
-        
-        public ProductUserControl(int foodId, string productName, decimal price1, decimal price2, decimal price3)
+
+        public ProductUserControl(int foodId, string productName, decimal price1, decimal price2, decimal price3, string imageFileName)
         {
             InitializeComponent();
             _foodId = foodId;
@@ -34,11 +37,16 @@ namespace CoffeeSell
             _priceS = price1;
             _priceM = price2;
             _priceL = price3;
+            _imageFileName = imageFileName;
+
             lblProductName.Text = productName;
             lblPriceS.Text = price1.ToString("N0") + " VNĐ";
             lblPriceM.Text = price2.ToString("N0") + " VNĐ";
             lblPriceL.Text = price3.ToString("N0") + " VNĐ";
+           
+            picProductImage.Image = PhotoFunction.LoadImage(imageFileName);
         }
+
 
 
 

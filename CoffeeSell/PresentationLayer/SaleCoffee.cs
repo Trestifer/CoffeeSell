@@ -26,7 +26,6 @@ namespace CoffeeSell
         private Account user;
         private List<Customer> fullCustomer;
         private DataTable DiscountApplied;
-
         public SaleCoffee(Account _user)
         {
             this.user = _user;
@@ -179,8 +178,8 @@ namespace CoffeeSell
                         decimal price1 = Convert.ToDecimal(reader["Price_S"]);
                         decimal price2 = Convert.ToDecimal(reader["Price_M"]);
                         decimal price3 = Convert.ToDecimal(reader["Price_L"]);
-
-                        ProductUserControl productControl = new ProductUserControl(foodId, productName, price1, price2, price3);
+                        string imageFileName = reader["Photo"].ToString();
+                        ProductUserControl productControl = new ProductUserControl(foodId, productName, price1, price2, price3, imageFileName);
                         productControl.ProductSelected += ProductUserControl_ProductSelected; // Gán sự kiện
                         flowLayoutPanelProducts.Controls.Add(productControl);
                     }
@@ -269,8 +268,8 @@ namespace CoffeeSell
                         decimal price1 = Convert.ToDecimal(reader["Price_S"]);
                         decimal price2 = Convert.ToDecimal(reader["Price_M"]);
                         decimal price3 = Convert.ToDecimal(reader["Price_L"]);
-
-                        ProductUserControl productControl = new ProductUserControl(foodId, productName, price1, price2, price3);
+                        string imageFileName = reader["Photo"].ToString();
+                        ProductUserControl productControl = new ProductUserControl(foodId, productName, price1, price2, price3, imageFileName);
                         productControl.ProductSelected += ProductUserControl_ProductSelected; // Gán sự kiện
                         flowLayoutPanelProducts.Controls.Add(productControl);
                     }
@@ -412,8 +411,8 @@ namespace CoffeeSell
                         decimal price1 = Convert.ToDecimal(reader["Price_S"]);
                         decimal price2 = Convert.ToDecimal(reader["Price_M"]);
                         decimal price3 = Convert.ToDecimal(reader["Price_L"]);
-
-                        ProductUserControl productControl = new ProductUserControl(foodId, productName, price1, price2, price3);
+                        string imageFileName = reader["Photo"].ToString();
+                        ProductUserControl productControl = new ProductUserControl(foodId, productName, price1, price2, price3, imageFileName);
                         productControl.ProductSelected += ProductUserControl_ProductSelected;
                         flowLayoutPanelProducts.Controls.Add(productControl);
                     }
@@ -523,8 +522,8 @@ namespace CoffeeSell
                         decimal price1 = Convert.ToDecimal(reader["Price_S"]);
                         decimal price2 = Convert.ToDecimal(reader["Price_M"]);
                         decimal price3 = Convert.ToDecimal(reader["Price_L"]);
-
-                        ProductUserControl productControl = new ProductUserControl(foodId, productName, price1, price2, price3);
+                        string imageFileName = reader["Photo"].ToString();
+                        ProductUserControl productControl = new ProductUserControl(foodId, productName, price1, price2, price3, imageFileName);
                         productControl.ProductSelected += ProductUserControl_ProductSelected;
                         flowLayoutPanelProducts.Controls.Add(productControl);
                     }
