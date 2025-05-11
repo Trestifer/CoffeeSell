@@ -28,19 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            textBox1 = new TextBox();
+            txt = new TextBox();
             label1 = new Label();
             label2 = new Label();
             lblTienThoi = new Label();
             button1 = new Button();
             SuspendLayout();
             // 
-            // textBox1
+            // txt
             // 
-            textBox1.Location = new Point(107, 76);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(267, 27);
-            textBox1.TabIndex = 0;
+            txt.Location = new Point(107, 76);
+            txt.Name = "txt";
+            txt.Size = new Size(267, 27);
+            txt.TabIndex = 0;
+            txt.TextChanged += txt_TextChanged;
             // 
             // label1
             // 
@@ -65,9 +66,8 @@
             lblTienThoi.AutoSize = true;
             lblTienThoi.Location = new Point(214, 145);
             lblTienThoi.Name = "lblTienThoi";
-            lblTienThoi.Size = new Size(74, 20);
+            lblTienThoi.Size = new Size(0, 20);
             lblTienThoi.TabIndex = 3;
-            lblTienThoi.Text = "Tiền thói: ";
             // 
             // button1
             // 
@@ -77,6 +77,7 @@
             button1.TabIndex = 4;
             button1.Text = "Xác nhận";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // ThoiTienForm
             // 
@@ -87,7 +88,7 @@
             Controls.Add(lblTienThoi);
             Controls.Add(label2);
             Controls.Add(label1);
-            Controls.Add(textBox1);
+            Controls.Add(txt);
             Name = "ThoiTienForm";
             Text = "ThoiTienForm";
             ResumeLayout(false);
@@ -96,7 +97,7 @@
 
         #endregion
 
-        private TextBox textBox1;
+        private TextBox txt;
         private Label label1;
         private Label label2;
         private Label lblTienThoi;
