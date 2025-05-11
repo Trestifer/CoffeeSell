@@ -54,7 +54,7 @@ namespace CoffeeSell
 
         private void Guna2DataGridView2_CellClick(object? sender, DataGridViewCellEventArgs e)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         private void Txt_TextChanged(object? sender, EventArgs e)

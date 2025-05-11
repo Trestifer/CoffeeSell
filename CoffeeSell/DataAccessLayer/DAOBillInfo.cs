@@ -140,5 +140,27 @@ namespace CoffeeSell.DataAccessLayer
                 return -1;
             }
         }
+        // Phương thức mới: Lấy BillInfo theo ngày, sửa lại để tham chiếu đúng DateCheckIn
+        public DataTable GetBillInfoByDate(DateTime date)
+        {
+            string cmString = @"
+                SELECT bi.* 
+                FROM BillInfo bi
+                JOIN Bill b ON bi.IdBill = b.BillId
+                WHERE CAST(b.DateCheckIn AS DATE) = @Date";
+
+            try
+            {
+                return ExecuteQuery(
+                    cmString,
+                    new string[] { "@Date" },
+                    new object[] { date.Date }); // Đảm bảo chỉ lấy phần ngày
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"GetBillInfoByDate error: {ex.Message}");
+                return new DataTable();
+            }
+        }
     }
 }

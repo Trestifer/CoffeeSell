@@ -36,15 +36,17 @@
             DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
+            dateTimePicker1 = new DateTimePicker();
+            label7 = new Label();
             label4 = new Label();
             label5 = new Label();
-            comboBox2 = new ComboBox();
             guna2DataGridView2 = new Guna.UI2.WinForms.Guna2DataGridView();
             label6 = new Label();
             tabPage2 = new TabPage();
+            label8 = new Label();
+            dateTimePicker2 = new DateTimePicker();
             label3 = new Label();
             label2 = new Label();
-            comboBox1 = new ComboBox();
             guna2DataGridView1 = new Guna.UI2.WinForms.Guna2DataGridView();
             label1 = new Label();
             tabControl1.SuspendLayout();
@@ -66,9 +68,10 @@
             // 
             // tabPage1
             // 
+            tabPage1.Controls.Add(dateTimePicker1);
+            tabPage1.Controls.Add(label7);
             tabPage1.Controls.Add(label4);
             tabPage1.Controls.Add(label5);
-            tabPage1.Controls.Add(comboBox2);
             tabPage1.Controls.Add(guna2DataGridView2);
             tabPage1.Controls.Add(label6);
             tabPage1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 163);
@@ -79,6 +82,26 @@
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Thống kê thức uống bán trong ngày";
             tabPage1.UseVisualStyleBackColor = true;
+            tabPage1.Click += tabPage1_Click;
+            // 
+            // dateTimePicker1
+            // 
+            dateTimePicker1.Location = new Point(360, 111);
+            dateTimePicker1.Name = "dateTimePicker1";
+            dateTimePicker1.Size = new Size(250, 34);
+            dateTimePicker1.TabIndex = 13;
+            dateTimePicker1.ValueChanged += dateTimePicker1_ValueChanged;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.ForeColor = Color.Red;
+            label7.Location = new Point(1027, 579);
+            label7.Name = "label7";
+            label7.Size = new Size(150, 28);
+            label7.TabIndex = 12;
+            label7.Text = "Tổng số lượng:";
+            label7.Click += label7_Click;
             // 
             // label4
             // 
@@ -97,14 +120,6 @@
             label5.Size = new Size(59, 28);
             label5.TabIndex = 10;
             label5.Text = "Ngày";
-            // 
-            // comboBox2
-            // 
-            comboBox2.FormattingEnabled = true;
-            comboBox2.Location = new Point(383, 108);
-            comboBox2.Name = "comboBox2";
-            comboBox2.Size = new Size(100, 36);
-            comboBox2.TabIndex = 9;
             // 
             // guna2DataGridView2
             // 
@@ -156,6 +171,7 @@
             guna2DataGridView2.ThemeStyle.RowsStyle.Height = 29;
             guna2DataGridView2.ThemeStyle.RowsStyle.SelectionBackColor = Color.FromArgb(231, 229, 255);
             guna2DataGridView2.ThemeStyle.RowsStyle.SelectionForeColor = Color.FromArgb(71, 69, 94);
+            guna2DataGridView2.CellContentClick += guna2DataGridView2_CellContentClick;
             // 
             // label6
             // 
@@ -168,9 +184,10 @@
             // 
             // tabPage2
             // 
+            tabPage2.Controls.Add(label8);
+            tabPage2.Controls.Add(dateTimePicker2);
             tabPage2.Controls.Add(label3);
             tabPage2.Controls.Add(label2);
-            tabPage2.Controls.Add(comboBox1);
             tabPage2.Controls.Add(guna2DataGridView1);
             tabPage2.Controls.Add(label1);
             tabPage2.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 163);
@@ -181,15 +198,34 @@
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Doanh thu trong ngày";
             tabPage2.UseVisualStyleBackColor = true;
+            tabPage2.Click += tabPage2_Click;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(823, 582);
+            label8.Name = "label8";
+            label8.Size = new Size(165, 28);
+            label8.TabIndex = 8;
+            label8.Text = "Tổng doanh thu:";
+            // 
+            // dateTimePicker2
+            // 
+            dateTimePicker2.Location = new Point(364, 114);
+            dateTimePicker2.Name = "dateTimePicker2";
+            dateTimePicker2.Size = new Size(136, 34);
+            dateTimePicker2.TabIndex = 7;
+            dateTimePicker2.ValueChanged += dateTimePicker2_ValueChanged;
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(866, 582);
+            label3.Location = new Point(987, 582);
             label3.Name = "label3";
             label3.Size = new Size(165, 28);
             label3.TabIndex = 6;
             label3.Text = "Tổng doanh thu:";
+            label3.Click += label3_Click;
             // 
             // label2
             // 
@@ -199,14 +235,6 @@
             label2.Size = new Size(59, 28);
             label2.TabIndex = 5;
             label2.Text = "Ngày";
-            // 
-            // comboBox1
-            // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(378, 111);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(100, 36);
-            comboBox1.TabIndex = 4;
             // 
             // guna2DataGridView1
             // 
@@ -258,6 +286,7 @@
             guna2DataGridView1.ThemeStyle.RowsStyle.Height = 29;
             guna2DataGridView1.ThemeStyle.RowsStyle.SelectionBackColor = Color.FromArgb(231, 229, 255);
             guna2DataGridView1.ThemeStyle.RowsStyle.SelectionForeColor = Color.FromArgb(71, 69, 94);
+            guna2DataGridView1.CellContentClick += guna2DataGridView1_CellContentClick;
             // 
             // label1
             // 
@@ -297,11 +326,13 @@
         private Label label1;
         private Label label3;
         private Label label2;
-        private ComboBox comboBox1;
         private Label label4;
         private Label label5;
-        private ComboBox comboBox2;
         private Guna.UI2.WinForms.Guna2DataGridView guna2DataGridView2;
         private Label label6;
+        private Label label7;
+        private DateTimePicker dateTimePicker1;
+        private DateTimePicker dateTimePicker2;
+        private Label label8;
     }
 }

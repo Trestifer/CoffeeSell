@@ -43,28 +43,27 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 163);
             label1.ForeColor = Color.White;
-            label1.Location = new Point(136, 23);
+            label1.Location = new Point(155, 31);
             label1.Name = "label1";
-            label1.Size = new Size(194, 32);
+            label1.Size = new Size(242, 41);
             label1.TabIndex = 1;
             label1.Text = "ĐỔI MẬT KHẨU";
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(30, 133);
-            textBox1.Margin = new Padding(3, 2, 3, 2);
+            textBox1.Location = new Point(34, 177);
             textBox1.Multiline = true;
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(389, 31);
+            textBox1.Size = new Size(444, 40);
             textBox1.TabIndex = 13;
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 163);
-            label2.Location = new Point(32, 103);
+            label2.Location = new Point(37, 137);
             label2.Name = "label2";
-            label2.Size = new Size(109, 21);
+            label2.Size = new Size(139, 28);
             label2.TabIndex = 12;
             label2.Text = "Mật khẩu mới";
             // 
@@ -72,28 +71,26 @@
             // 
             panel1.BackColor = Color.FromArgb(0, 94, 165);
             panel1.Controls.Add(label1);
-            panel1.Location = new Point(-4, -2);
-            panel1.Margin = new Padding(3, 2, 3, 2);
+            panel1.Location = new Point(-5, -3);
             panel1.Name = "panel1";
-            panel1.Size = new Size(460, 79);
+            panel1.Size = new Size(526, 105);
             panel1.TabIndex = 11;
             // 
             // textBox2
             // 
-            textBox2.Location = new Point(30, 216);
-            textBox2.Margin = new Padding(3, 2, 3, 2);
+            textBox2.Location = new Point(34, 288);
             textBox2.Multiline = true;
             textBox2.Name = "textBox2";
-            textBox2.Size = new Size(389, 31);
+            textBox2.Size = new Size(444, 40);
             textBox2.TabIndex = 17;
             // 
             // label3
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 163);
-            label3.Location = new Point(32, 186);
+            label3.Location = new Point(37, 248);
             label3.Name = "label3";
-            label3.Size = new Size(139, 21);
+            label3.Size = new Size(179, 28);
             label3.TabIndex = 16;
             label3.Text = "Nhập lại mật khẩu";
             // 
@@ -102,10 +99,9 @@
             button1.BackColor = Color.FromArgb(0, 94, 165);
             button1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 163);
             button1.ForeColor = Color.White;
-            button1.Location = new Point(132, 270);
-            button1.Margin = new Padding(3, 2, 3, 2);
+            button1.Location = new Point(151, 360);
             button1.Name = "button1";
-            button1.Size = new Size(182, 46);
+            button1.Size = new Size(208, 61);
             button1.TabIndex = 14;
             button1.Text = "XÁC NHẬN";
             button1.UseVisualStyleBackColor = false;
@@ -113,17 +109,16 @@
             // 
             // DoiMatKhau
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(448, 338);
+            ClientSize = new Size(512, 451);
             Controls.Add(textBox2);
             Controls.Add(label3);
             Controls.Add(button1);
             Controls.Add(textBox1);
             Controls.Add(label2);
             Controls.Add(panel1);
-            Margin = new Padding(3, 2, 3, 2);
             Name = "DoiMatKhau";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "DoiMatKhau";
