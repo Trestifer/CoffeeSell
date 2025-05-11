@@ -40,7 +40,7 @@ namespace CoffeeSell
             Account account = BOAccount.Login(guna2TextBox1.Text, guna2TextBox2.Text);
             if (account != null)
             {
-                MessageBox.Show("Đăng nhập thàn công");
+                MessageBox.Show("Đăng nhập thành công");
                 BOLoginHistory.SuccessLogin(account.GetAccountId());
                 this.Hide();
                 if (!account.GetTypeAccount())
