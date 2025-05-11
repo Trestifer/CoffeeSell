@@ -625,7 +625,7 @@
             Controls.Add(panel2);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "SaleCoffee";
+            //Name = "SaleCoffee";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "SaleCoffee";
             WindowState = FormWindowState.Maximized;
