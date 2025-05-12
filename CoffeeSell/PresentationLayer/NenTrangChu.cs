@@ -113,7 +113,7 @@ namespace CoffeeSell
                         DataRow[] foodRows = foodTable.Select($"FoodId = {foodId}");
                         if (foodRows.Length > 0)
                         {
-                            if (!foodRows[0].Table.Columns.Contains("Price_S"))
+                            if (!foodRows[0].Table.Columns.Contains("Price_M"))
                             {
                                 System.Diagnostics.Debug.WriteLine($"Cột Price_S không tồn tại trong bảng Food cho FoodId {foodId}.");
                                 continue;
@@ -122,7 +122,7 @@ namespace CoffeeSell
                             decimal price;
                             try
                             {
-                                price = Convert.ToDecimal(foodRows[0]["Price_S"]);
+                                price = Convert.ToDecimal(foodRows[0]["Price_M"]);
                             }
                             catch (Exception ex)
                             {
@@ -138,7 +138,7 @@ namespace CoffeeSell
                     }
                 }
 
-                label1.Text = totalRevenue.ToString("N0") + " VNĐ"; // Tổng doanh thu tất cả hóa đơn
+                label1.Text = totalRevenue.ToString("N0") + "K VNĐ"; // Tổng doanh thu tất cả hóa đơn
                 label2.Text = totalUniqueBills.ToString(); // Số lượng duy nhất BillId trong toàn cơ sở dữ liệu
                 label3.Text = totalUniqueFoods.ToString(); // Số lượng duy nhất FoodId trong toàn cơ sở dữ liệu
             }
@@ -198,7 +198,7 @@ namespace CoffeeSell
                             DataRow[] foodRows = foodTable.Select($"FoodId = {foodId}");
                             if (foodRows.Length > 0)
                             {
-                                if (!foodRows[0].Table.Columns.Contains("Price_S"))
+                                if (!foodRows[0].Table.Columns.Contains("Price_M"))
                                 {
                                     System.Diagnostics.Debug.WriteLine($"Cột Price_S không tồn tại trong bảng Food cho FoodId {foodId}.");
                                     continue;
@@ -207,7 +207,7 @@ namespace CoffeeSell
                                 decimal price;
                                 try
                                 {
-                                    price = Convert.ToDecimal(foodRows[0]["Price_S"]);
+                                    price = Convert.ToDecimal(foodRows[0]["Price_M"]);
                                 }
                                 catch (Exception ex)
                                 {

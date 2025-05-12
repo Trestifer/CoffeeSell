@@ -89,6 +89,8 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(txt);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
             Name = "ThoiTienForm";
             Text = "ThoiTienForm";
             ResumeLayout(false);

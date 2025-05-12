@@ -20,7 +20,7 @@ namespace CoffeeSell
             AllBill = daoBill.GetBillWithCustomerInfo();
             KhoiTaoComboBox();
             TaiLaiDuLieu();
-            CapNhatTongDoanhThu();
+            
         }
 
         private void KhoiTaoComboBox()
@@ -47,10 +47,9 @@ namespace CoffeeSell
         {
             guna2DataGridView1.DataSource = AllBill;
             guna2DataGridView1.Show();
-            guna2DataGridView3.DataSource = null;
-            guna2DataGridView3.Show();
+            
             guna2DataGridView1.ColumnHeadersHeight = 40;
-            guna2DataGridView2.ColumnHeadersHeight = 40;
+            
 
             if (guna2DataGridView1.Columns.Contains("BillId"))
                 guna2DataGridView1.Columns["BillId"].HeaderText = "Mã Hóa Đơn";
@@ -72,16 +71,7 @@ namespace CoffeeSell
                 guna2DataGridView1.Columns["StatusBill"].Visible = false;
         }
 
-        private void CapNhatTongDoanhThu()
-        {
-            decimal tongDoanhThu = 0;
-            foreach (DataRow row in AllBill.Rows)
-            {
-                if (row["TotalPrice"] != DBNull.Value)
-                    tongDoanhThu += Convert.ToDecimal(row["TotalPrice"]);
-            }
-            label4.Text = $"Tổng Doanh Thu: {tongDoanhThu:N0} VNĐ";
-        }
+        
 
         private void LocHoaDonTheoThangNam(string thangNam)
         {
@@ -121,7 +111,7 @@ namespace CoffeeSell
                     if (row["TotalPrice"] != DBNull.Value)
                         tongDoanhThu += Convert.ToDecimal(row["TotalPrice"]);
                 }
-                label4.Text = $"Tổng Doanh Thu: {tongDoanhThu:N0} VNĐ";
+                
             }
             catch (Exception ex)
             {
@@ -198,12 +188,7 @@ namespace CoffeeSell
 
                 DataRow[] dongChiTiet = bangChiTietHoaDon.Select($"IdBill = {maHoaDon}");
                 System.Diagnostics.Debug.WriteLine($"Số dòng khớp với IdBill {maHoaDon}: {dongChiTiet.Length}");
-                if (dongChiTiet.Length == 0)
-                {
-                    guna2DataGridView3.DataSource = null;
-                    MessageBox.Show($"Hóa đơn {maHoaDon} không có chi tiết!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
+                
 
                 // Tạo DataTable mới để hiển thị thông tin chi tiết
                 DataTable chiTiet = new DataTable();
@@ -266,30 +251,10 @@ namespace CoffeeSell
                     }
                 }
 
-                // Gán DataTable vào DataGridView và làm mới
-                guna2DataGridView2.DataSource = null; // Xóa dữ liệu cũ
-                guna2DataGridView2.DataSource = chiTiet;
-                guna2DataGridView2.Refresh(); // Làm mới DataGridView
+                
+                
 
-                // Định dạng cột
-                if (guna2DataGridView2.Columns.Contains("Id"))
-                    guna2DataGridView2.Columns["Id"].HeaderText = "Mã Chi Tiết";
-                if (guna2DataGridView2.Columns.Contains("IdBill"))
-                    guna2DataGridView2.Columns["IdBill"].HeaderText = "Mã Hóa Đơn";
-                if (guna2DataGridView2.Columns.Contains("TenMon"))
-                    guna2DataGridView2.Columns["TenMon"].HeaderText = "Tên Món";
-                if (guna2DataGridView2.Columns.Contains("Gia"))
-                {
-                    guna2DataGridView2.Columns["Gia"].HeaderText = "Giá";
-                    guna2DataGridView2.Columns["Gia"].DefaultCellStyle.Format = "N0";
-                }
-                if (guna2DataGridView2.Columns.Contains("SoLuong"))
-                    guna2DataGridView2.Columns["SoLuong"].HeaderText = "Số Lượng";
-                if (guna2DataGridView2.Columns.Contains("ThanhTien"))
-                {
-                    guna2DataGridView2.Columns["ThanhTien"].HeaderText = "Thành Tiền";
-                    guna2DataGridView2.Columns["ThanhTien"].DefaultCellStyle.Format = "N0";
-                }
+                
             }
             catch (Exception ex)
             {

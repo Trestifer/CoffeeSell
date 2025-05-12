@@ -98,6 +98,8 @@
             Controls.Add(button1);
             Controls.Add(label1);
             Controls.Add(textBox2);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
             Name = "QuenMatKhau";
             Text = "QuenMatKhau";
             panel1.ResumeLayout(false);

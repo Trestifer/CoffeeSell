@@ -40,9 +40,9 @@ namespace CoffeeSell
             _imageFileName = imageFileName;
 
             lblProductName.Text = productName;
-            lblPriceS.Text = price1.ToString("N0") + " VNĐ";
-            lblPriceM.Text = price2.ToString("N0") + " VNĐ";
-            lblPriceL.Text = price3.ToString("N0") + " VNĐ";
+            lblPriceS.Text = price1.ToString("N0") + "K VNĐ";
+            lblPriceM.Text = price2.ToString("N0") + "K VNĐ";
+            lblPriceL.Text = price3.ToString("N0") + "K VNĐ";
            
             picProductImage.Image = PhotoFunction.LoadImage(imageFileName);
         }

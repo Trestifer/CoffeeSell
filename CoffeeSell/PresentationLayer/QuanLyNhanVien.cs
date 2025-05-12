@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -198,6 +199,48 @@ namespace CoffeeSell
         private void btnAdd_Click(object sender, EventArgs e)// Cần check thông tin Employee trc khi thêm (Đã thêm thành công nhân viên ko họ ko tên ko mã tài khoản)
         {
             Employee newEmployee = GetEmployeeInfo();
+            // Kiểm tra Họ tên
+            if (string.IsNullOrWhiteSpace(newEmployee.GetNameEmployee()))
+            {
+                MessageBox.Show("Họ tên nhân viên không được để trống.");
+                return;
+            }
+
+            // Kiểm tra SĐT
+            string sdt = newEmployee.GetPhoneNumber();
+            if (string.IsNullOrWhiteSpace(sdt))
+            {
+                MessageBox.Show("Số điện thoại không được để trống.");
+                return;
+            }
+            if (!Regex.IsMatch(sdt, @"^0\d{9}$"))
+            {
+                MessageBox.Show("Số điện thoại phải có 10 số và bắt đầu bằng 0.");
+                return;
+            }
+
+            // Kiểm tra Địa chỉ
+            if (string.IsNullOrWhiteSpace(newEmployee.GetHomeAddress()))
+            {
+                MessageBox.Show("Địa chỉ không được để trống.");
+                return;
+            }
+
+            // Kiểm tra Ngày sinh
+            DateTime dob = newEmployee.GetDateOfBirth();
+            if (dob > DateTime.Today)
+            {
+                MessageBox.Show("Ngày sinh không hợp lệ.");
+                return;
+            }
+
+            int age = DateTime.Today.Year - dob.Year;
+            if (dob > DateTime.Today.AddYears(-age)) age--;
+            if (age < 16)
+            {
+                MessageBox.Show("Nhân viên phải từ 16 tuổi trở lên.");
+                return;
+            }
             newEmployee.SetEmployeeId(0);
             if (BOEmployee.AddEmployee(newEmployee))
             {
@@ -209,6 +252,12 @@ namespace CoffeeSell
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
+            // Kiểm tra xem đã chọn nhân viên chưa
+            if (employeeID == -1)
+            {
+                MessageBox.Show("Vui lòng chọn nhân viên cần xóa.");
+                return;
+            }
             if (employeeID != -1)
             {
                 if (BOEmployee.DeleteEmployee(employeeID))
@@ -225,6 +274,49 @@ namespace CoffeeSell
 
         private void btnedit_Click(object sender, EventArgs e)
         {
+            Employee newEmployee = GetEmployeeInfo();
+            // Kiểm tra Họ tên
+            if (string.IsNullOrWhiteSpace(newEmployee.GetNameEmployee()))
+            {
+                MessageBox.Show("Họ tên nhân viên không được để trống.");
+                return;
+            }
+
+            // Kiểm tra SĐT
+            string sdt = newEmployee.GetPhoneNumber();
+            if (string.IsNullOrWhiteSpace(sdt))
+            {
+                MessageBox.Show("Số điện thoại không được để trống.");
+                return;
+            }
+            if (!Regex.IsMatch(sdt, @"^0\d{9}$"))
+            {
+                MessageBox.Show("Số điện thoại phải có 10 số và bắt đầu bằng 0.");
+                return;
+            }
+
+            // Kiểm tra Địa chỉ
+            if (string.IsNullOrWhiteSpace(newEmployee.GetHomeAddress()))
+            {
+                MessageBox.Show("Địa chỉ không được để trống.");
+                return;
+            }
+
+            // Kiểm tra Ngày sinh
+            DateTime dob = newEmployee.GetDateOfBirth();
+            if (dob > DateTime.Today)
+            {
+                MessageBox.Show("Ngày sinh không hợp lệ.");
+                return;
+            }
+
+            int age = DateTime.Today.Year - dob.Year;
+            if (dob > DateTime.Today.AddYears(-age)) age--;
+            if (age < 16)
+            {
+                MessageBox.Show("Nhân viên phải từ 16 tuổi trở lên.");
+                return;
+            }
             if (employeeID != 1)
             {
                 if (BOEmployee.EditEmployee(GetEmployeeInfo()))
@@ -236,6 +328,7 @@ namespace CoffeeSell
             }
             Reset();
         }
+
 
         private void genderCheckBox_CheckedChanged(object sender, EventArgs e)
         {

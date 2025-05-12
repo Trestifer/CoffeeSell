@@ -104,6 +104,8 @@
             ClientSize = new Size(633, 392);
             Controls.Add(button1);
             Controls.Add(guna2DataGridView1);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
             Name = "KhuyenMaiSellect";
             Text = "KhuyenMaiSellect";
             ((System.ComponentModel.ISupportInitialize)guna2DataGridView1).EndInit();

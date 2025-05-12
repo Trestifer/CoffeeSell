@@ -263,11 +263,13 @@
             // 
             // cbcDanhMuc
             // 
+            cbcDanhMuc.DropDownStyle = ComboBoxStyle.DropDownList;
             cbcDanhMuc.FormattingEnabled = true;
             cbcDanhMuc.Location = new Point(187, 283);
             cbcDanhMuc.Name = "cbcDanhMuc";
             cbcDanhMuc.Size = new Size(158, 28);
             cbcDanhMuc.TabIndex = 15;
+            cbcDanhMuc.SelectedIndexChanged += cbcDanhMuc_SelectedIndexChanged;
             // 
             // button2
             // 

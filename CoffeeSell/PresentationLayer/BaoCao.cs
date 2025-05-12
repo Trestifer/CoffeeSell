@@ -131,7 +131,7 @@ namespace CoffeeSell
                     DataRow[] foodRows = foodTable.Select($"FoodId = {foodId}");
                     if (foodRows.Length > 0)
                     {
-                        decimal price = Convert.ToDecimal(foodRows[0]["Price_S"]); // Sử dụng giá nhỏ làm mặc định
+                        decimal price = Convert.ToDecimal(foodRows[0]["Price_M"]); // Sử dụng giá nhỏ làm mặc định
                         decimal revenue = price * quantity;
                         if (foodRevenue.TryGetValue(foodId, out decimal existingRevenue))
                         {

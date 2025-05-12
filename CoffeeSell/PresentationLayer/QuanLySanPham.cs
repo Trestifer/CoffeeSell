@@ -76,7 +76,7 @@ namespace CoffeeSell
 
         private void Guna2DataGridView2_CellClick(object? sender, DataGridViewCellEventArgs e)
         {
-            
+
         }
 
         private void Txt_TextChanged(object? sender, EventArgs e)
@@ -203,6 +203,18 @@ namespace CoffeeSell
 
         private void button2_Click(object sender, EventArgs e)
         {
+            // Lấy và kiểm tra dữ liệu đầu vào
+            string name = txtName.Text.Trim();
+            string priceS = txtS.Text.Trim();
+            string priceM = txtM.Text.Trim();
+            string priceL = txtL.Text.Trim();
+
+            // Kiểm tra các trường bắt buộc không được để trống
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(priceS) || string.IsNullOrEmpty(priceM) || string.IsNullOrEmpty(priceL))
+            {
+                MessageBox.Show("Vui lòng nhập đầy đủ Tên sản phẩm và giá Size S, M, L!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             Food info = GetFood();
             if (BOFood.Add(info))
             {
@@ -214,7 +226,18 @@ namespace CoffeeSell
 
         private void button3_Click(object sender, EventArgs e)
         {
+            // Lấy và kiểm tra dữ liệu đầu vào
+            string name = txtName.Text.Trim();
+            string priceS = txtS.Text.Trim();
+            string priceM = txtM.Text.Trim();
+            string priceL = txtL.Text.Trim();
 
+            // Kiểm tra các trường bắt buộc không được để trống
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(priceS) || string.IsNullOrEmpty(priceM) || string.IsNullOrEmpty(priceL))
+            {
+                MessageBox.Show("Vui lòng nhập đầy đủ Tên sản phẩm và giá Size S, M, L!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
 
 
@@ -267,6 +290,12 @@ namespace CoffeeSell
         private void button4_Click(object sender, EventArgs e)
         {
             Food info = GetFood();
+            // Kiểm tra xem đã chọn sản phẩm hay chưa
+            if (info == null || info.GetFoodId() <= 0)
+            {
+                MessageBox.Show("Vui lòng chọn sản phẩm cần xóa.");
+                return;
+            }
             if (BOFood.Delete(info.GetFoodId()))
             {
                 MessageBox.Show("Xóa thành công");
@@ -327,6 +356,16 @@ namespace CoffeeSell
 
         private void button6_Click(object sender, EventArgs e)
         {
+            string categoryName = textBox2.Text.Trim();
+
+            // Kiểm tra tên danh mục không được để trống
+            if (string.IsNullOrEmpty(categoryName))
+            {
+                MessageBox.Show("Vui lòng nhập tên danh mục!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                textBox2.Focus();
+                return;
+            }
+
             Category category = new Category();
             category.SetCategoryName(textBox2.Text);
             if (BOCategory.Add(category))
@@ -339,6 +378,12 @@ namespace CoffeeSell
 
         private void button7_Click(object sender, EventArgs e)
         {
+            // Kiểm tra xem đã chọn danh mục hay chưa
+            if (CategoryId == 0 || string.IsNullOrEmpty(_NameCategory))
+            {
+                MessageBox.Show("Vui lòng chọn danh mục cần xóa!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             if (BOCategory.Delete(CategoryId))
             {
                 MessageBox.Show("Xóa thành công");
@@ -347,9 +392,14 @@ namespace CoffeeSell
             }
             Reset_DanhMuc();
         }
-   
+
 
         private void guna2DataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void cbcDanhMuc_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

@@ -119,6 +119,8 @@
             Controls.Add(textBox1);
             Controls.Add(label2);
             Controls.Add(panel1);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
             Name = "DoiMatKhau";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "DoiMatKhau";
