@@ -39,5 +39,12 @@ namespace CoffeeSell.BO
         {
             return discount.GetAvailableDiscountsForCustomer(id);
         }
+        public static DataTable SearchDiscountByName(string keyword)
+        {
+            DataTable discounts = discount.SearchDiscountByName(keyword);
+            DataView view = discounts.DefaultView;
+            view.Sort = "IsUseable DESC";
+            return view.ToTable();
+        }
     }
 }

@@ -171,6 +171,23 @@ namespace CoffeeSell.DataAccessLayer
                 return false;
             }
         }
+        public DataTable SearchDiscountByName(string keyword)
+        {
+            string cmString = "SELECT * FROM Discount WHERE NameDiscount LIKE @Keyword";
+
+            try
+            {
+                return ExecuteQuery(
+                    cmString,
+                    new string[] { "@Keyword" },
+                    new object[] { $"%{keyword}%" });
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"SearchDiscountByName error: {ex.Message}");
+                return new DataTable();
+            }
+        }
 
         public DataTable GetAvailableDiscountsForCustomer(int customerId)
         {
