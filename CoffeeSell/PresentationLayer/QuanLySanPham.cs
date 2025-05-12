@@ -97,10 +97,10 @@ namespace CoffeeSell
         {
 
             DataTable dt = BOCategory.GetCategory();
-            DataRow newRow = dt.NewRow();
-            newRow["NameCategory"] = "";  // Display text
-            newRow["CategoryId"] = -1;    // Value
-            dt.Rows.InsertAt(newRow, 0);
+            //DataRow newRow = dt.NewRow();
+            //newRow["NameCategory"] = "";  // Display text
+            //newRow["CategoryId"] = -1;    // Value
+            //dt.Rows.InsertAt(newRow, 0);
             // Bind to ComboBox
             cbcDanhMuc.DataSource = dt;
             cbcDanhMuc.DisplayMember = "NameCategory";

@@ -29,8 +29,17 @@ namespace CoffeeSell
 
         private void button2_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(txtName.Text))
+            {
+                MessageBox.Show("Tên khuyến mãi không được bỏ trống!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             Discount temp = GetDiscount();
-
+            if (temp == null)
+            {
+                MessageBox.Show("Không thể tạo đối tượng khuyến mãi. Vui lòng kiểm tra lại dữ liệu nhập!");
+                return;
+            }
             temp.SetEndDate(new DateTime(1753, 1, 1));
             if (BODiscount.Add(temp))
             {
@@ -51,7 +60,7 @@ namespace CoffeeSell
             cbcCustomer.Items.Add(new KeyValuePair<string, int>("Thành viên Bạc", ranking.Bac));
             cbcCustomer.Items.Add(new KeyValuePair<string, int>("Thành Viên Vàng", ranking.Vang));
             cbcCustomer.Items.Add(new KeyValuePair<string, int>("Thành viên KC", ranking.KiemCuong));
-
+            cbcCustomer.SelectedIndex = 0;
             DataTable dt = BODiscount.GetDiscountInfo();
 
             // Add RemainingDays column manually
@@ -114,7 +123,12 @@ namespace CoffeeSell
             Discount discountInfo = new Discount();
             discountInfo.SetDiscountId(id);
             discountInfo.SetDetail(guna2TextBox1.Text);
-            discountInfo.SetDiscountPercent(decimal.Parse(txtPercent.Text));
+            if (!decimal.TryParse(txtPercent.Text, out decimal percent))
+            {
+                MessageBox.Show("Vui lòng nhập đúng định dạng phần trăm khuyến mãi!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+            discountInfo.SetDiscountPercent(percent);
             discountInfo.SetNameDiscount(txtName.Text);
             discountInfo.SetPointRequire(((KeyValuePair<string, int>)cbcCustomer.SelectedItem).Value);
             discountInfo.SetIsReuseable(!checkBox1.Checked);
@@ -172,7 +186,18 @@ namespace CoffeeSell
 
         private void button3_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(txtName.Text))
+            {
+                MessageBox.Show("Tên khuyến mãi không được bỏ trống!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             Discount temp = GetDiscount();
+            if (temp == null)
+            {
+                MessageBox.Show("Không thể tạo đối tượng khuyến mãi. Vui lòng kiểm tra lại dữ liệu nhập!");
+                return;
+            }
+            
             temp.SetIsReuseable(false);
             temp.SetEndDate(new DateTime(1753, 1, 1));
             if (BODiscount.Update(temp))
@@ -228,12 +253,12 @@ namespace CoffeeSell
 
         private void cbcCustomer_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            cbcCustomer.SelectedIndex = 0;
         }
 
         private void QuanLyKhuyenMai_Load(object sender, EventArgs e)
         {
-
+            cbcCustomer.SelectedIndex = 0;
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
