@@ -27,7 +27,13 @@ namespace CoffeeSell
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if(textBox1.Text == textBox2.Text)
+            // Check if both password and confirm password fields are not empty
+            if (string.IsNullOrEmpty(textBox1.Text) || string.IsNullOrEmpty(textBox2.Text))
+            {
+                MessageBox.Show("Mật khẩu và xác nhận mật khẩu không được để trống");
+                return; // Stop further execution if any field is empty
+            }
+            if (textBox1.Text == textBox2.Text)
             {
                 user.SetPasswordHash(textBox1.Text);
                 if (BOAccount.UpdateAccount(user))

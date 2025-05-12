@@ -49,8 +49,17 @@ namespace CoffeeSell
                 txt.TextChanged += Txt_TextChanged;
             }
             txtName.KeyPress += NamePress;
+            // Thêm sự kiện KeyPress cho textBox1
+            textBox1.KeyPress += textBox1_KeyPress;
 
-
+        }
+        private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                e.Handled = true; // Ngăn tiếng "ding" khi nhấn Enter
+                button5_Click(sender, e); // Gọi sự kiện tìm kiếm
+            }
         }
 
         private void Guna2DataGridView1_CellClick(object? sender, DataGridViewCellEventArgs e)
@@ -402,6 +411,127 @@ namespace CoffeeSell
         private void cbcDanhMuc_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            string keyword = textBox1.Text.Trim();
+            if (string.IsNullOrEmpty(keyword))
+            {
+                Reset_SanPham(); // Hiển thị toàn bộ sản phẩm nếu từ khóa rỗng
+                return;
+            }
+
+            // Gọi tìm kiếm và cập nhật DataGridView
+            DataTable searchResult = BOFood.SearchFoodByName(keyword);
+            dtgrid.DataSource = searchResult;
+
+            // Cập nhật giao diện giống Reset_SanPham
+            if (dtgrid.Columns.Contains("CategoryId"))
+                dtgrid.Columns["CategoryId"].Visible = false;
+            dtgrid.Columns["Photo"].Visible = false;
+
+            dtgrid.Columns["FoodId"].HeaderText = "Mã món";
+            dtgrid.Columns["NameFood"].HeaderText = "Tên món";
+            dtgrid.Columns["NameCategory"].HeaderText = "Danh mục";
+            dtgrid.Columns["Price_S"].HeaderText = "Giá size nhỏ";
+            dtgrid.Columns["Price_M"].HeaderText = "Giá size vừa";
+            dtgrid.Columns["Price_L"].HeaderText = "Giá size lớn";
+            dtgrid.Columns["Sold"].HeaderText = "Đã bán";
+
+            if (!dtgrid.Columns.Contains("BanChay"))
+            {
+                DataGridViewCheckBoxColumn chk = new DataGridViewCheckBoxColumn();
+                chk.HeaderText = "Bán chạy";
+                chk.Name = "BanChay";
+                chk.ReadOnly = true;
+                dtgrid.Columns.Add(chk);
+            }
+
+            var rows = searchResult.AsEnumerable()
+                                 .OrderByDescending(r => r.Field<int>("Sold"))
+                                 .ToList();
+
+            bool hasTieAt5 = rows.Count >= 6 && rows[4].Field<int>("Sold") == rows[5].Field<int>("Sold");
+
+            for (int i = 0; i < rows.Count; i++)
+            {
+                DataGridViewRow gridRow = dtgrid.Rows[i];
+                bool isTop5 = i < 5 && !hasTieAt5;
+                gridRow.Cells["BanChay"].Value = isTop5;
+            }
+
+            dtgrid.ColumnHeadersHeight = 40;
+            dtgrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dtgrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            dtgrid.EnableHeadersVisualStyles = false;
+            dtgrid.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            string keyword = textBox1.Text.Trim(); // Lấy từ khóa từ textBox1
+
+            if (string.IsNullOrEmpty(keyword))
+            {
+                // Nếu không nhập từ khóa, hiển thị toàn bộ sản phẩm
+                Reset_SanPham();
+                MessageBox.Show("Vui lòng nhập từ khóa để tìm kiếm!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            // Gọi phương thức tìm kiếm và cập nhật DataGridView
+            DataTable searchResult = BOFood.SearchFoodByName(keyword);
+            dtgrid.DataSource = searchResult;
+
+            // Cập nhật giao diện DataGridView giống Reset_SanPham
+            if (dtgrid.Columns.Contains("CategoryId"))
+                dtgrid.Columns["CategoryId"].Visible = false;
+            dtgrid.Columns["Photo"].Visible = false;
+
+            dtgrid.Columns["FoodId"].HeaderText = "Mã món";
+            dtgrid.Columns["NameFood"].HeaderText = "Tên món";
+            dtgrid.Columns["NameCategory"].HeaderText = "Danh mục";
+            dtgrid.Columns["Price_S"].HeaderText = "Giá size nhỏ";
+            dtgrid.Columns["Price_M"].HeaderText = "Giá size vừa";
+            dtgrid.Columns["Price_L"].HeaderText = "Giá size lớn";
+            dtgrid.Columns["Sold"].HeaderText = "Đã bán";
+
+            // Thêm cột "Bán chạy" nếu chưa có
+            if (!dtgrid.Columns.Contains("BanChay"))
+            {
+                DataGridViewCheckBoxColumn chk = new DataGridViewCheckBoxColumn();
+                chk.HeaderText = "Bán chạy";
+                chk.Name = "BanChay";
+                chk.ReadOnly = true;
+                dtgrid.Columns.Add(chk);
+            }
+
+            // Xác định top 5 sản phẩm bán chạy
+            var rows = searchResult.AsEnumerable()
+                                 .OrderByDescending(r => r.Field<int>("Sold"))
+                                 .ToList();
+
+            bool hasTieAt5 = rows.Count >= 6 && rows[4].Field<int>("Sold") == rows[5].Field<int>("Sold");
+
+            for (int i = 0; i < rows.Count; i++)
+            {
+                DataGridViewRow gridRow = dtgrid.Rows[i];
+                bool isTop5 = i < 5 && !hasTieAt5;
+                gridRow.Cells["BanChay"].Value = isTop5;
+            }
+
+            dtgrid.ColumnHeadersHeight = 40;
+            dtgrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dtgrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            dtgrid.EnableHeadersVisualStyles = false;
+            dtgrid.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            // Thông báo nếu không tìm thấy kết quả
+            if (searchResult.Rows.Count == 0)
+            {
+                MessageBox.Show($"Không tìm thấy sản phẩm nào với từ khóa '{keyword}'!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 }

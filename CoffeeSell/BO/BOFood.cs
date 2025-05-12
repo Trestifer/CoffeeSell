@@ -32,5 +32,9 @@ namespace CoffeeSell.BO
         {
             return food.CountProductsInCategory(categoryId) > 0;
         }
+        public static DataTable SearchFoodByName(string keyword)
+        {
+            return food.SearchFoodByName(keyword);
+        }
     }
 }

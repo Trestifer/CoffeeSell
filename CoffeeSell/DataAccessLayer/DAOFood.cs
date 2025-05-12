@@ -172,5 +172,37 @@ namespace CoffeeSell.DataAccessLayer
                 return 0;
             }
         }
+        public DataTable SearchFoodByName(string keyword)
+        {
+            string query = @"
+        SELECT 
+            f.FoodId,
+            f.NameFood,
+            f.CategoryId,
+            c.NameCategory,
+            f.Price_S,
+            f.Price_M,
+            f.Price_L,
+            f.Photo,
+            f.Sold
+        FROM Food f
+        INNER JOIN Category c ON f.CategoryId = c.CategoryId
+        WHERE f.NameFood LIKE @Keyword";
+
+            try
+            {
+                // Thêm ký tự % để tìm kiếm chuỗi con
+                string searchPattern = $"%{keyword}%";
+                return ExecuteQuery(
+                    query,
+                    new string[] { "@Keyword" },
+                    new object[] { searchPattern });
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"SearchFoodByName error: {ex.Message}");
+                return new DataTable();
+            }
+        }
     }
 }

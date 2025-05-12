@@ -187,6 +187,38 @@ namespace CoffeeSell.DataAccessLayer
                 return null;
             }
         }
+        public DataTable SearchEmployeeByName(string keyword)
+        {
+            string cmString = @"
+        SELECT 
+            e.EmployeeId,
+            e.NameEmployee,
+            e.DateOfBirth,
+            e.Gender,
+            e.HomeAddress,
+            e.PhoneNumber,
+            e.AccountId,
+            a.LoginName,
+            ee.Email
+        FROM Employee e
+        JOIN Account a ON e.AccountId = a.AccountId
+        LEFT JOIN EmployeeEmail ee ON e.EmployeeId = ee.EmployeeId
+        WHERE e.NameEmployee LIKE @Keyword";
+
+            try
+            {
+                string searchPattern = $"%{keyword}%";
+                return ExecuteQuery(
+                    cmString,
+                    new string[] { "@Keyword" },
+                    new object[] { searchPattern });
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"SearchEmployeeByName error: {ex.Message}");
+                return new DataTable();
+            }
+        }
 
 
     }

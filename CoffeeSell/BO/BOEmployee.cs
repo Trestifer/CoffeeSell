@@ -78,6 +78,9 @@ namespace CoffeeSell.BO
         {
             return employee.GetAllEmployeeFullData();
         }
-
+        public static DataTable SearchEmployeeByName(string keyword)
+        {
+            return employee.SearchEmployeeByName(keyword);
+        }
     }
 }

@@ -260,6 +260,7 @@
             button1.TabIndex = 21;
             button1.Text = "tìm kiếm";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // textBox1
             // 
@@ -267,6 +268,7 @@
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(254, 27);
             textBox1.TabIndex = 20;
+            textBox1.TextChanged += textBox1_TextChanged;
             // 
             // genderCheckBox
             // 

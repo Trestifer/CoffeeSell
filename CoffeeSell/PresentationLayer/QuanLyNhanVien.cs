@@ -22,6 +22,8 @@ namespace CoffeeSell
         public QuanLyNhanVien(Account _user)
         {
             InitializeComponent();
+            // Thêm sự kiện KeyPress cho textBox1
+            textBox1.KeyPress += textBox1_KeyPress;
             dateTimePicker1.Format = DateTimePickerFormat.Custom;
             dateTimePicker1.CustomFormat = "dd/MM/yyyy";
             dateTimePicker1.MinDate = new DateTime(DateTime.Now.Year - 50, 12, 31);
@@ -40,7 +42,14 @@ namespace CoffeeSell
         {
 
         }
-
+        private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                e.Handled = true; // Ngăn tiếng "ding" khi nhấn Enter
+                button1_Click(sender, e); // Gọi sự kiện tìm kiếm
+            }
+        }
         private Employee GetEmployeeInfo()
         {
             Employee employee = new Employee();
@@ -343,6 +352,66 @@ namespace CoffeeSell
         private void txtPhoneNumber_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string keyword = textBox1.Text.Trim();
+
+            if (string.IsNullOrEmpty(keyword))
+            {
+                Reset(); // Hiển thị toàn bộ nhân viên
+                MessageBox.Show("Vui lòng nhập từ khóa để tìm kiếm!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            employeeDttb = BOEmployee.SearchEmployeeByName(keyword);
+
+            if (!employeeDttb.Columns.Contains("GioiTinhText"))
+            {
+                employeeDttb.Columns.Add("GioiTinhText", typeof(string));
+                foreach (DataRow row in employeeDttb.Rows)
+                {
+                    bool gender = Convert.ToBoolean(row["Gender"]);
+                    row["GioiTinhText"] = gender ? "Nam" : "Nữ";
+                }
+            }
+
+            dtgridNhanVien.DataSource = employeeDttb;
+
+            // Cấu hình lại các cột hiển thị
+            foreach (DataGridViewColumn col in dtgridNhanVien.Columns)
+            {
+                col.Visible = false;
+            }
+
+            dtgridNhanVien.Columns["EmployeeId"].Visible = true;
+            dtgridNhanVien.Columns["EmployeeId"].HeaderText = "Mã nhân viên";
+            dtgridNhanVien.Columns["NameEmployee"].Visible = true;
+            dtgridNhanVien.Columns["NameEmployee"].HeaderText = "Tên nhân viên";
+            dtgridNhanVien.Columns["GioiTinhText"].Visible = true;
+            dtgridNhanVien.Columns["GioiTinhText"].HeaderText = "Giới tính";
+            dtgridNhanVien.Columns["DateOfBirth"].Visible = true;
+            dtgridNhanVien.Columns["DateOfBirth"].HeaderText = "Ngày sinh";
+            dtgridNhanVien.Columns["LoginName"].Visible = true;
+            dtgridNhanVien.Columns["LoginName"].HeaderText = "Tên đăng nhập";
+            dtgridNhanVien.Columns["Email"].Visible = true;
+            dtgridNhanVien.Columns["Email"].HeaderText = "Email";
+            dtgridNhanVien.Columns["HomeAddress"].Visible = true;
+            dtgridNhanVien.Columns["HomeAddress"].HeaderText = "Địa chỉ";
+
+            dtgridNhanVien.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            dtgridNhanVien.ColumnHeadersHeight = 40;
+
+            if (employeeDttb.Rows.Count == 0)
+            {
+                MessageBox.Show($"Không tìm thấy nhân viên nào với từ khóa '{keyword}'!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 }
