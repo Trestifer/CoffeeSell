@@ -633,6 +633,7 @@ namespace CoffeeSell
                 receipt.id = bill.BillId;
                 if (bill.BillId > 0)
                 {
+
                     List<Products> list = new List<Products>();
                     foreach (DataGridViewRow row in guna2DataGridView1.Rows)
                     {
@@ -668,12 +669,13 @@ namespace CoffeeSell
                     receipt.Items = list;
                     string path = PhotoFunction.GenerateReceipt(receipt, user.GetLoginName(), customerinfo);
                     BOBill.UpdatePhoto(bill.BillId, path);
-                   
-                    if(DiscountApplied!=null)
+
+                    if (DiscountApplied!=null)
                     {
                         
                         foreach(DataRow row in DiscountApplied.Rows)
                         {
+
                             decimal sv = pricee * (decimal)row["DiscountPercent"] / 100;
                             DiscountBillInfo billInfo = new DiscountBillInfo();
                             billInfo.SetSaved(sv);

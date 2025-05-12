@@ -231,7 +231,7 @@ namespace CoffeeSell.Ulti
                 textPaint.TextAlign = SKTextAlign.Center;
                 canvas.DrawText($"WiFi: TheBoys || Pass: xincamon", centerX, y, smallerBoldFont);
                 y += 30;
-                canvas.DrawText("Homelander tuổi", centerX, y, slogan);
+                canvas.DrawText("Cảm ơn quý khách", centerX, y, slogan);
 
                 using (FileStream fs = File.OpenWrite(filePath))
                 {
