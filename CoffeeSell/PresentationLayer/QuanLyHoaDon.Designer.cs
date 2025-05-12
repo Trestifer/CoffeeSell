@@ -38,6 +38,7 @@
             guna2DataGridView1 = new Guna.UI2.WinForms.Guna2DataGridView();
             label1 = new Label();
             tabControl1 = new TabControl();
+            label2 = new Label();
             tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)guna2DataGridView1).BeginInit();
             tabControl1.SuspendLayout();
@@ -45,6 +46,7 @@
             // 
             // tabPage2
             // 
+            tabPage2.Controls.Add(label2);
             tabPage2.Controls.Add(button1);
             tabPage2.Controls.Add(label3);
             tabPage2.Controls.Add(comboBox3);
@@ -160,6 +162,16 @@
             tabControl1.Size = new Size(1894, 1070);
             tabControl1.TabIndex = 0;
             // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(1082, 798);
+            label2.Name = "label2";
+            label2.Size = new Size(177, 31);
+            label2.TabIndex = 7;
+            label2.Text = "Lịch sử hóa đơn";
+            label2.Click += label2_Click;
+            // 
             // QuanLyHoaDon
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -185,5 +197,6 @@
         private Guna.UI2.WinForms.Guna2DataGridView guna2DataGridView1;
         private Label label1;
         private TabControl tabControl1;
+        private Label label2;
     }
 }

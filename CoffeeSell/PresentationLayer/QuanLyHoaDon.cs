@@ -20,7 +20,7 @@ namespace CoffeeSell
             AllBill = daoBill.GetBillWithCustomerInfo();
             KhoiTaoComboBox();
             TaiLaiDuLieu();
-            
+
         }
 
         private void KhoiTaoComboBox()
@@ -47,9 +47,8 @@ namespace CoffeeSell
         {
             guna2DataGridView1.DataSource = AllBill;
             guna2DataGridView1.Show();
-            
+
             guna2DataGridView1.ColumnHeadersHeight = 40;
-            
 
             if (guna2DataGridView1.Columns.Contains("BillId"))
                 guna2DataGridView1.Columns["BillId"].HeaderText = "Mã Hóa Đơn";
@@ -69,9 +68,18 @@ namespace CoffeeSell
                 guna2DataGridView1.Columns["PhoneNumber"].HeaderText = "Số Điện Thoại";
             if (guna2DataGridView1.Columns.Contains("StatusBill"))
                 guna2DataGridView1.Columns["StatusBill"].Visible = false;
+
+            // Tính tổng doanh thu
+            decimal tongDoanhThu = 0;
+            foreach (DataRow row in AllBill.Rows)
+            {
+                if (row["TotalPrice"] != DBNull.Value)
+                    tongDoanhThu += Convert.ToDecimal(row["TotalPrice"]);
+            }
+            label2.Text = $"Tổng doanh thu: {tongDoanhThu:N0}K VNĐ";
         }
 
-        
+
 
         private void LocHoaDonTheoThangNam(string thangNam)
         {
@@ -105,13 +113,14 @@ namespace CoffeeSell
                 if (guna2DataGridView1.Columns.Contains("StatusBill"))
                     guna2DataGridView1.Columns["StatusBill"].Visible = false;
 
+                // Tính tổng doanh thu
                 decimal tongDoanhThu = 0;
                 foreach (DataRow row in hoaDonLoc.Rows)
                 {
                     if (row["TotalPrice"] != DBNull.Value)
                         tongDoanhThu += Convert.ToDecimal(row["TotalPrice"]);
                 }
-                
+                label2.Text = $"Tổng doanh thu: {tongDoanhThu:N0} VNĐ";
             }
             catch (Exception ex)
             {
@@ -188,7 +197,7 @@ namespace CoffeeSell
 
                 DataRow[] dongChiTiet = bangChiTietHoaDon.Select($"IdBill = {maHoaDon}");
                 System.Diagnostics.Debug.WriteLine($"Số dòng khớp với IdBill {maHoaDon}: {dongChiTiet.Length}");
-                
+
 
                 // Tạo DataTable mới để hiển thị thông tin chi tiết
                 DataTable chiTiet = new DataTable();
@@ -251,10 +260,10 @@ namespace CoffeeSell
                     }
                 }
 
-                
-                
 
-                
+
+
+
             }
             catch (Exception ex)
             {
@@ -275,6 +284,11 @@ namespace CoffeeSell
         }
 
         private void tabPage2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
         {
 
         }

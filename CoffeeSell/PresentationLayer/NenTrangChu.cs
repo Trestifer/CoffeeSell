@@ -52,25 +52,32 @@ namespace CoffeeSell
             try
             {
                 DataTable billTable = daoBill.GetAllBill();
-                DataTable billInfoTable = daoBillInfo.GetAllBillInfo(); // Lấy tất cả BillInfo, không giới hạn ngày
-                DataTable foodTable = daoFood.GetAllFood();
 
-                if (billTable == null || billInfoTable == null || foodTable == null)
+                if (billTable == null)
                 {
-                    System.Diagnostics.Debug.WriteLine("Dữ liệu trả về từ một trong các bảng là null.");
+                    System.Diagnostics.Debug.WriteLine("Dữ liệu trả về từ bảng Bill là null.");
                     label1.Text = "0 VNĐ";
                     label2.Text = "0";
                     label3.Text = "0";
                     return;
                 }
 
-                System.Diagnostics.Debug.WriteLine($"Số hàng - Bill: {billTable.Rows.Count}, BillInfo: {billInfoTable.Rows.Count}, Food: {foodTable.Rows.Count}");
+                System.Diagnostics.Debug.WriteLine($"Số hàng trong Bill: {billTable.Rows.Count}");
 
                 decimal totalRevenue = 0;
                 int totalUniqueBills = 0;
                 int totalUniqueFoods = 0;
 
-                // Đếm số lượng duy nhất BillId trong toàn bộ cơ sở dữ liệu
+                // Tính tổng doanh thu từ TotalPrice
+                foreach (DataRow billRow in billTable.Rows)
+                {
+                    if (billRow["TotalPrice"] != DBNull.Value)
+                    {
+                        totalRevenue += Convert.ToDecimal(billRow["TotalPrice"]);
+                    }
+                }
+
+                // Đếm số lượng hóa đơn duy nhất
                 var uniqueBillIds = new HashSet<int>();
                 foreach (DataRow billRow in billTable.Rows)
                 {
@@ -80,67 +87,28 @@ namespace CoffeeSell
                     }
                 }
                 totalUniqueBills = uniqueBillIds.Count;
-                System.Diagnostics.Debug.WriteLine($"Tổng số hóa đơn duy nhất trong cơ sở dữ liệu: {totalUniqueBills}");
+                System.Diagnostics.Debug.WriteLine($"Tổng số hóa đơn duy nhất: {totalUniqueBills}");
 
-                // Đếm số lượng duy nhất FoodId trong toàn bộ cơ sở dữ liệu (từ bảng Food)
-                var uniqueFoodIds = new HashSet<int>();
-                foreach (DataRow foodRow in foodTable.Rows)
+                // Đếm số lượng món ăn duy nhất từ bảng Food
+                DataTable foodTable = daoFood.GetAllFood();
+                if (foodTable != null)
                 {
-                    if (foodRow.Table.Columns.Contains("FoodId"))
+                    var uniqueFoodIds = new HashSet<int>();
+                    foreach (DataRow foodRow in foodTable.Rows)
                     {
-                        uniqueFoodIds.Add(Convert.ToInt32(foodRow["FoodId"]));
-                    }
-                }
-                totalUniqueFoods = uniqueFoodIds.Count;
-                System.Diagnostics.Debug.WriteLine($"Tổng số loại món ăn duy nhất trong cơ sở dữ liệu: {totalUniqueFoods}");
-
-                // Tính tổng doanh thu của tất cả hóa đơn
-                foreach (DataRow billInfoRow in billInfoTable.Rows)
-                {
-                    if (!billInfoRow.Table.Columns.Contains("IdBill") || !billInfoRow.Table.Columns.Contains("IdFood") || !billInfoRow.Table.Columns.Contains("Quantity"))
-                    {
-                        System.Diagnostics.Debug.WriteLine("Cột IdBill, IdFood hoặc Quantity không tồn tại trong BillInfo.");
-                        continue;
-                    }
-
-                    int billId = Convert.ToInt32(billInfoRow["IdBill"]);
-                    int foodId = Convert.ToInt32(billInfoRow["IdFood"]);
-                    int quantity = Convert.ToInt32(billInfoRow["Quantity"]);
-
-                    DataRow[] billRows = billTable.Select($"BillId = {billId}");
-                    if (billRows.Length > 0)
-                    {
-                        DataRow[] foodRows = foodTable.Select($"FoodId = {foodId}");
-                        if (foodRows.Length > 0)
+                        if (foodRow.Table.Columns.Contains("FoodId"))
                         {
-                            if (!foodRows[0].Table.Columns.Contains("Price_M"))
-                            {
-                                System.Diagnostics.Debug.WriteLine($"Cột Price_S không tồn tại trong bảng Food cho FoodId {foodId}.");
-                                continue;
-                            }
-
-                            decimal price;
-                            try
-                            {
-                                price = Convert.ToDecimal(foodRows[0]["Price_M"]);
-                            }
-                            catch (Exception ex)
-                            {
-                                System.Diagnostics.Debug.WriteLine($"Lỗi chuyển đổi Price_S cho FoodId {foodId}: {ex.Message}");
-                                price = 0;
-                            }
-                            totalRevenue += price * quantity;
-                        }
-                        else
-                        {
-                            System.Diagnostics.Debug.WriteLine($"Không tìm thấy FoodId {foodId} trong bảng Food.");
+                            uniqueFoodIds.Add(Convert.ToInt32(foodRow["FoodId"]));
                         }
                     }
+                    totalUniqueFoods = uniqueFoodIds.Count;
+                    System.Diagnostics.Debug.WriteLine($"Tổng số loại món ăn duy nhất: {totalUniqueFoods}");
                 }
 
-                label1.Text = totalRevenue.ToString("N0") + "K VNĐ"; // Tổng doanh thu tất cả hóa đơn
-                label2.Text = totalUniqueBills.ToString(); // Số lượng duy nhất BillId trong toàn cơ sở dữ liệu
-                label3.Text = totalUniqueFoods.ToString(); // Số lượng duy nhất FoodId trong toàn cơ sở dữ liệu
+                // Cập nhật các label
+                label1.Text = totalRevenue.ToString("N0") + "K VNĐ"; // Tổng doanh thu từ TotalPrice
+                label2.Text = totalUniqueBills.ToString(); // Số lượng hóa đơn
+                label3.Text = totalUniqueFoods.ToString(); // Số lượng món ăn
             }
             catch (Exception ex)
             {
@@ -165,58 +133,25 @@ namespace CoffeeSell
                 chartRevenueByMonth.Series.Add(series);
 
                 DataTable billTable = daoBill.GetAllBill();
-                DataTable billInfoTable = daoBillInfo.GetAllBillInfo();
-                DataTable foodTable = daoFood.GetAllFood();
 
-                if (billTable == null || billInfoTable == null || foodTable == null)
+                if (billTable == null)
                 {
-                    System.Diagnostics.Debug.WriteLine("Dữ liệu trả về từ một trong các bảng là null.");
+                    System.Diagnostics.Debug.WriteLine("Dữ liệu trả về từ bảng Bill là null.");
                     return;
                 }
 
                 decimal[] monthlyRevenue = new decimal[12];
                 Array.Clear(monthlyRevenue, 0, 12);
 
-                foreach (DataRow billInfoRow in billInfoTable.Rows)
+                foreach (DataRow billRow in billTable.Rows)
                 {
-                    if (!billInfoRow.Table.Columns.Contains("IdBill") || !billInfoRow.Table.Columns.Contains("IdFood") || !billInfoRow.Table.Columns.Contains("Quantity"))
+                    if (billRow["DateCheckIn"] != DBNull.Value && billRow["TotalPrice"] != DBNull.Value)
                     {
-                        System.Diagnostics.Debug.WriteLine("Cột IdBill, IdFood hoặc Quantity không tồn tại trong BillInfo.");
-                        continue;
-                    }
-
-                    int billId = Convert.ToInt32(billInfoRow["IdBill"]);
-                    int foodId = Convert.ToInt32(billInfoRow["IdFood"]);
-                    int quantity = Convert.ToInt32(billInfoRow["Quantity"]);
-
-                    DataRow[] billRows = billTable.Select($"BillId = {billId}");
-                    if (billRows.Length > 0)
-                    {
-                        DateTime dateCheckIn = Convert.ToDateTime(billRows[0]["DateCheckIn"]);
+                        DateTime dateCheckIn = Convert.ToDateTime(billRow["DateCheckIn"]);
                         if (dateCheckIn.Year == year)
                         {
-                            DataRow[] foodRows = foodTable.Select($"FoodId = {foodId}");
-                            if (foodRows.Length > 0)
-                            {
-                                if (!foodRows[0].Table.Columns.Contains("Price_M"))
-                                {
-                                    System.Diagnostics.Debug.WriteLine($"Cột Price_S không tồn tại trong bảng Food cho FoodId {foodId}.");
-                                    continue;
-                                }
-
-                                decimal price;
-                                try
-                                {
-                                    price = Convert.ToDecimal(foodRows[0]["Price_M"]);
-                                }
-                                catch (Exception ex)
-                                {
-                                    System.Diagnostics.Debug.WriteLine($"Lỗi chuyển đổi Price_S cho FoodId {foodId}: {ex.Message}");
-                                    price = 0;
-                                }
-                                int month = dateCheckIn.Month - 1;
-                                monthlyRevenue[month] += price * quantity;
-                            }
+                            int month = dateCheckIn.Month - 1;
+                            monthlyRevenue[month] += Convert.ToDecimal(billRow["TotalPrice"]);
                         }
                     }
                 }
