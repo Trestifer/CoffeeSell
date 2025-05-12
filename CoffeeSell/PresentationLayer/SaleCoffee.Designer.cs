@@ -40,11 +40,9 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             panel1 = new Panel();
-            label1 = new Label();
             panel2 = new Panel();
             label3 = new Label();
             pictureBox1 = new PictureBox();
-            label2 = new Label();
             label4 = new Label();
             guna2TextBox1 = new Guna.UI2.WinForms.Guna2TextBox();
             flowLayoutPanelCategories = new FlowLayoutPanel();
@@ -87,7 +85,6 @@
             label20 = new Label();
             textBox1 = new TextBox();
             textBox2 = new TextBox();
-            panel1.SuspendLayout();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             flowLayoutPanelCategories.SuspendLayout();
@@ -100,28 +97,17 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(84, 125, 224);
-            panel1.Controls.Add(label1);
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
             panel1.Size = new Size(1926, 35);
             panel1.TabIndex = 0;
             panel1.Paint += panel1_Paint;
             // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(1638, 9);
-            label1.Name = "label1";
-            label1.Size = new Size(32, 20);
-            label1.TabIndex = 0;
-            label1.Text = "Giờ";
-            // 
             // panel2
             // 
             panel2.BackColor = Color.White;
             panel2.Controls.Add(label3);
             panel2.Controls.Add(pictureBox1);
-            panel2.Controls.Add(label2);
             panel2.Location = new Point(0, 32);
             panel2.Name = "panel2";
             panel2.Size = new Size(1926, 50);
@@ -147,15 +133,6 @@
             pictureBox1.TabIndex = 2;
             pictureBox1.TabStop = false;
             pictureBox1.Click += pictureBox1_Click;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(1638, 9);
-            label2.Name = "label2";
-            label2.Size = new Size(32, 20);
-            label2.TabIndex = 0;
-            label2.Text = "Giờ";
             // 
             // label4
             // 
@@ -630,8 +607,6 @@
             Text = "SaleCoffee";
             WindowState = FormWindowState.Maximized;
             Load += SaleCoffee_Load;
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
@@ -648,10 +623,8 @@
         #endregion
 
         private Panel panel1;
-        private Label label1;
         private Panel panel2;
         private PictureBox pictureBox1;
-        private Label label2;
         private Label label4;
         private Guna.UI2.WinForms.Guna2TextBox guna2TextBox1;
         private Label label3;

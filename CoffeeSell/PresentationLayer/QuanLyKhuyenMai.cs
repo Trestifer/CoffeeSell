@@ -178,7 +178,7 @@ namespace CoffeeSell
         {
             if (BODiscount.UpdateState(id, false, new DateTime(1753, 1, 1)))
             {
-                MessageBox.Show("Kết thúc mãi thành công");
+                MessageBox.Show("Kết thúc khuyến mãi thành công");
                 BOActivityLog.Record(user.GetLoginName(), 'E', $"Đã kết thúc khuyến mãi mã {id}");
             }
             Reset();
@@ -202,7 +202,7 @@ namespace CoffeeSell
             temp.SetEndDate(new DateTime(1753, 1, 1));
             if (BODiscount.Update(temp))
             {
-                MessageBox.Show("Cập nhật mãi thành công");
+                MessageBox.Show("Cập nhật khuyến mãi thành công");
                 BOActivityLog.Record(user.GetLoginName(), 'E', $"Đã cập nhật khuyến mãi {id}");
             }
             Reset();

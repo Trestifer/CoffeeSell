@@ -621,7 +621,10 @@ namespace CoffeeSell
                 if(tempForm.ShowDialog() == DialogResult.OK )
                 {
                     TienDua = tempForm.TienDua;
+                    
                 }
+                if (TienDua < price)
+                    return;
                 decimal TienThoi = TienDua - price;
                 Receipt receipt = new Receipt();
                 receipt.receive = TienDua;

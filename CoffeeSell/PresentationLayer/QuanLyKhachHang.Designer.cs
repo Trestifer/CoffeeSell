@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             panel1 = new Panel();
             label7 = new Label();
             comboBox1 = new ComboBox();
@@ -47,6 +47,12 @@
             txt1 = new TextBox();
             button1 = new Button();
             button2 = new Button();
+            textBox1 = new TextBox();
+            textBox2 = new TextBox();
+            label11 = new Label();
+            label13 = new Label();
+            button6 = new Button();
+            button7 = new Button();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)guna2DataGridView1).BeginInit();
             panel3.SuspendLayout();
@@ -92,28 +98,28 @@
             // 
             // guna2DataGridView1
             // 
-            dataGridViewCellStyle4.BackColor = Color.White;
-            guna2DataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = Color.FromArgb(100, 88, 255);
-            dataGridViewCellStyle5.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle5.ForeColor = Color.White;
-            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            guna2DataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.BackColor = Color.White;
+            guna2DataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(100, 88, 255);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle2.ForeColor = Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            guna2DataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             guna2DataGridView1.ColumnHeadersHeight = 4;
             guna2DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = Color.White;
-            dataGridViewCellStyle6.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle6.ForeColor = Color.FromArgb(71, 69, 94);
-            dataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(231, 229, 255);
-            dataGridViewCellStyle6.SelectionForeColor = Color.FromArgb(71, 69, 94);
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
-            guna2DataGridView1.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.White;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle3.ForeColor = Color.FromArgb(71, 69, 94);
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(231, 229, 255);
+            dataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(71, 69, 94);
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+            guna2DataGridView1.DefaultCellStyle = dataGridViewCellStyle3;
             guna2DataGridView1.GridColor = Color.FromArgb(231, 229, 255);
-            guna2DataGridView1.Location = new Point(119, 207);
+            guna2DataGridView1.Location = new Point(119, 260);
             guna2DataGridView1.Margin = new Padding(3, 4, 3, 4);
             guna2DataGridView1.Name = "guna2DataGridView1";
             guna2DataGridView1.RowHeadersVisible = false;
@@ -245,12 +251,68 @@
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(403, 104);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(104, 27);
+            textBox1.TabIndex = 15;
+            // 
+            // textBox2
+            // 
+            textBox2.Location = new Point(636, 107);
+            textBox2.Name = "textBox2";
+            textBox2.Size = new Size(104, 27);
+            textBox2.TabIndex = 16;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(338, 107);
+            label11.Name = "label11";
+            label11.Size = new Size(59, 20);
+            label11.TabIndex = 15;
+            label11.Text = "Tên KH:";
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Location = new Point(591, 111);
+            label13.Name = "label13";
+            label13.Size = new Size(39, 20);
+            label13.TabIndex = 17;
+            label13.Text = "SĐT:";
+            // 
+            // button6
+            // 
+            button6.Location = new Point(738, 185);
+            button6.Name = "button6";
+            button6.Size = new Size(94, 29);
+            button6.TabIndex = 18;
+            button6.Text = "Xóa";
+            button6.UseVisualStyleBackColor = true;
+            // 
+            // button7
+            // 
+            button7.Location = new Point(612, 185);
+            button7.Name = "button7";
+            button7.Size = new Size(94, 29);
+            button7.TabIndex = 19;
+            button7.Text = "Sửa";
+            button7.UseVisualStyleBackColor = true;
+            // 
             // QuanLyKhachHang
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(1842, 864);
+            Controls.Add(button7);
+            Controls.Add(button6);
+            Controls.Add(label13);
+            Controls.Add(label11);
+            Controls.Add(textBox2);
+            Controls.Add(textBox1);
             Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(panel3);
@@ -300,5 +362,11 @@
         private Panel panel3;
         private TextBox txt1;
         private Button button1;
+        private TextBox textBox1;
+        private TextBox textBox2;
+        private Label label11;
+        private Label label13;
+        private Button button6;
+        private Button button7;
     }
 }
