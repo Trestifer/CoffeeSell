@@ -145,7 +145,21 @@ namespace CoffeeSell
 
         }
 
+<<<<<<< HEAD
 
+=======
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Discount temp = GetDiscount();
+            temp.SetEndDate(new DateTime(1753, 1, 1));
+            if (BODiscount.Add(temp))
+            {
+                MessageBox.Show("Thêm khuyến mãi thành công");
+                BOActivityLog.Record(user.GetLoginName(), 'A', $"Đã thêm khuyến mãi {temp.GetNameDiscount()}");
+            }
+            Reset();
+        }
+>>>>>>> discountbillInfo and QuanLyKhuyenMai
 
         private void button6_Click(object sender, EventArgs e)
         {
