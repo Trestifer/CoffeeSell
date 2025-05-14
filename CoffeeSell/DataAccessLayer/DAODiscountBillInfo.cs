@@ -7,7 +7,6 @@ namespace CoffeeSell.DataAccessLayer
 {
     public class DAODiscountBillInfo : DAO
     {
-<<<<<<< HEAD
         public bool InsertDiscountBillInfo(DiscountBillInfo info)
         {
             string query = @"
@@ -28,35 +27,10 @@ namespace CoffeeSell.DataAccessLayer
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"InsertDiscountBillInfo error: {ex.Message}");
-=======
-        public bool CreateDiscountBillInfo(DiscountBillInfo info)
-        {
-            string cmString = @"
-                INSERT INTO DiscountBillInfo (DiscountInfoId, DiscountId, Saved)
-                VALUES (@InfoId, @DiscountId, @Saved)";
-
-            try
-            {
-                int rows = ExecuteNonQuery(
-                    cmString,
-                    new string[] { "@InfoId", "@DiscountId", "@Saved" },
-                    new object[] {
-                        info.GetDiscountInfoId(),
-                        info.GetDiscountId(),
-                        info.GetSaved()
-                    });
-
-                return rows > 0;
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"CreateDiscountBillInfo error: {ex.Message}");
->>>>>>> discountbillInfo and QuanLyKhuyenMai
                 return false;
             }
         }
 
-<<<<<<< HEAD
         public DataTable GetDiscountsByBillId(int billId)
         {
             string query = "SELECT * FROM DiscountBillInfo WHERE BillId = @BillId";
@@ -87,51 +61,6 @@ namespace CoffeeSell.DataAccessLayer
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"DeleteDiscountsByBillId error: {ex.Message}");
-                return false;
-            }
-        }
-=======
-        public bool UpdateDiscountBillInfo(DiscountBillInfo info)
-        {
-            string cmString = @"
-                UPDATE DiscountBillInfo
-                SET DiscountId = @DiscountId, Saved = @Saved
-                WHERE DiscountInfoId = @InfoId";
-
-            try
-            {
-                int rows = ExecuteNonQuery(
-                    cmString,
-                    new string[] { "@DiscountId", "@Saved", "@InfoId" },
-                    new object[] {
-                        info.GetDiscountId(),
-                        info.GetSaved(),
-                        info.GetDiscountInfoId()
-                    });
-
-                return rows > 0;
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"UpdateDiscountBillInfo error: {ex.Message}");
-                return false;
-            }
-        }
-
-        public bool DeleteDiscountBillInfo(int discountInfoId)
-        {
-            string cmString = "DELETE FROM DiscountBillInfo WHERE DiscountInfoId = @InfoId";
-
-            try
-            {
-                return ExecuteNonQuery(
-                    cmString,
-                    new string[] { "@InfoId" },
-                    new object[] { discountInfoId }) > 0;
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"DeleteDiscountBillInfo error: {ex.Message}");
                 return false;
             }
         }
@@ -178,6 +107,5 @@ namespace CoffeeSell.DataAccessLayer
                 return null;
             }
         }
->>>>>>> discountbillInfo and QuanLyKhuyenMai
     }
 }

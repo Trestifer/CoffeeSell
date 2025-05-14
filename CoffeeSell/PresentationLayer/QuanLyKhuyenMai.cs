@@ -145,9 +145,6 @@ namespace CoffeeSell
 
         }
 
-<<<<<<< HEAD
-
-=======
         private void button2_Click(object sender, EventArgs e)
         {
             Discount temp = GetDiscount();
@@ -159,7 +156,6 @@ namespace CoffeeSell
             }
             Reset();
         }
->>>>>>> discountbillInfo and QuanLyKhuyenMai
 
         private void button6_Click(object sender, EventArgs e)
         {
