@@ -11,20 +11,21 @@ namespace CoffeeSell.DataAccessLayer
         public int CreateBillInfo(BillInfo billInfo)
         {
             string cmString = @"
-                INSERT INTO BillInfo (IdBill, IdFood, Quantity)
-                OUTPUT INSERTED.Id
-                VALUES (@BillId, @FoodId, @Quantity)";
+    INSERT INTO BillInfo (IdBill, IdFood, Quantity, foodPrice)
+    OUTPUT INSERTED.Id
+    VALUES (@BillId, @FoodId, @Quantity, @FoodPrice)";
 
             try
             {
                 object result = ExecuteScalar(
                     cmString,
-                    new string[] { "@BillId", "@FoodId", "@Quantity" },
+                    new string[] { "@BillId", "@FoodId", "@Quantity", "@FoodPrice" },
                     new object[]
                     {
                         billInfo.GetIdBill(),
                         billInfo.GetIdFood(),
-                        billInfo.GetQuantity()
+                        billInfo.GetQuantity(),
+                        billInfo.GetFoodPrice()
                     });
 
                 return result != null ? Convert.ToInt32(result) : -1;
@@ -39,20 +40,24 @@ namespace CoffeeSell.DataAccessLayer
         public bool UpdateBillInfo(BillInfo billInfo)
         {
             string cmString = @"
-                UPDATE BillInfo
-                SET IdBill = @BillId, IdFood = @FoodId, Quantity = @Quantity
-                WHERE Id = @Id";
+                        UPDATE BillInfo
+                        SET IdBill = @BillId,
+                            IdFood = @FoodId,
+                            Quantity = @Quantity,
+                            foodPrice = @FoodPrice
+                        WHERE Id = @Id";
 
             try
             {
                 int rows = ExecuteNonQuery(
                     cmString,
-                    new string[] { "@BillId", "@FoodId", "@Quantity", "@Id" },
+                    new string[] { "@BillId", "@FoodId", "@Quantity", "@FoodPrice", "@Id" },
                     new object[]
                     {
                         billInfo.GetIdBill(),
                         billInfo.GetIdFood(),
                         billInfo.GetQuantity(),
+                        billInfo.GetFoodPrice(),
                         billInfo.GetId()
                     });
 
@@ -115,6 +120,7 @@ namespace CoffeeSell.DataAccessLayer
                     bi.SetIdBill(Convert.ToInt32(r["IdBill"]));
                     bi.SetIdFood(Convert.ToInt32(r["IdFood"]));
                     bi.SetQuantity(Convert.ToInt32(r["Quantity"]));
+                    bi.SetFoodPrice(Convert.ToDecimal(r["foodPrice"]));
                     return bi;
                 }
 

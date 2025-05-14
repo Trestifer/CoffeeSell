@@ -93,7 +93,7 @@ namespace CoffeeSell.DataAccessLayer
                 {
                     DataRow r = dt.Rows[0];
                     DiscountBillInfo info = new DiscountBillInfo();
-                    info.SetDiscountInfoId(Convert.ToInt32(r["DiscountInfoId"]));
+                    //info.SetDiscountInfoId(Convert.ToInt32(r["DiscountInfoId"]));
                     info.SetDiscountId(Convert.ToInt32(r["DiscountId"]));
                     info.SetSaved(Convert.ToDecimal(r["Saved"]));
                     return info;

@@ -14,7 +14,6 @@ namespace CoffeeSell.BO
         static DAOBill bil = new DAOBill();
         public static int Add(Bill billInfo)
         {
-            billInfo.StatusBill = 0;
             billInfo.DateCheckIn = DateTime.Now;
             return bil.CreateBill(billInfo);
         }

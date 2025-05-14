@@ -41,6 +41,7 @@
 
   <ItemGroup>
     <Folder Include="Images\Receipe\" />
+    <Folder Include="Images\receipt\" />
     <Folder Include="Uploads\" />
     <Folder Include="Uploads\" />
   </ItemGroup>

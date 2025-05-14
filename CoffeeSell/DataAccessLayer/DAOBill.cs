@@ -12,18 +12,17 @@ namespace CoffeeSell.DataAccessLayer
             string cmString = @"
                 INSERT INTO Bill (DateCheckIn, TotalPrice, StatusBill, CustomerId)
                 OUTPUT INSERTED.BillId
-                VALUES (@CheckIn, @Total, @Status, @CustomerId)";
+                VALUES (@CheckIn, @Total,  @CustomerId)";
 
             try
             {
                 object result = ExecuteScalar(
                     cmString,
-                    new string[] { "@CheckIn", "@Total", "@Status", "@CustomerId" },
+                    new string[] { "@CheckIn", "@Total", "@CustomerId" },
                     new object[]
                     {
                         bill.DateCheckIn,
                         bill.TotalPrice,
-                        bill.StatusBill,
                         bill.CustomerId ?? (object)DBNull.Value
                     });
 
@@ -42,7 +41,6 @@ namespace CoffeeSell.DataAccessLayer
                 UPDATE Bill
                 SET DateCheckIn = @CheckIn,
                     TotalPrice = @Total,
-                    StatusBill = @Status,
                     CustomerId = @CustomerId
                 WHERE BillId = @Id";
 
@@ -50,12 +48,11 @@ namespace CoffeeSell.DataAccessLayer
             {
                 int rows = ExecuteNonQuery(
                     cmString,
-                    new string[] { "@CheckIn", "@Total", "@Status", "@CustomerId", "@Id" },
+                    new string[] { "@CheckIn", "@Total", "@CustomerId", "@Id" },
                     new object[]
                     {
                         bill.DateCheckIn,
                         bill.TotalPrice,
-                        bill.StatusBill,
                         bill.CustomerId ?? (object)DBNull.Value,
                         bill.BillId
                     });
@@ -119,7 +116,6 @@ namespace CoffeeSell.DataAccessLayer
                         BillId = Convert.ToInt32(r["BillId"]),
                         DateCheckIn = Convert.ToDateTime(r["DateCheckIn"]),
                         TotalPrice = Convert.ToDecimal(r["TotalPrice"]),
-                        StatusBill = Convert.ToInt32(r["StatusBill"]),
                         CustomerId = r["CustomerId"] == DBNull.Value ? (int?)null : Convert.ToInt32(r["CustomerId"])
                     };
                 }
@@ -153,7 +149,6 @@ namespace CoffeeSell.DataAccessLayer
             b.BillId,
             b.DateCheckIn,
             b.TotalPrice,
-            b.StatusBill,
             b.Photo,
             c.NameCustomer,
             c.PhoneNumber

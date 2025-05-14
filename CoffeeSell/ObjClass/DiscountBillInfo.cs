@@ -9,12 +9,7 @@
         public DiscountBillInfo() { }
 
         // Parameterized constructor
-        public DiscountBillInfo(int discountInfoId, int discountId)
-        {
-            DiscountInfoId = discountInfoId;
-            DiscountId = discountId;
-        }
-
+       
         public int? GetBillId() => _billId;
         public void SetBillId(int? value) => _billId = value;
 

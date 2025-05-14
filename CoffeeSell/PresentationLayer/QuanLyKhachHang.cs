@@ -31,7 +31,7 @@ namespace CoffeeSell
             txt1.Text = a.Dong.ToString();
             txt2.Text = a.Bac.ToString();
             txt3.Text = a.Vang.ToString();
-            txt4.Text = a.KiemCuong.ToString();
+            txt4.Text = a.KimCuong.ToString();
             
         }
 
@@ -76,7 +76,7 @@ namespace CoffeeSell
             b.Dong =Convert.ToInt32(txt1.Text);
             b.Bac =Convert.ToInt32(txt2.Text);
             b.Vang =Convert.ToInt32(txt3.Text);
-            b.KiemCuong =Convert.ToInt32(txt4.Text);
+            b.KimCuong =Convert.ToInt32(txt4.Text);
             BOCustomer.Update(b);
         }
     }

@@ -106,7 +106,6 @@ namespace CoffeeSell
             cbcDanhMuc.DisplayMember = "NameCategory";
             cbcDanhMuc.ValueMember = "CategoryId";
 
-            cbcDanhMuc.SelectedIndex = 0;
             textBox2.Text = "";
             _NameCategory = "";
             CategoryId = -1;
@@ -276,6 +275,7 @@ namespace CoffeeSell
                     foodId = Convert.ToInt32(row.Cells["FoodId"].Value);
                     string foodName = row.Cells["NameFood"].Value.ToString();
                     cbcDanhMuc.SelectedValue = Convert.ToInt32(row.Cells["CategoryId"].Value);
+                    txtName.Text = foodName;
                     txtS.Text = TextHandling.CustomDecimalToString(row.Cells["Price_S"].Value.ToString());
                     txtL.Text = TextHandling.CustomDecimalToString(row.Cells["Price_L"].Value.ToString());
                     txtM.Text = TextHandling.CustomDecimalToString(row.Cells["Price_M"].Value.ToString());

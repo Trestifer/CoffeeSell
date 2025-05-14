@@ -20,7 +20,7 @@ namespace CoffeeSell.DataAccessLayer
                         Convert.ToInt32(row["Dong"]),
                         Convert.ToInt32(row["Bac"]),
                         Convert.ToInt32(row["Vang"]),
-                        Convert.ToInt32(row["KiemCuong"])
+                        Convert.ToInt32(row["KimCuong"])
                     );
                 }
                 return null;
@@ -39,14 +39,14 @@ namespace CoffeeSell.DataAccessLayer
                 SET Dong = @Dong,
                     Bac = @Bac,
                     Vang = @Vang,
-                    KiemCuong = @KiemCuong";
+                    KiemCuong = @KimCuong";
 
             try
             {
                 int rows = ExecuteNonQuery(
                     query,
                     new string[] { "@Dong", "@Bac", "@Vang", "@KiemCuong" },
-                    new object[] { ranking.Dong, ranking.Bac, ranking.Vang, ranking.KiemCuong });
+                    new object[] { ranking.Dong, ranking.Bac, ranking.Vang, ranking.KimCuong });
 
                 return rows > 0;
             }

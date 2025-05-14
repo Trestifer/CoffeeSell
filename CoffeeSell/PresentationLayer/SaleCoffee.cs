@@ -22,11 +22,12 @@ namespace CoffeeSell
         private decimal? minPrice = null;
         private decimal? maxPrice = null;
         private System.Windows.Forms.Timer searchTimer;
-        private string connectionString = "Server=26.58.112.204,1433;Database=QuanLyBanCafe;User Id=trestifer;Password=tam73105;Encrypt=False";
+        private string connectionString = "Server=26.58.112.204,1433;Database=CoffeeSell;User Id=trestifer;Password=tam73105;Encrypt=False";
         private int orderIndex = 1;
         private Account user;
         private List<Customer> fullCustomer;
         private DataTable DiscountApplied;
+        private int totalDiscount = 0;
         public SaleCoffee(Account _user)
         {
             this.user = _user;
@@ -445,7 +446,8 @@ namespace CoffeeSell
                 {
                     totalDiscount += Convert.ToInt32(row["DiscountPercent"]);
                 }
-                discount = Math.Min((totalDiscount * total) / 100, total);
+                if (totalDiscount > 100)
+                    totalDiscount = 100;
             }
             finalPrice = total - discount;
 
@@ -658,12 +660,13 @@ namespace CoffeeSell
                             billInfo.GetQuantity(),
                             pricextz
                         );
+                        bill.TotalPrice = pricextz - pricextz * totalDiscount / 100;
 
 
                         list.Add(product);
                         if (billInfo.GetIdFood() == 0)
                             break;
-                        if (!BOBIllInfo.Add(billInfo))
+                        if (!BOBIllInfo.Add(billInfo)||BOFood.UpdateSold(billInfo.GetIdFood(),billInfo.GetQuantity()))
                         {
                             MessageBox.Show("Có lỗi xãy ra!");
                             return;
@@ -699,7 +702,7 @@ namespace CoffeeSell
                     }
                     if (customerinfo.GetCustomerId() != -1)
                     { BOCustomer.UpdatePoint(customerinfo.GetCustomerId(), (int)price); }
-
+                    BOActivityLog.Record(user.GetLoginName(), 'S', $"Đã tiến hành thoan toán hóa đơn{bill.BillId}");
                     MessageBox.Show("Thanh toán thành công");
                     guna2DataGridView1.Rows.Clear();
 

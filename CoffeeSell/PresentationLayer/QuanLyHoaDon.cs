@@ -66,8 +66,6 @@ namespace CoffeeSell
                 guna2DataGridView1.Columns["NameCustomer"].HeaderText = "Tên Khách Hàng";
             if (guna2DataGridView1.Columns.Contains("PhoneNumber"))
                 guna2DataGridView1.Columns["PhoneNumber"].HeaderText = "Số Điện Thoại";
-            if (guna2DataGridView1.Columns.Contains("StatusBill"))
-                guna2DataGridView1.Columns["StatusBill"].Visible = false;
             guna2DataGridView1.Columns["Photo"].Visible = false;
 
             // Tính tổng doanh thu

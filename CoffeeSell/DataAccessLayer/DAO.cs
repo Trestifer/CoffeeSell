@@ -10,7 +10,7 @@ namespace CoffeeSell.DataAccessLayer
 {
     public class DAO
     {
-        protected readonly string conn = "Server=26.58.112.204,1433;Database=QuanLyBanCafe;User Id=trestifer;Password=tam73105;Encrypt=False";
+        protected readonly string conn = "Server=26.58.112.204,1433;Database=CoffeeSell;User Id=trestifer;Password=tam73105;Encrypt=False";
 
 
         public bool TestConnection()

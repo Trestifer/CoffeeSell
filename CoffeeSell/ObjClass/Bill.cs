@@ -7,7 +7,6 @@ namespace CoffeeSell.ObjClass
         public int BillId { get; set; }
         public DateTime DateCheckIn { get; set; }
         public decimal TotalPrice { get; set; }
-        public int StatusBill { get; set; }
         public int? CustomerId { get; set; }
 
         public Bill() { }
@@ -17,7 +16,6 @@ namespace CoffeeSell.ObjClass
             BillId = billId;
             DateCheckIn = dateCheckIn;
             TotalPrice = totalPrice;
-            StatusBill = statusBill;
             CustomerId = customerId;
         }
     }

@@ -15,7 +15,7 @@ namespace CoffeeSell.ObjClass
             private int IdBill { get; set; }
             private int IdFood { get; set; }
             private int Quantity { get; set; }
-
+            private decimal foodPrice { get; set; }
             // Default constructor
             public BillInfo() { }
 
@@ -33,7 +33,8 @@ namespace CoffeeSell.ObjClass
             public int GetIdBill() => IdBill;
             public int GetIdFood() => IdFood;
             public int GetQuantity() => Quantity;
-
+            public decimal GetFoodPrice() => foodPrice;
+            public void SetFoodPrice(decimal price)=> foodPrice = price;
 
             public void SetId(int id) => Id = id;
             public void SetIdBill(int idBill) => IdBill = idBill;

@@ -163,7 +163,7 @@ namespace CoffeeSell.Ulti
                 string rank = "Chưa có";
                 int point = customer.GetPoints();
                 Ranking r = BOCustomer.GetRanking();
-                if (point >= r.KiemCuong)
+                if (point >= r.KimCuong)
                     rank = "Kim Cương";
                 else if (point >= r.Vang)
                     rank = "Vàng";

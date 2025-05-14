@@ -1,4 +1,6 @@
-﻿using CoffeeSell.DataAccessLayer;
+﻿using CoffeeSell.BO;
+using CoffeeSell.DataAccessLayer;
+using CoffeeSell.ObjClass;
 using CoffeeSell.PresentationLayer;
 using Microsoft.VisualBasic.Logging;
 namespace CoffeeSell
@@ -9,6 +11,7 @@ namespace CoffeeSell
         ///  The main entry point for the application.
         /// </summary>
         [STAThread]
+
         static void Main()
         {
             // To customize application configuration such as set high DPI settings or default font,

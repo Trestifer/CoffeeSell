@@ -36,5 +36,9 @@ namespace CoffeeSell.BO
         {
             return food.SearchFoodByName(keyword);
         }
+        public static bool UpdateSold(int id, int foodId)
+        {
+            return food.IncrementSoldByFoodId(id, foodId);
+        }
     }
 }

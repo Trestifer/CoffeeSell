@@ -204,5 +204,28 @@ namespace CoffeeSell.DataAccessLayer
                 return new DataTable();
             }
         }
+        public bool IncrementSoldByFoodId(int foodId, int sold)
+        {
+            string cmString = @"
+        UPDATE Food
+        SET Sold = Sold + @Sold
+        WHERE FoodId = @FoodId";
+
+            try
+            {
+                int rows = ExecuteNonQuery(
+                    cmString,
+                    new string[] { "@Sold", "@FoodId" },
+                    new object[] { sold, foodId });
+
+                return rows > 0;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"IncrementSoldByFoodId error: {ex.Message}");
+                return false;
+            }
+        }
+
     }
 }
