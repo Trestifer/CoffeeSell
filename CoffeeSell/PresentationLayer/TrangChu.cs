@@ -310,6 +310,7 @@ namespace CoffeeSell
         private void timer1_Tick(object sender, EventArgs e)
         {
             UpdateDateTime();
+            BODiscount.UpdateEndate();
         }
 
         private void guna2Button2_Click(object sender, EventArgs e)

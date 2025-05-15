@@ -219,7 +219,40 @@ namespace CoffeeSell.DataAccessLayer
                 return new DataTable();
             }
         }
+        public Employee GetEmployeeById(int employeeId)
+        {
+            string cmString = "SELECT * FROM Employee WHERE EmployeeId = @EmployeeId";
+            try
+            {
+                DataTable result = ExecuteQuery(
+                    cmString,
+                    new string[] { "@EmployeeId" },
+                    new object[] { employeeId });
 
+                if (result.Rows.Count > 0)
+                {
+                    DataRow row = result.Rows[0];
+
+                    Employee emp = new Employee();
+                    emp.SetEmployeeId(Convert.ToInt32(row["EmployeeId"]));
+                    emp.SetNameEmployee(row["NameEmployee"].ToString());
+                    emp.SetDateOfBirth(Convert.ToDateTime(row["DateOfBirth"]));
+                    emp.SetGender(Convert.ToBoolean(row["Gender"]));
+                    emp.SetHomeAddress(row["HomeAddress"].ToString());
+                    emp.SetPhoneNumber(row["PhoneNumber"].ToString());
+                    emp.SetAccountId(Convert.ToInt32(row["AccountId"]));
+
+                    return emp;
+                }
+
+                return null; // Not found
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error fetching employee by EmployeeId: {ex.Message}");
+                return null;
+            }
+        }
 
     }
 }

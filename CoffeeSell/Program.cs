@@ -16,6 +16,7 @@ namespace CoffeeSell
         {
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
+            BOCustomer.ResetCustomerPoint();
             DAO dao = new DAO();
             if (!dao.TestConnection())
                 MessageBox.Show("Database hiện đang tắt hoặc cúp điện");

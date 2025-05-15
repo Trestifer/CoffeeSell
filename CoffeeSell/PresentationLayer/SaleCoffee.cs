@@ -620,10 +620,27 @@ namespace CoffeeSell
 
                 decimal TienDua =0;
                 ThoiTienForm tempForm = new ThoiTienForm(price);
-                if(tempForm.ShowDialog() == DialogResult.OK )
+                if (checkBox1.Checked = true)
+                {
+                    TienDua = price;
+                    /*MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+                     
+                     
+                     TẠO ẢNH QR NGAY TẠI ĐÂY
+                     Random nội dung CK 8 chữ số,
+                     Phần tạo ảnh và hiện thị nên nằm trong PhotoFunction
+                     ví dụ cách sử dụng: PhotoFuntion.GenerateQR(price);
+                     
+                     
+                     
+                     
+                     
+                    MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM */
+                }
+                else if (tempForm.ShowDialog() == DialogResult.OK)
                 {
                     TienDua = tempForm.TienDua;
-                    
+
                 }
                 if (TienDua < price)
                     return;

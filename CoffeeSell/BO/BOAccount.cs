@@ -32,5 +32,10 @@ namespace CoffeeSell.BO
             accountInfo.SetPasswordHash(Security.HashPassword(accountInfo.GetPasswordHash()));
             return account.UpdateAccount(accountInfo); 
         }
+        public static bool Delete(int id)
+        {
+            return account.Delete(id);
+        }
+        
     }
 }

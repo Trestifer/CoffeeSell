@@ -41,5 +41,9 @@ namespace CoffeeSell.BO
         {
             return r.UpdateRanking(info);
         }
+        public static void ResetCustomerPoint()
+        {
+            c.ResetPointsIfInactive();
+        }
     }
 }

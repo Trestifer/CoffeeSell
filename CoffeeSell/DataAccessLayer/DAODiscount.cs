@@ -224,6 +224,24 @@ namespace CoffeeSell.DataAccessLayer
                 return new DataTable();
             }
         }
+        public int DisableExpiredDiscounts()
+        {
+            string cmString = @"
+        UPDATE Discount
+        SET IsUseable = 0
+        WHERE EndDate IS NOT NULL AND EndDate < GETDATE() AND IsUseable = 1";
+
+            try
+            {
+                int affectedRows = ExecuteNonQuery(cmString);
+                return affectedRows;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"DisableExpiredDiscounts error: {ex.Message}");
+                return -1;
+            }
+        }
 
     }
 }

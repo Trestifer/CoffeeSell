@@ -39,7 +39,12 @@ namespace CoffeeSell.BO
         }
         public static bool DeleteEmployee(int id)
         {
-            return employee.DeleteEmployee(id);
+            Employee removeOne =  employee.GetEmployeeById(id);
+            if (removeOne != null) { return false; }
+            if (!BOEmployeeEmail.Delete(removeOne.GetEmployeeId())) {  return false; }
+            if (!employee.DeleteEmployee(id)) { return false; }
+            if (!BOAccount.Delete(removeOne.GetAccountId())) { return false; }
+            return true;
         }
         public static bool EditEmployee(Employee employeeInfo)
         {

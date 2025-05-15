@@ -117,7 +117,7 @@ namespace CoffeeSell.DataAccessLayer
                 return null;
             }
         }
-        public Account Delete(int AccountId)
+        public bool Delete(int AccountId)
         {
             string cmString = "Delete FROM Account WHERE AccountId = @AccountId";
 
@@ -131,24 +131,18 @@ namespace CoffeeSell.DataAccessLayer
 
                 if (result.Rows.Count == 1)
                 {
-                    DataRow row = result.Rows[0];
-                    Account loggedInAccount = new Account();
-                    loggedInAccount.SetLoginName(row["LoginName"].ToString());
-                    loggedInAccount.SetPasswordHash(row["PasswordHash"].ToString());
-                    loggedInAccount.SetDisplayName(row["DisplayName"].ToString());
-                    loggedInAccount.SetTypeAccount(Convert.ToBoolean(row["TypeAccount"]));
-                    return loggedInAccount;
+                    return true;
                 }
                 else
                 {
                     // No match found
-                    return null;
+                    return false;
                 }
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error during search: {ex.Message}");
-                return null;
+                return false;
             }
         }
         public Account GetAccount(string loginName)

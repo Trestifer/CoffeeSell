@@ -175,6 +175,25 @@ namespace CoffeeSell.DataAccessLayer
 
             return customers;
         }
+        public bool ResetPointsIfInactive()
+        {
+            string cmString = @"
+        UPDATE Customer
+        SET Points = 0
+        WHERE DATEDIFF(DAY, LattestBuy, GETDATE()) > 30";
+
+            try
+            {
+                int result = ExecuteNonQuery(cmString,null,null);
+                return result > 0; // True if updated
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"ResetPointsIfInactive error: {ex.Message}");
+                return false;
+            }
+        }
+
 
 
     }

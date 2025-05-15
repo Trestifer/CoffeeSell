@@ -46,5 +46,9 @@ namespace CoffeeSell.BO
             view.Sort = "IsUseable DESC";
             return view.ToTable();
         }
+        public static int UpdateEndate()
+        {
+            return discount.DisableExpiredDiscounts();
+        }
     }
 }

@@ -31,5 +31,9 @@ namespace CoffeeSell.BO
         {
             return emailFuction.UpdateEmployeeEmail(employeeEmail);
         }
+        public static bool Delete(int id)
+        {
+            return emailFuction.DeleteEmployeeEmail(id);
+        }
     }
 }
