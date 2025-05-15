@@ -47,7 +47,19 @@ public static class Security
             return await response.Content.ReadAsStringAsync(); // JSON string
         }
     }
+    public static async Task<string> RecognizeFace(string base64Image)
+    {
+        using (var client = new HttpClient())
+        {
+            var payload = new { image = base64Image };
+            var json = JsonConvert.SerializeObject(payload);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
 
+            var response = await client.PostAsync("http://127.0.0.1:5000/recognize", content);
+            return await response.Content.ReadAsStringAsync(); // JSON string
+        }
+    }
+    
 
     public static bool SendOtpEmail(string toEmail, string otp)
     {

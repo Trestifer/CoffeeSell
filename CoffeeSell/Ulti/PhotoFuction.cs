@@ -6,12 +6,33 @@ using SkiaSharp;
 using System.Diagnostics;
 using CoffeeSell.ObjClass;
 using CoffeeSell.BO;
+using OpenCvSharp.Extensions;
+using OpenCvSharp;
+using System.Drawing.Imaging;
+
 
 namespace CoffeeSell.Ulti
 {
     public class PhotoFunction
     {
+        public static string CaptureFrameAsBase64(int cameraIndex = 0)
+        {
+            using var capture = new VideoCapture(cameraIndex);
+            if (!capture.IsOpened())
+                throw new Exception("Camera not found or cannot be opened.");
 
+            using var mat = new Mat();
+            capture.Read(mat);
+            if (mat.Empty())
+                throw new Exception("Failed to capture image from camera.");
+
+            using var bitmap = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(mat);
+            using var ms = new MemoryStream();
+            bitmap.Save(ms, ImageFormat.Jpeg);
+            byte[] imageBytes = ms.ToArray();
+
+            return Convert.ToBase64String(imageBytes);
+        }
 
         public string ImageToBase64(string filePath)
         {
