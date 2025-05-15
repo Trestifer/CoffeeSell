@@ -11,6 +11,15 @@ namespace CoffeeSell.Ulti
 {
     public class PhotoFunction
     {
+
+
+        public string ImageToBase64(string filePath)
+        {
+            byte[] imageBytes = File.ReadAllBytes(filePath);
+            return Convert.ToBase64String(imageBytes);
+        }
+
+
         // ✅ Đường dẫn tới thư mục Images trong thư mục gốc của project
         private static readonly string ImageFolder = Path.Combine(
             Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.FullName,"Images"
