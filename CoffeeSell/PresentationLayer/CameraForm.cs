@@ -1,6 +1,8 @@
 ﻿using CoffeeSell.ObjClass;
+using CoffeeSell.Ulti;
 using OpenCvSharp;
 using System;
+using System.Buffers.Text;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,13 +17,16 @@ namespace CoffeeSell.PresentationLayer
 {
     public partial class CameraForm : Form
     {
+        private bool isRecognizing = false;
+        private string recognizedName = string.Empty;
         private VideoCapture capture;
         private Mat frame;
         private Bitmap image;
         private bool isCapturing = false;
-
-        public CameraForm(ManagerSecurity manager)
+        private ManagerSecurity manager;
+        public CameraForm(ManagerSecurity _manager)
         {
+            this.manager = _manager;
             InitializeComponent();
             frame = new Mat();
             capture = new VideoCapture(0);
@@ -32,20 +37,22 @@ namespace CoffeeSell.PresentationLayer
                 this.Close();  // Close the form immediately since no camera is available
                 return;
             }
+
+            takePhotoButton.Click += takePhotoButton_Click;
+
         }
 
         private void StartCamera()
         {
             if (!capture.IsOpened())
             {
-                // Just in case StartCamera is called separately, double check
                 MessageBox.Show("No camera found or cannot be opened.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.Close();
                 return;
             }
 
             isCapturing = true;
-            Task.Run(() =>
+            Task.Run(async () =>
             {
                 while (isCapturing)
                 {
@@ -53,13 +60,29 @@ namespace CoffeeSell.PresentationLayer
                     if (!frame.Empty())
                     {
                         image = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(frame);
-                        pictureBox1.Invoke(new Action(() =>
+                        pictureBox1.Invoke(() =>
                         {
                             pictureBox1.Image?.Dispose();
                             pictureBox1.Image = (Bitmap)image.Clone();
-                        }));
+                        });
+
+                        // Start recognition if enabled and not already recognized
+                        if (isRecognizing && string.IsNullOrEmpty(recognizedName))
+                        {
+                            using var ms = new MemoryStream();
+                            image.Save(ms, ImageFormat.Jpeg);
+                            string base64 = Convert.ToBase64String(ms.ToArray());
+
+                            string result = await Security.RecognizeFace(base64);
+                            if (!string.IsNullOrWhiteSpace(result) && !result.Contains("unknown", StringComparison.OrdinalIgnoreCase))
+                            {
+                                recognizedName = result;
+                                MessageBox.Show("Recognized: " + recognizedName);
+                            }
+                        }
                     }
-                    System.Threading.Thread.Sleep(30);
+
+                    await Task.Delay(100); // Delay to reduce CPU usage
                 }
             });
         }
@@ -74,19 +97,38 @@ namespace CoffeeSell.PresentationLayer
         {
             if (image != null)
             {
-                // Convert 'image' to Base64 here
-                using var ms = new MemoryStream();
-                image.Save(ms, ImageFormat.Jpeg);
-                string base64String = Convert.ToBase64String(ms.ToArray());
-                // Now you can send base64String to your API
-                MessageBox.Show("Photo captured!");
+                Task.Run(async () =>
+                {
+                    using var ms = new MemoryStream();
+                    image.Save(ms, ImageFormat.Jpeg);
+                    string base64String = Convert.ToBase64String(ms.ToArray());
+
+                    string name = manager.GetLoginName(); 
+                    string result = await Security.RegisterFace(name, base64String);
+
+                    MessageBox.Show("Register response: " + result);
+                });
+                
             }
         }
 
         private void CameraForm_Load(object sender, EventArgs e)
         {
             StartCamera();
+
+            if (manager.GetEncodingFace()== "")
+            {
+                takePhotoButton.Visible = true;  // allow registration
+                isRecognizing = false;
+            }
+            else
+            {
+                // Ready to recognize
+                takePhotoButton.Visible = false; // hide register button
+                isRecognizing = true;
+            }
         }
+
 
         private void CameraForm_FormClosing(object sender, FormClosingEventArgs e)
         {

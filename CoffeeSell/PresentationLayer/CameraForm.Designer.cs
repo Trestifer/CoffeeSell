@@ -29,22 +29,33 @@
         private void InitializeComponent()
         {
             pictureBox1 = new PictureBox();
+            takePhotoButton = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // pictureBox1
             // 
-            pictureBox1.Location = new Point(36, 35);
+            pictureBox1.Location = new Point(46, 31);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(966, 707);
+            pictureBox1.Size = new Size(966, 595);
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
+            // 
+            // takePhotoButton
+            // 
+            takePhotoButton.Location = new Point(493, 686);
+            takePhotoButton.Name = "takePhotoButton";
+            takePhotoButton.Size = new Size(75, 25);
+            takePhotoButton.TabIndex = 1;
+            takePhotoButton.Text = "button1";
+            takePhotoButton.UseVisualStyleBackColor = true;
             // 
             // CameraForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1074, 774);
+            Controls.Add(takePhotoButton);
             Controls.Add(pictureBox1);
             Name = "CameraForm";
             Text = "CameraForm";
@@ -55,5 +66,6 @@
         #endregion
 
         private PictureBox pictureBox1;
+        private Button takePhotoButton;
     }
 }
