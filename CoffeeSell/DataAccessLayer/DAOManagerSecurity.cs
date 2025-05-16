@@ -66,16 +66,16 @@ namespace CoffeeSell.DataAccessLayer
             }
         }
 
-        public ManagerSecurity GetManagerSecurityById(int id)
+        public ManagerSecurity GetManagerSecurityByLoginName(string LoginName)
         {
-            string cmString = "SELECT * FROM ManagerSecurity WHERE Id = @Id";
+            string cmString = "SELECT * FROM ManagerSecurity WHERE LoginName = @LoginName";
 
             try
             {
                 DataTable result = ExecuteQuery(
                     cmString,
-                    new string[] { "@Id" },
-                    new object[] { id }
+                    new string[] { "@LoginName" },
+                    new object[] { LoginName }
                 );
 
                 if (result.Rows.Count == 1)

@@ -21,6 +21,7 @@ namespace CoffeeSell
             if (!dao.TestConnection())
                 MessageBox.Show("Database hiện đang tắt hoặc cúp điện");
             ApplicationConfiguration.Initialize();
+            //new CameraForm().Show();
             Application.Run(new Login());
         }
     }

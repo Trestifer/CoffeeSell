@@ -233,7 +233,7 @@ namespace CoffeeSell.DataAccessLayer
 
             try
             {
-                int affectedRows = ExecuteNonQuery(cmString);
+                int affectedRows = ExecuteNonQuery(cmString,null,null);
                 return affectedRows;
             }
             catch (Exception ex)
