@@ -1,6 +1,7 @@
 ﻿using CoffeeSell.BO;
 using CoffeeSell.ObjClass;
 using CoffeeSell.PresentationLayer;
+using CoffeeSell.Ulti;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,9 +24,19 @@ namespace CoffeeSell
             user = _user;
             guna2DataGridView1.CellClick += guna2DataGridView1_CellClick;
             Reset();
+            txtPercent.KeyPress += txtPercent_KeyPress;
+
         }
 
+        private void txtPercent_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
 
+            if (!TextHandling.IsValidNumericInput(e.KeyChar, textBox.Text))
+            {
+                e.Handled = true; // Block the input
+            }
+        }
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -47,7 +58,12 @@ namespace CoffeeSell
                 BOActivityLog.Record(user.GetLoginName(), 'A', $"Đã thêm khuyến mãi {temp.GetNameDiscount}");
             }
             Reset();
+
         }
+
+
+
+
         private void Reset()
         {
             id = -1;
@@ -145,7 +161,7 @@ namespace CoffeeSell
 
         }
 
-   
+
 
         private void button6_Click(object sender, EventArgs e)
         {
@@ -197,7 +213,7 @@ namespace CoffeeSell
                 MessageBox.Show("Không thể tạo đối tượng khuyến mãi. Vui lòng kiểm tra lại dữ liệu nhập!");
                 return;
             }
-            
+
             temp.SetIsReuseable(false);
             temp.SetEndDate(new DateTime(1753, 1, 1));
             if (BODiscount.Update(temp))
@@ -268,72 +284,77 @@ namespace CoffeeSell
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //    string keyword = textBox1.Text.Trim();
+            string keyword = textBox1.Text.Trim();
 
-            //    if (string.IsNullOrEmpty(keyword))
-            //    {
-            //        Reset(); // Hiển thị toàn bộ khuyến mãi
-            //        MessageBox.Show("Vui lòng nhập từ khóa để tìm kiếm!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //        return;
-            //    }
+            if (string.IsNullOrEmpty(keyword))
+            {
+                Reset(); // Hiển thị toàn bộ khuyến mãi
+                MessageBox.Show("Vui lòng nhập từ khóa để tìm kiếm!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
 
-            //    //DataTable dt = BODiscount.SearchDiscountByName(keyword);
+            DataTable dt = BODiscount.SearchDiscountByName(keyword);
 
-            //    // Thêm cột RemainingDays
-            //    dt.Columns.Add("RemainingDays", typeof(string));
-            //    foreach (DataRow row in dt.Rows)
-            //    {
-            //        if (Convert.ToDateTime(row["EndDate"]) == new DateTime(1753, 1, 1))
-            //        {
-            //            row["RemainingDays"] = "";
-            //        }
-            //        else
-            //        {
-            //            DateTime endDate = Convert.ToDateTime(row["EndDate"]);
-            //            if (endDate == DateTime.MaxValue)
-            //                row["RemainingDays"] = "Không giới hạn";
-            //            else
-            //                row["RemainingDays"] = ((endDate - DateTime.Now).Days + 1) + " ngày";
-            //        }
-            //    }
+            // Thêm cột RemainingDays
+            dt.Columns.Add("RemainingDays", typeof(string));
+            foreach (DataRow row in dt.Rows)
+            {
+                if (Convert.ToDateTime(row["EndDate"]) == new DateTime(1753, 1, 1))
+                {
+                    row["RemainingDays"] = "";
+                }
+                else
+                {
+                    DateTime endDate = Convert.ToDateTime(row["EndDate"]);
+                    if (endDate == DateTime.MaxValue)
+                        row["RemainingDays"] = "Không giới hạn";
+                    else
+                        row["RemainingDays"] = ((endDate - DateTime.Now).Days + 1) + " ngày";
+                }
+            }
 
-            //    guna2DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
-            //    guna2DataGridView1.DataSource = dt;
+            guna2DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
+            guna2DataGridView1.DataSource = dt;
 
-            //    // Cấu hình cột hiển thị
-            //    guna2DataGridView1.Columns["IsUseable"].DisplayIndex = 0;
-            //    guna2DataGridView1.Columns["DiscountId"].DisplayIndex = 1;
-            //    guna2DataGridView1.Columns["NameDiscount"].DisplayIndex = 2;
-            //    guna2DataGridView1.Columns["RemainingDays"].DisplayIndex = 3;
+            // Cấu hình cột hiển thị
+            guna2DataGridView1.Columns["IsUseable"].DisplayIndex = 0;
+            guna2DataGridView1.Columns["DiscountId"].DisplayIndex = 1;
+            guna2DataGridView1.Columns["NameDiscount"].DisplayIndex = 2;
+            guna2DataGridView1.Columns["RemainingDays"].DisplayIndex = 3;
 
-            //    guna2DataGridView1.Columns["IsUseable"].HeaderText = "Thực thi";
-            //    guna2DataGridView1.Columns["DiscountId"].HeaderText = "Mã KM";
-            //    guna2DataGridView1.Columns["NameDiscount"].HeaderText = "Tên khuyến mãi";
-            //    guna2DataGridView1.Columns["RemainingDays"].HeaderText = "Còn lại";
+            guna2DataGridView1.Columns["IsUseable"].HeaderText = "Thực thi";
+            guna2DataGridView1.Columns["DiscountId"].HeaderText = "Mã KM";
+            guna2DataGridView1.Columns["NameDiscount"].HeaderText = "Tên khuyến mãi";
+            guna2DataGridView1.Columns["RemainingDays"].HeaderText = "Còn lại";
 
-            //    guna2DataGridView1.Columns["IsUseable"].Width = 80;
-            //    guna2DataGridView1.Columns["DiscountId"].Width = 80;
-            //    guna2DataGridView1.Columns["NameDiscount"].Width = 200;
-            //    guna2DataGridView1.Columns["RemainingDays"].Width = 100;
+            guna2DataGridView1.Columns["IsUseable"].Width = 80;
+            guna2DataGridView1.Columns["DiscountId"].Width = 80;
+            guna2DataGridView1.Columns["NameDiscount"].Width = 200;
+            guna2DataGridView1.Columns["RemainingDays"].Width = 100;
 
-            //    guna2DataGridView1.ColumnHeadersHeight = 50;
-            //    guna2DataGridView1.AllowUserToResizeRows = false;
-            //    foreach (DataGridViewColumn col in guna2DataGridView1.Columns)
-            //    {
-            //        if (col.Name != "IsUseable" &&
-            //            col.Name != "DiscountId" &&
-            //            col.Name != "NameDiscount" &&
-            //            col.Name != "RemainingDays")
-            //        {
-            //            col.Visible = false;
-            //        }
-            //    }
+            guna2DataGridView1.ColumnHeadersHeight = 50;
+            guna2DataGridView1.AllowUserToResizeRows = false;
+            foreach (DataGridViewColumn col in guna2DataGridView1.Columns)
+            {
+                if (col.Name != "IsUseable" &&
+                    col.Name != "DiscountId" &&
+                    col.Name != "NameDiscount" &&
+                    col.Name != "RemainingDays")
+                {
+                    col.Visible = false;
+                }
+            }
 
-            //    if (dt.Rows.Count == 0)
-            //    {
-            //        MessageBox.Show($"Không tìm thấy khuyến mãi nào với từ khóa '{keyword}'!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //}
+            if (dt.Rows.Count == 0)
+            {
+                MessageBox.Show($"Không tìm thấy khuyến mãi nào với từ khóa '{keyword}'!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
+        private void txtPercent_TextChanged(object sender, EventArgs e)
+        {
+            TextBox txtBox = sender as TextBox;
+            txtBox.Text = TextHandling.InputRange(txtBox, 0, 100);
+        }
     }
 }

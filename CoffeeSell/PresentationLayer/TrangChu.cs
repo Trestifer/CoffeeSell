@@ -48,7 +48,7 @@ namespace CoffeeSell
 
         private void label1_Click(object sender, EventArgs e)
         {
-
+            Panel1_Click(sender, e);
         }
 
         private void label10_Click(object sender, EventArgs e)
@@ -93,7 +93,7 @@ namespace CoffeeSell
             panel2.Click += Panel2_Click;
             panel3.Click += Panel3_Click;
             panel4.Click += Panel4_Click;
-            
+
             panel6.Click += Panel6_Click;
             panel7.Click += Panel7_Click;
             panel8.Click += Panel8_Click;
@@ -107,8 +107,8 @@ namespace CoffeeSell
         }
         private void Panel11_Click(object sender, EventArgs e)
         {
-            
-            
+
+
             panel10.Controls.Clear();
             LogForm testform = new LogForm();
             testform.TopLevel = false; // Đặt TopLevel thành false để Form có thể được nhúng
@@ -121,7 +121,7 @@ namespace CoffeeSell
         {
             SaleCoffee saleform = new SaleCoffee(user);
             saleform.Show();
-            
+
 
         }
         private void Panel1_Click(object sender, EventArgs e)
@@ -161,7 +161,7 @@ namespace CoffeeSell
         }
         private void Panel5_Click(object sender, EventArgs e)
         {
-            
+
 
 
         }
@@ -255,50 +255,7 @@ namespace CoffeeSell
         }
 
 
-        private void panel9_Paint(object sender, PaintEventArgs e)
-        {
 
-        }
-
-        private void panel10_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void panel7_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void panel8_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void panel3_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void panel5_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void panel6_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void panel10_Paint_1(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void panel4_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
         private void UpdateDateTime()
         {
             lblDate.Text = DateTime.Now.ToString("dd/MM/yyyy");
@@ -323,7 +280,7 @@ namespace CoffeeSell
 
         private void label4_Click(object sender, EventArgs e)
         {
-
+            Panel4_Click(sender, e);
         }
 
         private void guna2Button1_Click(object sender, EventArgs e)
@@ -342,6 +299,76 @@ namespace CoffeeSell
         }
 
         private void panel11_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+            Panel2_Click(sender, e);
+        }
+
+        private void guna2CustomGradientPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panel3_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+            Panel3_Click(sender, e);
+        }
+
+        private void panel8_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+            Panel8_Click(sender, e);
+        }
+
+        private void label10_Click_1(object sender, EventArgs e)
+        {
+            Panel11_Click(sender, e);
+        }
+
+        private void panel6_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+            Panel6_Click(sender, e);
+        }
+
+        private void panel7_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+            Panel7_Click(sender, e);
+        }
+
+        private void panel4_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label9_Click(object sender, EventArgs e)
+        {
+            Panel9_Click(sender, e);
+        }
+
+        private void panel9_Paint(object sender, PaintEventArgs e)
         {
 
         }

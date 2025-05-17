@@ -119,29 +119,29 @@ namespace CoffeeSell.DataAccessLayer
         }
         public bool Delete(int AccountId)
         {
-            string cmString = "Delete FROM Account WHERE AccountId = @AccountId";
+            string cmString = "DELETE FROM Account WHERE AccountId = @AccountId";
 
             try
             {
-                DataTable result = ExecuteQuery(
+                int affectedRows = ExecuteNonQuery(
                     cmString,
-                    new string[] { "@AccountId"},
+                    new string[] { "@AccountId" },
                     new object[] { AccountId }
                 );
 
-                if (result.Rows.Count == 1)
+                if (affectedRows == 1)
                 {
-                    return true;
+                    return true; // Successfully deleted
                 }
                 else
                 {
-                    // No match found
-                    return false;
+                    System.Diagnostics.Debug.WriteLine("Error during deletion: No account found with that ID");
+                    return false; // No row affected, possibly invalid AccountId
                 }
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error during search: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Error during deletion: {ex.Message}");
                 return false;
             }
         }
