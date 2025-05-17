@@ -26,9 +26,9 @@ namespace CoffeeSell.BO
             info.SetId(mnS.CreateManagerSecurity(info));
             return info;
         }
-        public static bool Update(ManagerSecurity info)
+        public static bool Update(string LoginName, string encode)
         {
-            return mnS.UpdateManagerSecurity(info);
+            return mnS.UpdateManagerSecurityByLoginName(LoginName,encode);
         }
 
     }

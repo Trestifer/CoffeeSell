@@ -6,58 +6,75 @@ namespace CoffeeSell.DataAccessLayer
 {
     public class DAOManagerSecurity : DAO
     {
-        public bool UpdateManagerSecurity(ManagerSecurity manager)
+        public bool UpdateManagerSecurityByLoginName(string loginName, string encodingFace)
         {
             string cmString = "UPDATE ManagerSecurity " +
-                              "SET LoginName = @LoginName, EncodingFace = @EncodingFace, Email = @Email, CurrentOTP = @CurrentOTP, OTPExpired = @OTPExpired " +
-                              "WHERE Id = @Id";
+                              "SET EncodingFace = @EncodingFace " +
+                              "WHERE LoginName = @LoginName";
 
             try
             {
                 int rowsAffected = ExecuteNonQuery(
                     cmString,
-                    new string[] { "@LoginName", "@EncodingFace", "@Email", "@CurrentOTP", "@OTPExpired", "@Id" },
+                    new[] { "@EncodingFace", "@LoginName" },
                     new object[]
                     {
-                        manager.GetLoginName(),
-                        manager.GetEncodingFace(),
-                        manager.GetEmail(),
-                        manager.GetCurrentOTP(),
-                        manager.GetOTPExpired(),
-                        manager.GetId()
+                encodingFace,
+                loginName
                     });
 
                 return rowsAffected > 0;
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error updating manager security: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Error updating EncodingFace by LoginName: {ex.Message}");
                 return false;
             }
         }
 
         public int CreateManagerSecurity(ManagerSecurity manager)
         {
-            string cmString = @"
-                INSERT INTO ManagerSecurity (LoginName, EncodingFace, Email, CurrentOTP, OTPExpired)
-                OUTPUT INSERTED.Id
-                VALUES (@LoginName, @EncodingFace, @Email, @CurrentOTP, @OTPExpired)";
+            // 1. Insert into EmailSecurity table first
+            string insertEmailSecurity = @"
+        INSERT INTO EmailSecurity (Email, IsConfirmed, CurrentOTP, OTPExpired)
+        OUTPUT INSERTED.EmailId
+        VALUES (@Email, @IsConfirmed, @CurrentOTP, @OTPExpired)";
 
             try
             {
-                object result = ExecuteScalar(
-                    cmString,
-                    new string[] { "@LoginName", "@EncodingFace", "@Email", "@CurrentOTP", "@OTPExpired" },
+                object emailIdObj = ExecuteScalar(
+                    insertEmailSecurity,
+                    new[] { "@Email", "@IsConfirmed", "@CurrentOTP", "@OTPExpired" },
                     new object[]
                     {
-                        manager.GetLoginName(),
-                        manager.GetEncodingFace(),
-                        manager.GetEmail(),
-                        manager.GetCurrentOTP(),
-                        manager.GetOTPExpired()
+                manager.GetEmail(),
+                manager.GetIsConfirmed(),
+                manager.GetCurrentOTP(),
+                manager.GetOTPExpired()
                     });
 
-                return result != null ? Convert.ToInt32(result) : -1;
+                if (emailIdObj == null)
+                    return -1;
+
+                int emailId = Convert.ToInt32(emailIdObj);
+
+                // 2. Insert into ManagerSecurity with EmailId
+                string insertManager = @"
+            INSERT INTO ManagerSecurity (LoginName, EncodingFace, EmailId)
+            OUTPUT INSERTED.EmailId
+            VALUES (@LoginName, @EncodingFace, @EmailId)";
+
+                object managerIdObj = ExecuteScalar(
+                    insertManager,
+                    new[] { "@LoginName", "@EncodingFace", "@EmailId" },
+                    new object[]
+                    {
+                manager.GetLoginName(),
+                manager.GetEncodingFace(),
+                emailId
+                    });
+
+                return managerIdObj != null ? Convert.ToInt32(managerIdObj) : -1;
             }
             catch (Exception ex)
             {
@@ -66,29 +83,26 @@ namespace CoffeeSell.DataAccessLayer
             }
         }
 
-        public ManagerSecurity GetManagerSecurityByLoginName(string LoginName)
+
+        public ManagerSecurity GetManagerSecurityByLoginName(string loginName)
         {
-            string cmString = "SELECT * FROM ManagerSecurity WHERE LoginName = @LoginName";
+            string cmString = "SELECT LoginName, EncodingFace FROM ManagerSecurity WHERE LoginName = @LoginName";
 
             try
             {
                 DataTable result = ExecuteQuery(
                     cmString,
-                    new string[] { "@LoginName" },
-                    new object[] { LoginName }
+                    new[] { "@LoginName" },
+                    new object[] { loginName }
                 );
 
                 if (result.Rows.Count == 1)
                 {
                     DataRow row = result.Rows[0];
-                    return new ManagerSecurity(
-                        Convert.ToInt32(row["Id"]),
-                        row["LoginName"].ToString(),
-                        row["EncodingFace"].ToString(),
-                        row["Email"].ToString(),
-                        row["CurrentOTP"].ToString(),
-                        Convert.ToDateTime(row["OTPExpired"])
-                    );
+                    ManagerSecurity temp = new ManagerSecurity();
+                    temp.SetLoginName( loginName );
+                    temp.SetEncodingFace(row["EncodingFace"].ToString());
+                    return temp;
                 }
                 else
                 {

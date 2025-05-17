@@ -330,7 +330,7 @@ namespace CoffeeSell
         {
             if (user.GetTypeAccount())
             {
-                new DoiMatKhau(user).Show();
+                new CameraForm(user).Show();
 
             }
             else

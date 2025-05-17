@@ -1,5 +1,6 @@
 ﻿using CoffeeSell.BO;
 using CoffeeSell.ObjClass;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,25 +16,37 @@ namespace CoffeeSell
     public partial class NhapOTP : Form
     {
         Account user;
-        EmployeeEmail Eemail;
-        string trueEmail;
+        string trusecurity;
         int countdown;
+        EmailSecurity security;
+
         public NhapOTP(Account _user)
         {
-            InitializeComponent();
             user = _user;
-            Eemail = BOEmployee.GetEmployeeEmail(user.GetAccountId());
-            
-            if (Eemail.GetEmail() != null)
-                textBox2.Text = Eemail.GetEmail();
-            button2.Enabled = false;
-            if (Eemail.GetIsConfirmed())
+            InitializeComponent();
+
+            if(!user.GetTypeAccount())
             {
-                trueEmail = textBox2.Text;
+                security = BOEmployeeEmail.Get(user.GetAccountId());
+            }
+            else
+            {
+                security = BOEmailSecurity.Get(user.GetLoginName()); 
+            }
+
+            if (security.GetEmail() != null)
+                textBox2.Text = security.GetEmail();
+
+            button2.Enabled = false;
+
+            if (security.GetIsConfirmed())
+            {
+                trusecurity = textBox2.Text;
                 textBox2.Text = MaskEmail(textBox2.Text);
                 textBox2.ReadOnly = true;
             }
         }
+
 
         private void label3_Click(object sender, EventArgs e)
         {
@@ -59,15 +72,18 @@ namespace CoffeeSell
             string newOTP = Security.GenerateOTP();
             string email = textBox2.Text;
             if(!textBox2.ReadOnly)
-                trueEmail = email;
-            if (Security.SendOtpEmail(trueEmail, newOTP))
+                trusecurity = email;
+            if (Security.SendOtpEmail(trusecurity, newOTP))
             {
                 MessageBox.Show("Đã gửi mã OTP");
                 if (!textBox2.ReadOnly)
-                { Eemail.SetEmail(trueEmail); }
-                Eemail.SetCurrentOTP(newOTP);
-                Eemail.SetOTPExpired(DateTime.Now.AddMinutes(2));
-                BOEmployeeEmail.UpdateEmployeeEmail(Eemail);
+                { security.SetEmail(trusecurity); }
+                security.SetCurrentOTP(newOTP);
+                security.SetOTPExpired(DateTime.Now.AddMinutes(2));
+                BOEmailSecurity.Update(security);
+                //////////////////////
+                //BOEmployesecurity.UpdateEmployesecurity(security);
+                /////////////////////
                 countdown = 120;
                 button1.Text = $"{countdown}s";
                 timer1.Interval = 1000; // 1 second
@@ -93,14 +109,15 @@ namespace CoffeeSell
         private void button2_Click(object sender, EventArgs e)
         {
             
-            if (DateTime.Now < Eemail.GetOTPExpired())
+            if (DateTime.Now < security.GetOTPExpired())
             {
-                if (textBox1.Text == Eemail.GetCurrentOTP())
+                if (textBox1.Text == security.GetCurrentOTP())
                 {
                     if (!textBox2.ReadOnly)
                     {
-                        Eemail.SetIsConfirmed(true);
-                        BOEmployeeEmail.UpdateEmployeeEmail(Eemail);
+                        security.SetIsConfirmed(true);
+                        BOEmailSecurity.Update(security);
+                        //BOEmployesecurity.UpdateEmployesecurity(security);
                         MessageBox.Show("Cập nhật Email thành công");
                     }
                     new DoiMatKhau(user).Show();
@@ -110,8 +127,9 @@ namespace CoffeeSell
             }
             else
             {
-                Eemail.SetCurrentOTP("");
-                BOEmployeeEmail.UpdateEmployeeEmail(Eemail);
+                security.SetCurrentOTP("");
+                BOEmailSecurity.Update(security);
+                //BOEmployesecurity.UpdateEmployesecurity(security);
                 MessageBox.Show("Mã đã hết hạn");
             }
         }

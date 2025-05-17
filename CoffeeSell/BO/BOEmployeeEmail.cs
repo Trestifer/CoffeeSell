@@ -21,7 +21,11 @@ namespace CoffeeSell.BO
             employeeEmail.SetOTPExpired(DateTime.Now);
             employeeEmail.SetEmail("");
             employeeEmail.SetCurrentOTP("");
-            return emailFuction.CreateEmployeeEmail(employeeEmail) > 0 ;
+            return emailFuction.CreateEmailForEmployee(employeeEmail);
+        }
+        public static EmailSecurity Get(int accountId)
+        {
+            return emailFuction.GetEmailSecurityByAccountId(accountId);
         }
         public static EmployeeEmail GetEmployeeById(int id)
         {

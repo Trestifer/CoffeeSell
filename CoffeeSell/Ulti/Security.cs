@@ -43,7 +43,7 @@ public static class Security
             var json = JsonConvert.SerializeObject(payload);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await client.PostAsync("http://127.0.0.1:5000/register", content);
+            var response = await client.PostAsync("http://26.58.112.204:5000/register", content);
             return await response.Content.ReadAsStringAsync(); // JSON string
         }
     }
@@ -55,7 +55,7 @@ public static class Security
             var json = JsonConvert.SerializeObject(payload);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await client.PostAsync("http://127.0.0.1:5000/recognize", content);
+            var response = await client.PostAsync("http://26.58.112.204:5000/recognize", content);
             return await response.Content.ReadAsStringAsync(); // JSON string
         }
     }

@@ -35,28 +35,32 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Location = new Point(46, 31);
+            pictureBox1.Location = new Point(53, 41);
+            pictureBox1.Margin = new Padding(3, 4, 3, 4);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(966, 595);
+            pictureBox1.Size = new Size(1104, 793);
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
+            pictureBox1.Click += pictureBox1_Click;
             // 
             // takePhotoButton
             // 
-            takePhotoButton.Location = new Point(493, 686);
+            takePhotoButton.Location = new Point(563, 915);
+            takePhotoButton.Margin = new Padding(3, 4, 3, 4);
             takePhotoButton.Name = "takePhotoButton";
-            takePhotoButton.Size = new Size(75, 25);
+            takePhotoButton.Size = new Size(86, 33);
             takePhotoButton.TabIndex = 1;
             takePhotoButton.Text = "button1";
             takePhotoButton.UseVisualStyleBackColor = true;
             // 
             // CameraForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1074, 774);
+            ClientSize = new Size(1227, 1032);
             Controls.Add(takePhotoButton);
             Controls.Add(pictureBox1);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "CameraForm";
             Text = "CameraForm";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();

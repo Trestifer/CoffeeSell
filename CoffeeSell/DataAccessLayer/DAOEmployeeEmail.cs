@@ -35,39 +35,66 @@ namespace CoffeeSell.DataAccessLayer
             }
         }
 
-        public int CreateEmployeeEmail(EmployeeEmail emailInfo)
-        {
-            string cmString = @"
-                INSERT INTO EmployeeEmail (EmployeeId, Email, IsConfirmed, CurrentOTP, OTPExpired)
-                OUTPUT INSERTED.EmployeeId
-                VALUES (@EmployeeId, @Email, @IsConfirmed, @CurrentOTP, @OTPExpired)";
-
-            try
+       
+            public bool CreateEmailForEmployee(EmployeeEmail emailInfo)
             {
-                object result = ExecuteScalar(
-                    cmString,
-                    new string[] { "@EmployeeId", "@Email", "@IsConfirmed", "@CurrentOTP", "@OTPExpired" },
-                    new object[]
+                try
+                {
+                    // Step 1: Create EmailSecurity entry
+                    string insertEmailSecurity = @"
+                INSERT INTO EmailSecurity (Email, IsConfirmed, CurrentOTP, OTPExpired)
+                OUTPUT INSERTED.EmailId
+                VALUES (@Email, @IsConfirmed, @CurrentOTP, @OTPExpired)";
+
+                    object result = ExecuteScalar(
+                        insertEmailSecurity,
+                        new[] { "@Email", "@IsConfirmed", "@CurrentOTP", "@OTPExpired" },
+                        new object[] {
+                    emailInfo.GetEmail(),
+                    emailInfo.GetIsConfirmed(),
+                    emailInfo.GetCurrentOTP(),
+                    emailInfo.GetOTPExpired()
+                        });
+
+                    if (result == null)
                     {
-                        emailInfo.GetEmployeeId(),
-                        emailInfo.GetEmail(),
-                        emailInfo.GetIsConfirmed(),
-                        emailInfo.GetCurrentOTP(),
-                        emailInfo.GetOTPExpired()
-                    });
+                        System.Diagnostics.Debug.WriteLine("[CreateEmailForEmployee] Failed to insert EmailSecurity.");
+                        return false;
+                    }
 
-                return result != null ? Convert.ToInt32(result) : -1;
+                    int emailId = Convert.ToInt32(result);
+
+                    // Step 2: Link with EmployeeEmail
+                    string insertEmployeeEmail = @"
+                INSERT INTO EmployeeEmail (EmployeeId, EmailId)
+                VALUES (@EmployeeId, @EmailId)";
+
+                    int rows = ExecuteNonQuery(
+                        insertEmployeeEmail,
+                        new[] { "@EmployeeId", "@EmailId" },
+                        new object[] {
+                    emailInfo.GetEmployeeId(),
+                    emailId
+                        });
+
+                    return rows > 0;
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"[CreateEmailForEmployee] Error: {ex.Message}");
+                    return false;
+                }
             }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error creating employee email: {ex.Message}");
-                return -1;
-            }
-        }
+
+
 
         public EmployeeEmail GetEmployeeEmailById(int employeeId)
         {
-            string cmString = "SELECT * FROM EmployeeEmail WHERE EmployeeId = @EmployeeId";
+            string cmString = @"
+        SELECT ee.EmployeeId, es.EmailId, es.Email, es.IsConfirmed, es.CurrentOTP, es.OTPExpired
+        FROM EmployeeEmail ee
+        JOIN EmailSecurity es ON ee.EmailId = es.EmailId
+        WHERE ee.EmployeeId = @EmployeeId";
 
             try
             {
@@ -81,6 +108,7 @@ namespace CoffeeSell.DataAccessLayer
                 {
                     DataRow row = result.Rows[0];
                     return new EmployeeEmail(
+                        Convert.ToInt32(row["EmailId"]),
                         Convert.ToInt32(row["EmployeeId"]),
                         row["Email"].ToString(),
                         Convert.ToBoolean(row["IsConfirmed"]),
@@ -99,6 +127,7 @@ namespace CoffeeSell.DataAccessLayer
                 return null;
             }
         }
+
 
         public bool DeleteEmployeeEmail(int employeeId)
         {
@@ -137,5 +166,42 @@ namespace CoffeeSell.DataAccessLayer
 
             return dt;
         }
+        public EmailSecurity GetEmailSecurityByAccountId(int accountId)
+        {
+            string cmString = @"
+        SELECT es.EmailId, es.Email, es.IsConfirmed, es.CurrentOTP, es.OTPExpired
+        FROM EmployeeEmail ee
+        JOIN EmailSecurity es ON ee.EmailId = es.EmailId
+        WHERE ee.EmployeeId = @AccountId";
+
+            try
+            {
+                DataTable result = ExecuteQuery(
+                    cmString,
+                    new[] { "@AccountId" },
+                    new object[] { accountId }
+                );
+
+                if (result.Rows.Count == 1)
+                {
+                    DataRow row = result.Rows[0];
+                    EmailSecurity emailSecurity = new EmailSecurity();
+                    emailSecurity.SetId(Convert.ToInt32(row["EmailId"]));
+                    emailSecurity.SetEmail(row["Email"].ToString());
+                    emailSecurity.SetIsConfirmed(Convert.ToBoolean(row["IsConfirmed"]));
+                    emailSecurity.SetCurrentOTP(row["CurrentOTP"].ToString());
+                    emailSecurity.SetOTPExpired(Convert.ToDateTime(row["OTPExpired"]));
+                    return emailSecurity;
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error fetching EmailSecurity by AccountId: {ex.Message}");
+                return null;
+            }
+        }
+
     }
 }

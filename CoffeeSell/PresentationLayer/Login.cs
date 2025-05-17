@@ -54,16 +54,17 @@ namespace CoffeeSell
                 else if(BOManagerSecurity.Get(account.GetLoginName())==null)
                 {
                     ManagerSecurity manager = BOManagerSecurity.Add(account.GetLoginName());
-                    CameraForm cameraForm = new CameraForm(manager);
+                    CameraForm cameraForm = new CameraForm(account);
                     cameraForm.Show();
+                    return;
                 }
                 else if(BOManagerSecurity.Get(account.GetLoginName()).GetEncodingFace() == "")
                 {
-                    ManagerSecurity managerSecurity = BOManagerSecurity.Get(account.GetLoginName());
-                    CameraForm cameraForm = new CameraForm(managerSecurity);
+                    CameraForm cameraForm = new CameraForm(account);
                     cameraForm.Show();
+                    return;
                 }
-                    TrangChu trangChuForm = new TrangChu(account);
+                TrangChu trangChuForm = new TrangChu(account);
                 trangChuForm.Show();
             }
             else
