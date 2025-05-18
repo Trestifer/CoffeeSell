@@ -55,7 +55,7 @@ namespace CoffeeSell
             };
 
             guna2TextBox1.TextChanged += guna2TextBox1_TextChanged;
-            txtKhachHang.ReadOnly= true;
+            txtKhachHang.ReadOnly = true;
 
 
         }
@@ -439,10 +439,10 @@ namespace CoffeeSell
                     total += rowTotal;
                 }
             }
-            if(DiscountApplied !=null)
+            if (DiscountApplied != null)
             {
                 int totalDiscount = 0;
-                foreach(DataRow row in DiscountApplied.Rows)
+                foreach (DataRow row in DiscountApplied.Rows)
                 {
                     totalDiscount += Convert.ToInt32(row["DiscountPercent"]);
                 }
@@ -618,11 +618,31 @@ namespace CoffeeSell
                 bill.CustomerId = customerinfo.GetCustomerId() == -1 ? null : customerinfo.GetCustomerId();
                 bill.TotalPrice = price;
 
-                decimal TienDua =0;
+                decimal TienDua = 0;
+                string transferCode = null;
                 ThoiTienForm tempForm = new ThoiTienForm(price);
-                if (checkBox1.Checked = true)
+                
+                if (checkBox1.Checked == true)
                 {
+                    // Thanh toán bằng chuyển khoản (QR)
                     TienDua = price;
+                    transferCode = PhotoFunction.GenerateQR(price); // Gọi GenerateQR để hiển thị mã QR
+                    if (transferCode == null)
+                    {
+                        MessageBox.Show("Không thể tạo mã QR. Vui lòng thử lại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    // Nhân viên cần kiểm tra giao dịch thủ công trên ví/ngân hàng với nội dung chuyển khoản
+                    DialogResult result = MessageBox.Show(
+                        $"Vui lòng kiểm tra giao dịch với nội dung CK: {transferCode} và số tiền: {price:N0} VNĐ. Xác nhận giao dịch thành công?",
+                        "Xác nhận thanh toán",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question
+                    );
+                    if (result != DialogResult.Yes)
+                    {
+                        return; // Hủy nếu nhân viên không xác nhận
+                    }
                     /*MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
                      
                      
@@ -683,7 +703,7 @@ namespace CoffeeSell
                         list.Add(product);
                         if (billInfo.GetIdFood() == 0)
                             break;
-                        if (!BOBIllInfo.Add(billInfo)||BOFood.UpdateSold(billInfo.GetIdFood(),billInfo.GetQuantity()))
+                        if (!BOBIllInfo.Add(billInfo) || BOFood.UpdateSold(billInfo.GetIdFood(), billInfo.GetQuantity()))
                         {
                             MessageBox.Show("Có lỗi xãy ra!");
                             return;
@@ -693,10 +713,10 @@ namespace CoffeeSell
                     string path = PhotoFunction.GenerateReceipt(receipt, user.GetLoginName(), customerinfo);
                     BOBill.UpdatePhoto(bill.BillId, path);
 
-                    if (DiscountApplied!=null)
+                    if (DiscountApplied != null)
                     {
-                        
-                        foreach(DataRow row in DiscountApplied.Rows)
+
+                        foreach (DataRow row in DiscountApplied.Rows)
                         {
 
                             decimal sv = pricee * (decimal)row["DiscountPercent"] / 100;
@@ -704,7 +724,7 @@ namespace CoffeeSell
                             billInfo.SetSaved(sv);
                             billInfo.SetBillId(bill.BillId);
                             billInfo.SetDiscountId((int)row["DiscountId"]);
-                            if(!BOBillDiscountInfo.Add(billInfo))
+                            if (!BOBillDiscountInfo.Add(billInfo))
                             {
                                 MessageBox.Show("SOS");
                             }
@@ -766,7 +786,7 @@ namespace CoffeeSell
                 txtKhachHang.ReadOnly = true;
                 button3.Enabled = true;
             }
-            else if(txtSDT.Text.Length!=10)
+            else if (txtSDT.Text.Length != 10)
             {
                 txtKhachHang.Text = "";
                 txtKhachHang.ReadOnly = true;
@@ -777,6 +797,11 @@ namespace CoffeeSell
                 txtKhachHang.ReadOnly = false;
                 button3.Enabled = true;
             }
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

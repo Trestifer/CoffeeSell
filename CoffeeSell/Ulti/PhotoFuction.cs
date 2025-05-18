@@ -9,12 +9,106 @@ using CoffeeSell.BO;
 using OpenCvSharp.Extensions;
 using OpenCvSharp;
 using System.Drawing.Imaging;
-
+using QRCoder;
+using System.Text; // Thêm thư viện QRCoder
 
 namespace CoffeeSell.Ulti
 {
     public class PhotoFunction
     {
+
+        public static string GenerateQR(decimal price)
+        {
+            try
+            {
+                // Tạo nội dung chuyển khoản ngẫu nhiên (8 ký tự, chữ và số)
+                const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                Random random = new Random();
+                char[] transferCodeArray = new char[8];
+                for (int i = 0; i < transferCodeArray.Length; i++)
+                {
+                    transferCodeArray[i] = chars[random.Next(chars.Length)];
+                }
+                string transferCode = new string(transferCodeArray); // Ví dụ: 3121OZEF
+
+                // Đường dẫn tới mã QR tĩnh
+                string qrFileName = "qr.png";
+                string qrFilePath = Path.Combine(ImageFolder, qrFileName);
+
+                // Kiểm tra xem file qr.png tồn tại không
+                if (!File.Exists(qrFilePath))
+                {
+                    MessageBox.Show("Không tìm thấy mã QR (qr.png) trong thư mục Images!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return null;
+                }
+
+                // Tạo form để hiển thị mã QR và thông tin
+                Form qrForm = new Form
+                {
+                    Text = "Thanh toán bằng mã QR",
+                    Size = new System.Drawing.Size(400, 500),
+                    StartPosition = FormStartPosition.CenterScreen,
+                    FormBorderStyle = FormBorderStyle.FixedSingle,
+                    MaximizeBox = false
+                };
+
+                // Hiển thị mã QR tĩnh
+                PictureBox pictureBox = new PictureBox
+                {
+                    Image = Image.FromFile(qrFilePath),
+                    SizeMode = PictureBoxSizeMode.Zoom,
+                    Size = new System.Drawing.Size(300, 300),
+                    Location = new System.Drawing.Point(50, 20)
+                };
+
+                // Hiển thị số tiền
+                Label lblPrice = new Label
+                {
+                    Text = $"Số tiền: {price:N0} VNĐ",
+                    Font = new Font("Segoe UI", 12, FontStyle.Bold),
+                    Size = new System.Drawing.Size(300, 30),
+                    Location = new System.Drawing.Point(50, 330),
+                    TextAlign = ContentAlignment.MiddleCenter
+                };
+
+                // Hiển thị nội dung chuyển khoản
+                Label lblTransferCode = new Label
+                {
+                    Text = $"Nội dung CK: {transferCode}",
+                    Font = new Font("Segoe UI", 12, FontStyle.Bold),
+                    Size = new System.Drawing.Size(300, 30),
+                    Location = new System.Drawing.Point(50, 370),
+                    TextAlign = ContentAlignment.MiddleCenter
+                };
+
+                // Nút đóng form
+                Button btnClose = new Button
+                {
+                    Text = "Đóng",
+                    Size = new System.Drawing.Size(100, 40),
+                    Location = new System.Drawing.Point(150, 420),
+                    Font = new Font("Segoe UI", 10)
+                };
+                btnClose.Click += (s, e) => qrForm.Close();
+
+                // Thêm controls vào form
+                qrForm.Controls.Add(pictureBox);
+                qrForm.Controls.Add(lblPrice);
+                qrForm.Controls.Add(lblTransferCode);
+                qrForm.Controls.Add(btnClose);
+
+                // Hiển thị form
+                qrForm.ShowDialog();
+
+                // Trả về nội dung chuyển khoản
+                return transferCode;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi tạo mã QR: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+        }
         public static string CaptureFrameAsBase64(int cameraIndex = 0)
         {
             using var capture = new VideoCapture(cameraIndex);
@@ -315,5 +409,6 @@ namespace CoffeeSell.Ulti
                 UseShellExecute = true
             });
         }
+
     }
 }
