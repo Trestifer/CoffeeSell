@@ -32,9 +32,14 @@ namespace CoffeeSell.PresentationLayer
                 MessageBox.Show("Tài khoản không tồn tại");
                 return;
             }
-            if(acc.GetTypeAccount()||!BOEmployee.CheckFirstLogin(acc.GetAccountId()))
+            if(acc.GetTypeAccount())
             {
-                MessageBox.Show("Có lỗi diễn ra lêu lêu");
+                MessageBox.Show("Mật khẩu của quản lý không thể bị đổi ở mục này. Vui lòng liên hệ nhà phát triển để được hỗ trợ");
+                return;
+            }
+            else if(!BOEmployee.CheckFirstLogin(acc.GetAccountId()))
+            {
+                MessageBox.Show("Mật khẩu mặc định cho nhân viên mới: changeme");
                 return;
             }
             new NhapOTP(acc).Show();

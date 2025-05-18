@@ -60,17 +60,19 @@ namespace CoffeeSell.Ulti
             // Otherwise, block
             return false;
         }
-        public static bool IsNumberInput(char keyChar, string currentText)
+        public static bool IsNumberInput(char keyChar, string currentText, int maxLength=255)
         {
             // Allow control characters (Backspace, Delete, etc.)
             if (char.IsControl(keyChar))
                 return true;
 
-            // Allow digits
-            if (char.IsDigit(keyChar))
+            // Allow digits if current text hasn't reached max length
+            if (char.IsDigit(keyChar) && currentText.Length < maxLength)
                 return true;
+
             return false;
         }
+
         public static string txtLimit(TextBox txt, int max)
         {
             string s = txt.Text;

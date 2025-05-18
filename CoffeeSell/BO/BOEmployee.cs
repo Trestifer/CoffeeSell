@@ -19,7 +19,7 @@ namespace CoffeeSell.BO
             DAOAccount account = new DAOAccount();
             int maxAccontId = account.GetMaxAccountId();
             Account temp = new Account(
-            accountId: 1,
+            accountId: -1,
             loginName: RemoveDiacritics(employeeInfo.GetNameEmployee().Replace(" ", "").ToLower()) + (maxAccontId+1),
             passwordHash: Security.HashPassword("changeme"),
             displayName: employeeInfo.GetNameEmployee(),
@@ -40,10 +40,12 @@ namespace CoffeeSell.BO
         public static bool DeleteEmployee(int id)
         {
             Employee removeOne =  employee.GetEmployeeById(id);
-            if (removeOne != null) { return false; }
-            if (!BOEmployeeEmail.Delete(removeOne.GetEmployeeId())) {  return false; }
-            if (!employee.DeleteEmployee(id)) { return false; }
-            if (!BOAccount.Delete(removeOne.GetAccountId())) { return false; }
+
+            if (removeOne == null) {MessageBox.Show("1"); return false; }
+            if (!BOEmployeeEmail.Delete(removeOne.GetEmployeeId())) { MessageBox.Show("2"); return false; }
+            if (!employee.DeleteEmployee(id)) { MessageBox.Show("3"); return false; }
+
+            if (!BOAccount.Delete(removeOne.GetAccountId())) {  return false; }
             return true;
         }
         public static bool EditEmployee(Employee employeeInfo)

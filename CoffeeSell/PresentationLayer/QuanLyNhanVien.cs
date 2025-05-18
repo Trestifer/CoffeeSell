@@ -1,5 +1,6 @@
 ﻿using CoffeeSell.BO;
 using CoffeeSell.ObjClass;
+using CoffeeSell.Ulti;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,9 +31,30 @@ namespace CoffeeSell
             dateTimePicker1.MaxDate = new DateTime(DateTime.Now.Year - 16, 1, 1);
             user = _user;
             Reset();
+            txtName.KeyPress += txtName_KeyPress;
+            txtPhoneNumber.KeyPress += txtSDT_Press;
 
         }
+        private void txtName_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            TextBox txtBox = sender as TextBox;
 
+            // Check if the character is a valid numeric input (like your `txtS_KeyPress` method)
+            if (!TextHandling.IsValidAlphabeticInput(e.KeyChar, txtBox.Text))
+            {
+                e.Handled = true;  // Block the keypress if it's not valid
+            }
+        }
+        private void txtSDT_Press(object sender, KeyPressEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            int maxLength = 10; // Or whatever max length you want
+
+            if (!TextHandling.IsNumberInput(e.KeyChar, textBox.Text, maxLength))
+            {
+                e.Handled = true; // Block the key press
+            }
+        }
         private void label7_Click(object sender, EventArgs e)
         {
 
@@ -276,7 +298,10 @@ namespace CoffeeSell
                     BOActivityLog.Record(user.GetLoginName(), 'D', $"Đã xóa nhân viên có mã {employeeID}");
 
                 }
-
+                else
+                {
+                    MessageBox.Show("Xóa thất bại");
+                }
             }
             Reset();
         }
@@ -334,6 +359,9 @@ namespace CoffeeSell
                     BOActivityLog.Record(user.GetLoginName(), 'E', $"Đã sửa nhân viên có mã {employeeID}");
 
                 }// Trả về Boolean có thể thêm If để kt
+                else
+                    MessageBox.Show("Sửa thất bại");
+
             }
             Reset();
         }

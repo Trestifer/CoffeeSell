@@ -148,20 +148,23 @@
             guna2CustomGradientPanel1.FillColor2 = Color.FromArgb(0, 94, 165);
             guna2CustomGradientPanel1.FillColor3 = Color.FromArgb(0, 94, 165);
             guna2CustomGradientPanel1.FillColor4 = Color.FromArgb(0, 94, 165);
-            guna2CustomGradientPanel1.Location = new Point(0, 3);
+            guna2CustomGradientPanel1.Location = new Point(0, 2);
+            guna2CustomGradientPanel1.Margin = new Padding(3, 2, 3, 2);
             guna2CustomGradientPanel1.Name = "guna2CustomGradientPanel1";
             guna2CustomGradientPanel1.ShadowDecoration.CustomizableEdges = customizableEdges22;
-            guna2CustomGradientPanel1.Size = new Size(276, 1007);
+            guna2CustomGradientPanel1.Size = new Size(242, 755);
             guna2CustomGradientPanel1.TabIndex = 0;
+            guna2CustomGradientPanel1.Paint += guna2CustomGradientPanel1_Paint;
             // 
             // panel11
             // 
             panel11.BackColor = Color.FromArgb(61, 132, 187);
             panel11.Controls.Add(guna2PictureBox1);
             panel11.Controls.Add(label10);
-            panel11.Location = new Point(0, 379);
+            panel11.Location = new Point(0, 284);
+            panel11.Margin = new Padding(3, 2, 3, 2);
             panel11.Name = "panel11";
-            panel11.Size = new Size(267, 60);
+            panel11.Size = new Size(234, 45);
             panel11.TabIndex = 12;
             panel11.Paint += panel11_Paint;
             // 
@@ -171,10 +174,11 @@
             guna2PictureBox1.CustomizableEdges = customizableEdges1;
             guna2PictureBox1.Image = Properties.Resources.settings;
             guna2PictureBox1.ImageRotate = 0F;
-            guna2PictureBox1.Location = new Point(18, 8);
+            guna2PictureBox1.Location = new Point(16, 6);
+            guna2PictureBox1.Margin = new Padding(3, 2, 3, 2);
             guna2PictureBox1.Name = "guna2PictureBox1";
             guna2PictureBox1.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            guna2PictureBox1.Size = new Size(40, 35);
+            guna2PictureBox1.Size = new Size(35, 26);
             guna2PictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             guna2PictureBox1.TabIndex = 14;
             guna2PictureBox1.TabStop = false;
@@ -183,20 +187,22 @@
             // 
             label10.AutoSize = true;
             label10.Font = new Font("Segoe UI Emoji", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label10.Location = new Point(64, 12);
+            label10.Location = new Point(56, 9);
             label10.Name = "label10";
-            label10.Size = new Size(210, 31);
+            label10.Size = new Size(175, 26);
             label10.TabIndex = 2;
             label10.Text = "Lịch Sử Hệ Thống";
+            label10.Click += label10_Click_1;
             // 
             // panel8
             // 
             panel8.BackColor = Color.FromArgb(61, 132, 187);
             panel8.Controls.Add(guna2PictureBox14);
             panel8.Controls.Add(label8);
-            panel8.Location = new Point(1, 313);
+            panel8.Location = new Point(1, 235);
+            panel8.Margin = new Padding(3, 2, 3, 2);
             panel8.Name = "panel8";
-            panel8.Size = new Size(267, 60);
+            panel8.Size = new Size(234, 45);
             panel8.TabIndex = 7;
             panel8.Paint += panel8_Paint;
             // 
@@ -206,10 +212,11 @@
             guna2PictureBox14.CustomizableEdges = customizableEdges3;
             guna2PictureBox14.Image = (Image)resources.GetObject("guna2PictureBox14.Image");
             guna2PictureBox14.ImageRotate = 0F;
-            guna2PictureBox14.Location = new Point(18, 8);
+            guna2PictureBox14.Location = new Point(16, 6);
+            guna2PictureBox14.Margin = new Padding(3, 2, 3, 2);
             guna2PictureBox14.Name = "guna2PictureBox14";
             guna2PictureBox14.ShadowDecoration.CustomizableEdges = customizableEdges4;
-            guna2PictureBox14.Size = new Size(40, 35);
+            guna2PictureBox14.Size = new Size(35, 26);
             guna2PictureBox14.SizeMode = PictureBoxSizeMode.Zoom;
             guna2PictureBox14.TabIndex = 18;
             guna2PictureBox14.TabStop = false;
@@ -218,11 +225,12 @@
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI Emoji", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label8.Location = new Point(64, 12);
+            label8.Location = new Point(56, 9);
             label8.Name = "label8";
-            label8.Size = new Size(147, 31);
+            label8.Size = new Size(124, 26);
             label8.TabIndex = 2;
             label8.Text = "Khách Hàng";
+            label8.Click += label8_Click;
             // 
             // guna2PictureBox6
             // 
@@ -230,10 +238,11 @@
             guna2PictureBox6.CustomizableEdges = customizableEdges5;
             guna2PictureBox6.Image = (Image)resources.GetObject("guna2PictureBox6.Image");
             guna2PictureBox6.ImageRotate = 0F;
-            guna2PictureBox6.Location = new Point(35, 920);
+            guna2PictureBox6.Location = new Point(31, 690);
+            guna2PictureBox6.Margin = new Padding(3, 2, 3, 2);
             guna2PictureBox6.Name = "guna2PictureBox6";
             guna2PictureBox6.ShadowDecoration.CustomizableEdges = customizableEdges6;
-            guna2PictureBox6.Size = new Size(40, 35);
+            guna2PictureBox6.Size = new Size(35, 26);
             guna2PictureBox6.SizeMode = PictureBoxSizeMode.Zoom;
             guna2PictureBox6.TabIndex = 11;
             guna2PictureBox6.TabStop = false;
@@ -243,9 +252,10 @@
             guna2HtmlLabel5.BackColor = Color.Transparent;
             guna2HtmlLabel5.Font = new Font("Times New Roman", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 163);
             guna2HtmlLabel5.ForeColor = SystemColors.ButtonHighlight;
-            guna2HtmlLabel5.Location = new Point(81, 933);
+            guna2HtmlLabel5.Location = new Point(71, 700);
+            guna2HtmlLabel5.Margin = new Padding(3, 2, 3, 2);
             guna2HtmlLabel5.Name = "guna2HtmlLabel5";
-            guna2HtmlLabel5.Size = new Size(147, 22);
+            guna2HtmlLabel5.Size = new Size(113, 18);
             guna2HtmlLabel5.TabIndex = 10;
             guna2HtmlLabel5.Text = "Made by: The Boys";
             // 
@@ -254,9 +264,10 @@
             panel9.BackColor = Color.FromArgb(61, 132, 187);
             panel9.Controls.Add(guna2PictureBox16);
             panel9.Controls.Add(label9);
-            panel9.Location = new Point(0, 643);
+            panel9.Location = new Point(0, 482);
+            panel9.Margin = new Padding(3, 2, 3, 2);
             panel9.Name = "panel9";
-            panel9.Size = new Size(267, 60);
+            panel9.Size = new Size(234, 45);
             panel9.TabIndex = 8;
             panel9.Paint += panel9_Paint;
             // 
@@ -266,10 +277,11 @@
             guna2PictureBox16.CustomizableEdges = customizableEdges7;
             guna2PictureBox16.Image = (Image)resources.GetObject("guna2PictureBox16.Image");
             guna2PictureBox16.ImageRotate = 0F;
-            guna2PictureBox16.Location = new Point(18, 12);
+            guna2PictureBox16.Location = new Point(16, 9);
+            guna2PictureBox16.Margin = new Padding(3, 2, 3, 2);
             guna2PictureBox16.Name = "guna2PictureBox16";
             guna2PictureBox16.ShadowDecoration.CustomizableEdges = customizableEdges8;
-            guna2PictureBox16.Size = new Size(40, 35);
+            guna2PictureBox16.Size = new Size(35, 26);
             guna2PictureBox16.SizeMode = PictureBoxSizeMode.Zoom;
             guna2PictureBox16.TabIndex = 20;
             guna2PictureBox16.TabStop = false;
@@ -278,20 +290,22 @@
             // 
             label9.AutoSize = true;
             label9.Font = new Font("Segoe UI Emoji", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label9.Location = new Point(64, 12);
+            label9.Location = new Point(56, 9);
             label9.Name = "label9";
-            label9.Size = new Size(104, 31);
+            label9.Size = new Size(89, 26);
             label9.TabIndex = 2;
             label9.Text = "Báo Cáo";
+            label9.Click += label9_Click;
             // 
             // panel7
             // 
             panel7.BackColor = Color.FromArgb(61, 132, 187);
             panel7.Controls.Add(guna2PictureBox13);
             panel7.Controls.Add(label7);
-            panel7.Location = new Point(0, 511);
+            panel7.Location = new Point(0, 383);
+            panel7.Margin = new Padding(3, 2, 3, 2);
             panel7.Name = "panel7";
-            panel7.Size = new Size(267, 60);
+            panel7.Size = new Size(234, 45);
             panel7.TabIndex = 3;
             panel7.Paint += panel7_Paint;
             // 
@@ -301,10 +315,11 @@
             guna2PictureBox13.CustomizableEdges = customizableEdges9;
             guna2PictureBox13.Image = (Image)resources.GetObject("guna2PictureBox13.Image");
             guna2PictureBox13.ImageRotate = 0F;
-            guna2PictureBox13.Location = new Point(18, 12);
+            guna2PictureBox13.Location = new Point(16, 9);
+            guna2PictureBox13.Margin = new Padding(3, 2, 3, 2);
             guna2PictureBox13.Name = "guna2PictureBox13";
             guna2PictureBox13.ShadowDecoration.CustomizableEdges = customizableEdges10;
-            guna2PictureBox13.Size = new Size(40, 35);
+            guna2PictureBox13.Size = new Size(35, 26);
             guna2PictureBox13.SizeMode = PictureBoxSizeMode.Zoom;
             guna2PictureBox13.TabIndex = 17;
             guna2PictureBox13.TabStop = false;
@@ -313,20 +328,22 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI Emoji", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label7.Location = new Point(64, 12);
+            label7.Location = new Point(56, 9);
             label7.Name = "label7";
-            label7.Size = new Size(129, 31);
+            label7.Size = new Size(110, 26);
             label7.TabIndex = 2;
             label7.Text = "Nhân Viên";
+            label7.Click += label7_Click;
             // 
             // panel6
             // 
             panel6.BackColor = Color.FromArgb(61, 132, 187);
             panel6.Controls.Add(guna2PictureBox12);
             panel6.Controls.Add(label6);
-            panel6.Location = new Point(0, 445);
+            panel6.Location = new Point(0, 334);
+            panel6.Margin = new Padding(3, 2, 3, 2);
             panel6.Name = "panel6";
-            panel6.Size = new Size(267, 60);
+            panel6.Size = new Size(234, 45);
             panel6.TabIndex = 3;
             panel6.Paint += panel6_Paint;
             // 
@@ -336,10 +353,11 @@
             guna2PictureBox12.CustomizableEdges = customizableEdges11;
             guna2PictureBox12.Image = (Image)resources.GetObject("guna2PictureBox12.Image");
             guna2PictureBox12.ImageRotate = 0F;
-            guna2PictureBox12.Location = new Point(18, 12);
+            guna2PictureBox12.Location = new Point(16, 9);
+            guna2PictureBox12.Margin = new Padding(3, 2, 3, 2);
             guna2PictureBox12.Name = "guna2PictureBox12";
             guna2PictureBox12.ShadowDecoration.CustomizableEdges = customizableEdges12;
-            guna2PictureBox12.Size = new Size(40, 35);
+            guna2PictureBox12.Size = new Size(35, 26);
             guna2PictureBox12.SizeMode = PictureBoxSizeMode.Zoom;
             guna2PictureBox12.TabIndex = 16;
             guna2PictureBox12.TabStop = false;
@@ -348,20 +366,22 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI Emoji", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label6.Location = new Point(64, 12);
+            label6.Location = new Point(56, 9);
             label6.Name = "label6";
-            label6.Size = new Size(146, 31);
+            label6.Size = new Size(123, 26);
             label6.TabIndex = 2;
             label6.Text = "Khuyến Mãi";
+            label6.Click += label6_Click;
             // 
             // panel4
             // 
             panel4.BackColor = Color.FromArgb(61, 132, 187);
             panel4.Controls.Add(guna2PictureBox10);
             panel4.Controls.Add(label4);
-            panel4.Location = new Point(0, 577);
+            panel4.Location = new Point(0, 433);
+            panel4.Margin = new Padding(3, 2, 3, 2);
             panel4.Name = "panel4";
-            panel4.Size = new Size(267, 60);
+            panel4.Size = new Size(234, 45);
             panel4.TabIndex = 6;
             panel4.Paint += panel4_Paint;
             // 
@@ -371,10 +391,11 @@
             guna2PictureBox10.CustomizableEdges = customizableEdges13;
             guna2PictureBox10.Image = (Image)resources.GetObject("guna2PictureBox10.Image");
             guna2PictureBox10.ImageRotate = 0F;
-            guna2PictureBox10.Location = new Point(18, 12);
+            guna2PictureBox10.Location = new Point(16, 9);
+            guna2PictureBox10.Margin = new Padding(3, 2, 3, 2);
             guna2PictureBox10.Name = "guna2PictureBox10";
             guna2PictureBox10.ShadowDecoration.CustomizableEdges = customizableEdges14;
-            guna2PictureBox10.Size = new Size(40, 35);
+            guna2PictureBox10.Size = new Size(35, 26);
             guna2PictureBox10.SizeMode = PictureBoxSizeMode.Zoom;
             guna2PictureBox10.TabIndex = 15;
             guna2PictureBox10.TabStop = false;
@@ -383,9 +404,9 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI Emoji", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(64, 12);
+            label4.Location = new Point(56, 9);
             label4.Name = "label4";
-            label4.Size = new Size(132, 31);
+            label4.Size = new Size(110, 26);
             label4.TabIndex = 2;
             label4.Text = "Sản Phẩm ";
             label4.Click += label4_Click;
@@ -395,9 +416,10 @@
             panel3.BackColor = Color.FromArgb(61, 132, 187);
             panel3.Controls.Add(guna2PictureBox9);
             panel3.Controls.Add(label3);
-            panel3.Location = new Point(0, 247);
+            panel3.Location = new Point(0, 185);
+            panel3.Margin = new Padding(3, 2, 3, 2);
             panel3.Name = "panel3";
-            panel3.Size = new Size(267, 60);
+            panel3.Size = new Size(234, 45);
             panel3.TabIndex = 5;
             panel3.Paint += panel3_Paint;
             // 
@@ -407,10 +429,11 @@
             guna2PictureBox9.CustomizableEdges = customizableEdges15;
             guna2PictureBox9.Image = Properties.Resources.invoice;
             guna2PictureBox9.ImageRotate = 0F;
-            guna2PictureBox9.Location = new Point(18, 8);
+            guna2PictureBox9.Location = new Point(16, 6);
+            guna2PictureBox9.Margin = new Padding(3, 2, 3, 2);
             guna2PictureBox9.Name = "guna2PictureBox9";
             guna2PictureBox9.ShadowDecoration.CustomizableEdges = customizableEdges16;
-            guna2PictureBox9.Size = new Size(40, 35);
+            guna2PictureBox9.Size = new Size(35, 26);
             guna2PictureBox9.SizeMode = PictureBoxSizeMode.Zoom;
             guna2PictureBox9.TabIndex = 14;
             guna2PictureBox9.TabStop = false;
@@ -419,20 +442,22 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI Emoji", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(64, 12);
+            label3.Location = new Point(56, 9);
             label3.Name = "label3";
-            label3.Size = new Size(112, 31);
+            label3.Size = new Size(93, 26);
             label3.TabIndex = 2;
             label3.Text = "Hóa Đơn";
+            label3.Click += label3_Click;
             // 
             // panel2
             // 
             panel2.BackColor = Color.FromArgb(61, 132, 187);
             panel2.Controls.Add(guna2PictureBox8);
             panel2.Controls.Add(label2);
-            panel2.Location = new Point(0, 181);
+            panel2.Location = new Point(0, 136);
+            panel2.Margin = new Padding(3, 2, 3, 2);
             panel2.Name = "panel2";
-            panel2.Size = new Size(267, 60);
+            panel2.Size = new Size(234, 45);
             panel2.TabIndex = 4;
             panel2.Paint += panel2_Paint;
             // 
@@ -442,10 +467,11 @@
             guna2PictureBox8.CustomizableEdges = customizableEdges17;
             guna2PictureBox8.Image = Properties.Resources.grocery_store;
             guna2PictureBox8.ImageRotate = 0F;
-            guna2PictureBox8.Location = new Point(18, 8);
+            guna2PictureBox8.Location = new Point(16, 6);
+            guna2PictureBox8.Margin = new Padding(3, 2, 3, 2);
             guna2PictureBox8.Name = "guna2PictureBox8";
             guna2PictureBox8.ShadowDecoration.CustomizableEdges = customizableEdges18;
-            guna2PictureBox8.Size = new Size(40, 35);
+            guna2PictureBox8.Size = new Size(35, 26);
             guna2PictureBox8.SizeMode = PictureBoxSizeMode.Zoom;
             guna2PictureBox8.TabIndex = 13;
             guna2PictureBox8.TabStop = false;
@@ -454,20 +480,22 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI Emoji", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(64, 12);
+            label2.Location = new Point(56, 9);
             label2.Name = "label2";
-            label2.Size = new Size(121, 31);
+            label2.Size = new Size(102, 26);
             label2.TabIndex = 2;
             label2.Text = "Bán Hàng";
+            label2.Click += label2_Click;
             // 
             // guna2HtmlLabel1
             // 
             guna2HtmlLabel1.BackColor = Color.Transparent;
             guna2HtmlLabel1.Font = new Font("Showcard Gothic", 16.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             guna2HtmlLabel1.ForeColor = SystemColors.HighlightText;
-            guna2HtmlLabel1.Location = new Point(38, 29);
+            guna2HtmlLabel1.Location = new Point(33, 22);
+            guna2HtmlLabel1.Margin = new Padding(3, 2, 3, 2);
             guna2HtmlLabel1.Name = "guna2HtmlLabel1";
-            guna2HtmlLabel1.Size = new Size(181, 35);
+            guna2HtmlLabel1.Size = new Size(148, 30);
             guna2HtmlLabel1.TabIndex = 3;
             guna2HtmlLabel1.Text = "Coffee Home";
             // 
@@ -476,9 +504,10 @@
             panel1.BackColor = Color.FromArgb(61, 132, 187);
             panel1.Controls.Add(guna2PictureBox7);
             panel1.Controls.Add(label1);
-            panel1.Location = new Point(0, 115);
+            panel1.Location = new Point(0, 86);
+            panel1.Margin = new Padding(3, 2, 3, 2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(267, 60);
+            panel1.Size = new Size(234, 45);
             panel1.TabIndex = 2;
             panel1.Paint += panel1_Paint;
             // 
@@ -488,10 +517,11 @@
             guna2PictureBox7.CustomizableEdges = customizableEdges19;
             guna2PictureBox7.Image = Properties.Resources.home;
             guna2PictureBox7.ImageRotate = 0F;
-            guna2PictureBox7.Location = new Point(18, 12);
+            guna2PictureBox7.Location = new Point(16, 9);
+            guna2PictureBox7.Margin = new Padding(3, 2, 3, 2);
             guna2PictureBox7.Name = "guna2PictureBox7";
             guna2PictureBox7.ShadowDecoration.CustomizableEdges = customizableEdges20;
-            guna2PictureBox7.Size = new Size(40, 35);
+            guna2PictureBox7.Size = new Size(35, 26);
             guna2PictureBox7.SizeMode = PictureBoxSizeMode.Zoom;
             guna2PictureBox7.TabIndex = 12;
             guna2PictureBox7.TabStop = false;
@@ -500,9 +530,9 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI Emoji", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(64, 12);
+            label1.Location = new Point(56, 9);
             label1.Name = "label1";
-            label1.Size = new Size(128, 31);
+            label1.Size = new Size(109, 26);
             label1.TabIndex = 2;
             label1.Text = "Trang Chủ";
             label1.Click += label1_Click;
@@ -525,10 +555,11 @@
             guna2CustomGradientPanel2.FillColor2 = Color.FromArgb(0, 94, 165);
             guna2CustomGradientPanel2.FillColor3 = Color.FromArgb(0, 94, 165);
             guna2CustomGradientPanel2.FillColor4 = Color.FromArgb(0, 94, 165);
-            guna2CustomGradientPanel2.Location = new Point(274, 3);
+            guna2CustomGradientPanel2.Location = new Point(240, 2);
+            guna2CustomGradientPanel2.Margin = new Padding(3, 2, 3, 2);
             guna2CustomGradientPanel2.Name = "guna2CustomGradientPanel2";
             guna2CustomGradientPanel2.ShadowDecoration.CustomizableEdges = customizableEdges29;
-            guna2CustomGradientPanel2.Size = new Size(1649, 84);
+            guna2CustomGradientPanel2.Size = new Size(1443, 63);
             guna2CustomGradientPanel2.TabIndex = 1;
             // 
             // lblDate
@@ -537,9 +568,9 @@
             lblDate.BackColor = Color.Transparent;
             lblDate.Font = new Font("Segoe UI", 12F, FontStyle.Italic, GraphicsUnit.Point, 163);
             lblDate.ForeColor = Color.White;
-            lblDate.Location = new Point(787, 24);
+            lblDate.Location = new Point(689, 18);
             lblDate.Name = "lblDate";
-            lblDate.Size = new Size(173, 28);
+            lblDate.Size = new Size(139, 21);
             lblDate.TabIndex = 12;
             lblDate.Text = "Ngày/Tháng/Năm";
             // 
@@ -549,9 +580,9 @@
             lblDays.BackColor = Color.Transparent;
             lblDays.Font = new Font("Segoe UI", 12F, FontStyle.Italic, GraphicsUnit.Point, 163);
             lblDays.ForeColor = Color.White;
-            lblDays.Location = new Point(581, 24);
+            lblDays.Location = new Point(508, 18);
             lblDays.Name = "lblDays";
-            lblDays.Size = new Size(46, 28);
+            lblDays.Size = new Size(36, 21);
             lblDays.TabIndex = 11;
             lblDays.Text = "Thứ";
             // 
@@ -561,9 +592,9 @@
             lblTime.BackColor = Color.Transparent;
             lblTime.Font = new Font("Segoe UI", 12F, FontStyle.Italic, GraphicsUnit.Point, 163);
             lblTime.ForeColor = Color.White;
-            lblTime.Location = new Point(409, 24);
+            lblTime.Location = new Point(358, 18);
             lblTime.Name = "lblTime";
-            lblTime.Size = new Size(42, 28);
+            lblTime.Size = new Size(34, 21);
             lblTime.TabIndex = 10;
             lblTime.Text = "Giờ";
             // 
@@ -572,9 +603,10 @@
             lblStaff.BackColor = Color.Transparent;
             lblStaff.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 163);
             lblStaff.ForeColor = Color.White;
-            lblStaff.Location = new Point(171, 57);
+            lblStaff.Location = new Point(150, 43);
+            lblStaff.Margin = new Padding(3, 2, 3, 2);
             lblStaff.Name = "lblStaff";
-            lblStaff.Size = new Size(32, 22);
+            lblStaff.Size = new Size(26, 17);
             lblStaff.TabIndex = 9;
             lblStaff.Text = "Tên:";
             // 
@@ -583,9 +615,10 @@
             lblDisplayName.BackColor = Color.Transparent;
             lblDisplayName.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 163);
             lblDisplayName.ForeColor = Color.White;
-            lblDisplayName.Location = new Point(165, 29);
+            lblDisplayName.Location = new Point(144, 22);
+            lblDisplayName.Margin = new Padding(3, 2, 3, 2);
             lblDisplayName.Name = "lblDisplayName";
-            lblDisplayName.Size = new Size(32, 22);
+            lblDisplayName.Size = new Size(26, 17);
             lblDisplayName.TabIndex = 8;
             lblDisplayName.Text = "Tên:";
             // 
@@ -599,10 +632,11 @@
             guna2Button2.FillColor = Color.FromArgb(247, 148, 29);
             guna2Button2.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 163);
             guna2Button2.ForeColor = Color.White;
-            guna2Button2.Location = new Point(1501, 0);
+            guna2Button2.Location = new Point(1313, 0);
+            guna2Button2.Margin = new Padding(3, 2, 3, 2);
             guna2Button2.Name = "guna2Button2";
             guna2Button2.ShadowDecoration.CustomizableEdges = customizableEdges24;
-            guna2Button2.Size = new Size(155, 84);
+            guna2Button2.Size = new Size(136, 63);
             guna2Button2.TabIndex = 4;
             guna2Button2.Text = "Đăng Xuất";
             guna2Button2.Click += guna2Button2_Click;
@@ -617,10 +651,11 @@
             guna2Button1.FillColor = Color.FromArgb(247, 148, 29);
             guna2Button1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 163);
             guna2Button1.ForeColor = Color.White;
-            guna2Button1.Location = new Point(1319, 0);
+            guna2Button1.Location = new Point(1154, 0);
+            guna2Button1.Margin = new Padding(3, 2, 3, 2);
             guna2Button1.Name = "guna2Button1";
             guna2Button1.ShadowDecoration.CustomizableEdges = customizableEdges26;
-            guna2Button1.Size = new Size(163, 84);
+            guna2Button1.Size = new Size(143, 63);
             guna2Button1.TabIndex = 3;
             guna2Button1.Text = "Đổi Mật Khẩu";
             guna2Button1.Click += guna2Button1_Click;
@@ -630,11 +665,12 @@
             guna2CirclePictureBox1.BackColor = Color.Transparent;
             guna2CirclePictureBox1.Image = Properties.Resources.people;
             guna2CirclePictureBox1.ImageRotate = 0F;
-            guna2CirclePictureBox1.Location = new Point(30, 37);
+            guna2CirclePictureBox1.Location = new Point(26, 28);
+            guna2CirclePictureBox1.Margin = new Padding(3, 2, 3, 2);
             guna2CirclePictureBox1.Name = "guna2CirclePictureBox1";
             guna2CirclePictureBox1.ShadowDecoration.CustomizableEdges = customizableEdges27;
             guna2CirclePictureBox1.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            guna2CirclePictureBox1.Size = new Size(55, 39);
+            guna2CirclePictureBox1.Size = new Size(48, 29);
             guna2CirclePictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             guna2CirclePictureBox1.TabIndex = 3;
             guna2CirclePictureBox1.TabStop = false;
@@ -644,9 +680,10 @@
             guna2HtmlLabel4.BackColor = Color.Transparent;
             guna2HtmlLabel4.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 163);
             guna2HtmlLabel4.ForeColor = Color.White;
-            guna2HtmlLabel4.Location = new Point(109, 57);
+            guna2HtmlLabel4.Location = new Point(95, 43);
+            guna2HtmlLabel4.Margin = new Padding(3, 2, 3, 2);
             guna2HtmlLabel4.Name = "guna2HtmlLabel4";
-            guna2HtmlLabel4.Size = new Size(62, 22);
+            guna2HtmlLabel4.Size = new Size(49, 17);
             guna2HtmlLabel4.TabIndex = 2;
             guna2HtmlLabel4.Text = "Chức vụ: ";
             // 
@@ -655,9 +692,10 @@
             guna2HtmlLabel3.BackColor = Color.Transparent;
             guna2HtmlLabel3.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 163);
             guna2HtmlLabel3.ForeColor = Color.White;
-            guna2HtmlLabel3.Location = new Point(109, 29);
+            guna2HtmlLabel3.Location = new Point(95, 22);
+            guna2HtmlLabel3.Margin = new Padding(3, 2, 3, 2);
             guna2HtmlLabel3.Name = "guna2HtmlLabel3";
-            guna2HtmlLabel3.Size = new Size(32, 22);
+            guna2HtmlLabel3.Size = new Size(26, 17);
             guna2HtmlLabel3.TabIndex = 1;
             guna2HtmlLabel3.Text = "Tên:";
             // 
@@ -666,19 +704,20 @@
             guna2HtmlLabel2.BackColor = Color.Transparent;
             guna2HtmlLabel2.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 163);
             guna2HtmlLabel2.ForeColor = Color.White;
-            guna2HtmlLabel2.Location = new Point(21, 9);
+            guna2HtmlLabel2.Location = new Point(18, 7);
+            guna2HtmlLabel2.Margin = new Padding(3, 2, 3, 2);
             guna2HtmlLabel2.Name = "guna2HtmlLabel2";
-            guna2HtmlLabel2.Size = new Size(153, 22);
+            guna2HtmlLabel2.Size = new Size(120, 17);
             guna2HtmlLabel2.TabIndex = 0;
             guna2HtmlLabel2.Text = "Thông tin người dùng";
             // 
             // panel10
             // 
-            panel10.Location = new Point(280, 93);
+            panel10.Location = new Point(245, 70);
+            panel10.Margin = new Padding(3, 2, 3, 2);
             panel10.Name = "panel10";
-            panel10.Size = new Size(1632, 917);
+            panel10.Size = new Size(1428, 688);
             panel10.TabIndex = 2;
-            panel10.Paint += panel10_Paint_1;
             // 
             // timer1
             // 
@@ -687,14 +726,15 @@
             // 
             // TrangChu
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(1924, 1011);
+            ClientSize = new Size(1684, 758);
             Controls.Add(panel10);
             Controls.Add(guna2CustomGradientPanel2);
             Controls.Add(guna2CustomGradientPanel1);
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            Margin = new Padding(3, 2, 3, 2);
             MaximizeBox = false;
             Name = "TrangChu";
             StartPosition = FormStartPosition.CenterScreen;

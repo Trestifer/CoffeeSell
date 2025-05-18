@@ -131,24 +131,50 @@ namespace CoffeeSell.DataAccessLayer
 
         public bool DeleteEmployeeEmail(int employeeId)
         {
-            string cmString = "DELETE FROM EmployeeEmail WHERE EmployeeId = @EmployeeId";
+            string getEmailIdQuery = "SELECT EmailId FROM EmployeeEmail WHERE EmployeeId = @EmployeeId";
+            string deleteEmployeeEmailQuery = "DELETE FROM EmployeeEmail WHERE EmployeeId = @EmployeeId";
+            string deleteEmailSecurityQuery = "DELETE FROM EmailSecurity WHERE EmailId = @EmailId";
 
             try
             {
-                int rowsAffected = ExecuteNonQuery(
-                    cmString,
+                // Step 1: Get EmailId
+                DataTable result = ExecuteQuery(
+                    getEmailIdQuery,
                     new string[] { "@EmployeeId" },
                     new object[] { employeeId }
                 );
 
-                return rowsAffected > 0;
+                if (result.Rows.Count == 0)
+                {
+                    // No record found to delete
+                    return false;
+                }
+
+                int emailId = Convert.ToInt32(result.Rows[0]["EmailId"]);
+
+                // Step 2: Delete from EmployeeEmail
+                int rowsAffectedEmployeeEmail = ExecuteNonQuery(
+                    deleteEmployeeEmailQuery,
+                    new string[] { "@EmployeeId" },
+                    new object[] { employeeId }
+                );
+
+                // Step 3: Delete from EmailSecurity
+                int rowsAffectedEmailSecurity = ExecuteNonQuery(
+                    deleteEmailSecurityQuery,
+                    new string[] { "@EmailId" },
+                    new object[] { emailId }
+                );
+
+                return rowsAffectedEmployeeEmail > 0 && rowsAffectedEmailSecurity > 0;
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error deleting employee email: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Error deleting employee email and email security: {ex.Message}");
                 return false;
             }
         }
+
 
         public DataTable GetAllEmployeeEmails()
         {

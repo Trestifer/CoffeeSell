@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using Microsoft.Identity.Client;
+using CoffeeSell.BO;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CoffeeSell.DataAccessLayer
 {
@@ -162,19 +164,20 @@ namespace CoffeeSell.DataAccessLayer
         public DataTable GetAllEmployeeFullData()
         {
             string cmString = @"
-        SELECT 
-            e.EmployeeId,
-            e.NameEmployee,
-            e.DateOfBirth,
-            e.Gender,
-            e.HomeAddress,
-            e.PhoneNumber,
-            e.AccountId,
-            a.LoginName,
-            ee.Email
-        FROM Employee e
-        JOIN Account a ON e.AccountId = a.AccountId
-        LEFT JOIN EmployeeEmail ee ON e.EmployeeId = ee.EmployeeId";
+            SELECT 
+                e.EmployeeId,
+                e.NameEmployee,
+                e.DateOfBirth,
+                e.Gender,
+                e.HomeAddress,
+                e.PhoneNumber,
+                e.AccountId,
+                a.LoginName,
+                es.Email
+            FROM Employee e
+            JOIN Account a ON e.AccountId = a.AccountId
+            LEFT JOIN EmployeeEmail ee ON e.EmployeeId = ee.EmployeeId
+            LEFT JOIN EmailSecurity es ON ee.EmailId = es.EmailId";
 
             try
             {
@@ -183,10 +186,11 @@ namespace CoffeeSell.DataAccessLayer
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error fetching full employee data: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Error fetching full employee data: { ex.Message}");
                 return null;
             }
         }
+
         public DataTable SearchEmployeeByName(string keyword)
         {
             string cmString = @"
@@ -241,7 +245,7 @@ namespace CoffeeSell.DataAccessLayer
                     emp.SetHomeAddress(row["HomeAddress"].ToString());
                     emp.SetPhoneNumber(row["PhoneNumber"].ToString());
                     emp.SetAccountId(Convert.ToInt32(row["AccountId"]));
-
+                    MessageBox.Show(emp.GetAccountId().ToString());
                     return emp;
                 }
 
