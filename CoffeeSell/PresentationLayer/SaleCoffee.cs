@@ -582,7 +582,6 @@ namespace CoffeeSell
             {
                 customerinfo.SetCustomerId(BOCustomer.Add(customerinfo));
                 customerinfo.SetPoints(0);
-                MessageBox.Show(customerinfo.GetCustomerId().ToString());
                 ReloadCustomer();
             }
             else
@@ -703,7 +702,7 @@ namespace CoffeeSell
                         list.Add(product);
                         if (billInfo.GetIdFood() == 0)
                             break;
-                        if (!BOBIllInfo.Add(billInfo) || BOFood.UpdateSold(billInfo.GetIdFood(), billInfo.GetQuantity()))
+                        if (!BOBIllInfo.Add(billInfo) || !BOFood.UpdateSold(billInfo.GetIdFood(), billInfo.GetQuantity()))
                         {
                             MessageBox.Show("Có lỗi xãy ra!");
                             return;

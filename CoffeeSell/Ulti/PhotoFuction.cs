@@ -48,7 +48,7 @@ namespace CoffeeSell.Ulti
                 System.Net.WebResponse response = request.GetResponse();
                 System.IO.Stream responseStream = response.GetResponseStream();
                 Image qrImage = Image.FromStream(responseStream);
-
+                 
                 // Tạo form để hiển thị mã QR và thông tin
                 Form qrForm = new Form
                 {
