@@ -29,18 +29,25 @@ namespace CoffeeSell.Ulti
                 {
                     transferCodeArray[i] = chars[random.Next(chars.Length)];
                 }
-                string transferCode = new string(transferCodeArray); // Ví dụ: 3121OZEF
+                string transferCode = new string(transferCodeArray); // Ví dụ: 3F9K8Z1A
 
-                // Đường dẫn tới mã QR tĩnh
-                string qrFileName = "qr.png";
-                string qrFilePath = Path.Combine(ImageFolder, qrFileName);
+                // Thông tin ngân hàng
+                string bankId = "bidv";  // ✅ your bank is BIDV
+                string accountNumber = "6513802413";
+                string accountName = "Nguyen Huynh Minh Tam";
 
-                // Kiểm tra xem file qr.png tồn tại không
-                if (!File.Exists(qrFilePath))
-                {
-                    MessageBox.Show("Không tìm thấy mã QR (qr.png) trong thư mục Images!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return null;
-                }
+                // Encode thông tin URL
+                string encodedAccountName = Uri.EscapeDataString(accountName);
+                string encodedTransferCode = Uri.EscapeDataString(transferCode);
+
+                // Tạo URL QR động (VietQR)
+                string qrUrl = $"https://img.vietqr.io/image/{bankId}-{accountNumber}-compact2.jpg?amount={price}&addInfo={encodedTransferCode}&accountName={encodedAccountName}";
+
+                // Tải ảnh QR từ URL
+                System.Net.WebRequest request = System.Net.WebRequest.Create(qrUrl);
+                System.Net.WebResponse response = request.GetResponse();
+                System.IO.Stream responseStream = response.GetResponseStream();
+                Image qrImage = Image.FromStream(responseStream);
 
                 // Tạo form để hiển thị mã QR và thông tin
                 Form qrForm = new Form
@@ -52,55 +59,47 @@ namespace CoffeeSell.Ulti
                     MaximizeBox = false
                 };
 
-                // Hiển thị mã QR tĩnh
                 PictureBox pictureBox = new PictureBox
                 {
-                    Image = Image.FromFile(qrFilePath),
+                    Image = qrImage,
                     SizeMode = PictureBoxSizeMode.Zoom,
                     Size = new System.Drawing.Size(300, 300),
                     Location = new System.Drawing.Point(50, 20)
                 };
 
-                // Hiển thị số tiền
                 Label lblPrice = new Label
                 {
                     Text = $"Số tiền: {price:N0} VNĐ",
-                    Font = new Font("Segoe UI", 12, FontStyle.Bold),
+                    Font = new System.Drawing.Font("Segoe UI", 12, System.Drawing.FontStyle.Bold),
                     Size = new System.Drawing.Size(300, 30),
                     Location = new System.Drawing.Point(50, 330),
-                    TextAlign = ContentAlignment.MiddleCenter
+                    TextAlign = System.Drawing.ContentAlignment.MiddleCenter
                 };
 
-                // Hiển thị nội dung chuyển khoản
                 Label lblTransferCode = new Label
                 {
                     Text = $"Nội dung CK: {transferCode}",
-                    Font = new Font("Segoe UI", 12, FontStyle.Bold),
+                    Font = new System.Drawing.Font("Segoe UI", 12, System.Drawing.FontStyle.Bold),
                     Size = new System.Drawing.Size(300, 30),
                     Location = new System.Drawing.Point(50, 370),
-                    TextAlign = ContentAlignment.MiddleCenter
+                    TextAlign = System.Drawing.ContentAlignment.MiddleCenter
                 };
 
-                // Nút đóng form
                 Button btnClose = new Button
                 {
                     Text = "Đóng",
                     Size = new System.Drawing.Size(100, 40),
                     Location = new System.Drawing.Point(150, 420),
-                    Font = new Font("Segoe UI", 10)
+                    Font = new System.Drawing.Font("Segoe UI", 10)
                 };
                 btnClose.Click += (s, e) => qrForm.Close();
 
-                // Thêm controls vào form
                 qrForm.Controls.Add(pictureBox);
                 qrForm.Controls.Add(lblPrice);
                 qrForm.Controls.Add(lblTransferCode);
                 qrForm.Controls.Add(btnClose);
-
-                // Hiển thị form
                 qrForm.ShowDialog();
 
-                // Trả về nội dung chuyển khoản
                 return transferCode;
             }
             catch (Exception ex)
@@ -109,6 +108,8 @@ namespace CoffeeSell.Ulti
                 return null;
             }
         }
+
+
         public static string CaptureFrameAsBase64(int cameraIndex = 0)
         {
             using var capture = new VideoCapture(cameraIndex);
