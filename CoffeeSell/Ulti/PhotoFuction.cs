@@ -21,6 +21,7 @@ namespace CoffeeSell.Ulti
         {
             try
             {
+                SettingConfig settingConfig = BOSettingConfig.Get();
                 // Tạo nội dung chuyển khoản ngẫu nhiên (8 ký tự, chữ và số)
                 const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
                 Random random = new Random();
@@ -32,9 +33,9 @@ namespace CoffeeSell.Ulti
                 string transferCode = new string(transferCodeArray); // Ví dụ: 3F9K8Z1A
 
                 // Thông tin ngân hàng
-                string bankId = "bidv";  // ✅ your bank is BIDV
-                string accountNumber = "6513802413";
-                string accountName = "Nguyen Huynh Minh Tam";
+                string bankId = settingConfig.GetBank().ToLower();  // ✅ your bank is BIDV
+                string accountNumber = settingConfig.GetBankAccountNumber();
+                string accountName = settingConfig.GetBankName();
 
                 // Encode thông tin URL
                 string encodedAccountName = Uri.EscapeDataString(accountName);
@@ -184,6 +185,8 @@ namespace CoffeeSell.Ulti
 
         public static string GenerateReceipt(Receipt receipt,string LoginName, Customer customer)
         {
+            SettingConfig settingConfig = BOSettingConfig.Get();
+
             int width = 400;
             int height = 620 + (receipt.Items.Count * 40);
             // ✅ Create path like in SaveImageToImagesFolder
@@ -257,9 +260,9 @@ namespace CoffeeSell.Ulti
                 int y = 40;
 
                 // Centered Shop Details
-                canvas.DrawText("CoffeeHome", centerX, y, shopName);
+                canvas.DrawText(settingConfig.GetStoreName(), centerX, y, shopName);
                 y += 30;
-                canvas.DrawText($"D/c: 8 Tống Hữu Định, Thảo Điền, Tp.HCM", centerX, y, smallerBoldFont);
+                canvas.DrawText(settingConfig.GetAddress(), centerX, y, smallerBoldFont);
                 y += 15;
                 canvas.DrawText(theLine, centerX, y, line);
                 y += 25;
@@ -271,7 +274,7 @@ namespace CoffeeSell.Ulti
                 textPaint.TextAlign = SKTextAlign.Left;
                 y += 40;
                 canvas.DrawText($"Ngày xuất: ", 15, y, textPaintB);
-                canvas.DrawText(DateTime.Now.ToString("dd/MM/yyyy hh:mm"), 115, y, textPaint);
+                canvas.DrawText(DateTime.Now.ToString("dd/MM/yyyy hh:mm"), 135, y, textPaint);
 
                 y += 30;
                 canvas.DrawText("Thu ngân: ", 15, y, textPaintB);
@@ -325,7 +328,7 @@ namespace CoffeeSell.Ulti
                     canvas.DrawText($"{count}", 15, y, textPaint);
                     canvas.DrawText(item.name, 45, y, textPaint);
                     canvas.DrawText($"{item.quantity}", width - 175, y, textPaint); // Align quantity
-                    canvas.DrawText($"{item.price * item.quantity:F2}", width - 120, y, textPaint); // Align price
+                    canvas.DrawText($"{item.price:F2}", width - 120, y, textPaint); // Align price
                     y += 30;
                     count++;
                 }
@@ -354,9 +357,9 @@ namespace CoffeeSell.Ulti
 
                 // Centered WiFi Info & Slogan
                 textPaint.TextAlign = SKTextAlign.Center;
-                canvas.DrawText($"WiFi: TheBoys || Pass: xincamon", centerX, y, smallerBoldFont);
+                canvas.DrawText($"WiFi: {settingConfig.GetWifi()} || Pass: {settingConfig.GetPassword()}", centerX, y, smallerBoldFont);
                 y += 30;
-                canvas.DrawText("Cảm ơn quý khách", centerX, y, slogan);
+                canvas.DrawText(settingConfig.GetSlogan(), centerX, y, slogan);
 
                 using (FileStream fs = File.OpenWrite(filePath))
                 {

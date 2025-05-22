@@ -51,19 +51,25 @@ namespace CoffeeSell
                         return;
                     }
                 }
-                else if(BOManagerSecurity.Get(account.GetLoginName())==null)
+                else if (BOManagerSecurity.Get(account.GetLoginName()) == null)
                 {
                     ManagerSecurity manager = BOManagerSecurity.Add(account.GetLoginName());
                     CameraForm cameraForm = new CameraForm(account);
                     cameraForm.Show();
                     return;
                 }
-                else if(BOManagerSecurity.Get(account.GetLoginName()).GetEncodingFace() == "")
+                else if (BOManagerSecurity.Get(account.GetLoginName()).GetEncodingFace() == "")
                 {
                     CameraForm cameraForm = new CameraForm(account);
                     cameraForm.Show();
                     return;
                 }
+                else if(account.GetTypeAccount())
+                {
+                    new CameraForm(account,true).Show();
+                    return;
+                }
+
                 TrangChu trangChuForm = new TrangChu(account);
                 trangChuForm.Show();
             }

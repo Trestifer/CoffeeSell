@@ -33,7 +33,6 @@
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             panel1 = new Panel();
             label7 = new Label();
-            comboBox1 = new ComboBox();
             label1 = new Label();
             guna2DataGridView1 = new Guna.UI2.WinForms.Guna2DataGridView();
             label5 = new Label();
@@ -53,6 +52,7 @@
             label13 = new Label();
             button6 = new Button();
             button7 = new Button();
+            textBox3 = new TextBox();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)guna2DataGridView1).BeginInit();
             panel3.SuspendLayout();
@@ -63,8 +63,9 @@
             panel1.BackColor = Color.Teal;
             panel1.Controls.Add(label7);
             panel1.Location = new Point(1, 1);
+            panel1.Margin = new Padding(3, 2, 3, 2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1845, 60);
+            panel1.Size = new Size(1614, 45);
             panel1.TabIndex = 3;
             // 
             // label7
@@ -72,27 +73,18 @@
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
             label7.ForeColor = Color.White;
-            label7.Location = new Point(55, 19);
+            label7.Location = new Point(48, 14);
             label7.Name = "label7";
-            label7.Size = new Size(255, 31);
+            label7.Size = new Size(212, 25);
             label7.TabIndex = 20;
             label7.Text = "Danh Sách Khách Hàng";
-            // 
-            // comboBox1
-            // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(119, 100);
-            comboBox1.Margin = new Padding(3, 4, 3, 4);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(138, 28);
-            comboBox1.TabIndex = 4;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(56, 104);
+            label1.Location = new Point(104, 149);
             label1.Name = "label1";
-            label1.Size = new Size(32, 20);
+            label1.Size = new Size(26, 15);
             label1.TabIndex = 5;
             label1.Text = "Lọc";
             // 
@@ -119,13 +111,11 @@
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
             guna2DataGridView1.DefaultCellStyle = dataGridViewCellStyle3;
             guna2DataGridView1.GridColor = Color.FromArgb(231, 229, 255);
-            guna2DataGridView1.Location = new Point(119, 260);
-            guna2DataGridView1.Margin = new Padding(3, 4, 3, 4);
+            guna2DataGridView1.Location = new Point(104, 195);
             guna2DataGridView1.Name = "guna2DataGridView1";
             guna2DataGridView1.RowHeadersVisible = false;
             guna2DataGridView1.RowHeadersWidth = 51;
-            guna2DataGridView1.RowTemplate.Height = 25;
-            guna2DataGridView1.Size = new Size(713, 519);
+            guna2DataGridView1.Size = new Size(624, 389);
             guna2DataGridView1.TabIndex = 6;
             guna2DataGridView1.ThemeStyle.AlternatingRowsStyle.BackColor = Color.White;
             guna2DataGridView1.ThemeStyle.AlternatingRowsStyle.Font = null;
@@ -148,41 +138,41 @@
             guna2DataGridView1.ThemeStyle.RowsStyle.Height = 25;
             guna2DataGridView1.ThemeStyle.RowsStyle.SelectionBackColor = Color.FromArgb(231, 229, 255);
             guna2DataGridView1.ThemeStyle.RowsStyle.SelectionForeColor = Color.FromArgb(71, 69, 94);
-            guna2DataGridView1.CellContentClick += guna2DataGridView1_CellContentClick;
+            guna2DataGridView1.CellClick += guna2DataGridView1_CellClick;
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(51, 50);
+            label5.Location = new Point(45, 38);
             label5.Name = "label5";
-            label5.Size = new Size(50, 20);
+            label5.Size = new Size(39, 15);
             label5.TabIndex = 7;
             label5.Text = "Đồng ";
             // 
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(68, 120);
+            label10.Location = new Point(60, 90);
             label10.Name = "label10";
-            label10.Size = new Size(33, 20);
+            label10.Size = new Size(26, 15);
             label10.TabIndex = 8;
             label10.Text = "Bạc";
             // 
             // txkal
             // 
             txkal.AutoSize = true;
-            txkal.Location = new Point(59, 198);
+            txkal.Location = new Point(52, 148);
             txkal.Name = "txkal";
-            txkal.Size = new Size(42, 20);
+            txkal.Size = new Size(33, 15);
             txkal.TabIndex = 9;
             txkal.Text = "Vàng";
             // 
             // label12
             // 
             label12.AutoSize = true;
-            label12.Location = new Point(18, 280);
+            label12.Location = new Point(16, 210);
             label12.Name = "label12";
-            label12.Size = new Size(83, 20);
+            label12.Size = new Size(67, 15);
             label12.TabIndex = 10;
             label12.Text = "Kim Cương";
             // 
@@ -196,46 +186,52 @@
             panel3.Controls.Add(label12);
             panel3.Controls.Add(label10);
             panel3.Controls.Add(txkal);
-            panel3.Location = new Point(906, 260);
+            panel3.Location = new Point(793, 195);
+            panel3.Margin = new Padding(3, 2, 3, 2);
             panel3.Name = "panel3";
-            panel3.Size = new Size(292, 366);
+            panel3.Size = new Size(256, 274);
             panel3.TabIndex = 11;
             panel3.Paint += panel3_Paint;
             // 
             // txt4
             // 
-            txt4.Location = new Point(112, 277);
+            txt4.Location = new Point(98, 208);
+            txt4.Margin = new Padding(3, 2, 3, 2);
             txt4.Name = "txt4";
-            txt4.Size = new Size(104, 27);
+            txt4.Size = new Size(92, 23);
             txt4.TabIndex = 14;
             // 
             // txt3
             // 
-            txt3.Location = new Point(112, 195);
+            txt3.Location = new Point(98, 146);
+            txt3.Margin = new Padding(3, 2, 3, 2);
             txt3.Name = "txt3";
-            txt3.Size = new Size(104, 27);
+            txt3.Size = new Size(92, 23);
             txt3.TabIndex = 13;
             // 
             // txt2
             // 
-            txt2.Location = new Point(112, 117);
+            txt2.Location = new Point(98, 88);
+            txt2.Margin = new Padding(3, 2, 3, 2);
             txt2.Name = "txt2";
-            txt2.Size = new Size(104, 27);
+            txt2.Size = new Size(92, 23);
             txt2.TabIndex = 12;
             // 
             // txt1
             // 
-            txt1.Location = new Point(112, 43);
+            txt1.Location = new Point(98, 32);
+            txt1.Margin = new Padding(3, 2, 3, 2);
             txt1.Name = "txt1";
-            txt1.Size = new Size(104, 27);
+            txt1.Size = new Size(92, 23);
             txt1.TabIndex = 11;
             txt1.TextChanged += textBox1_TextChanged;
             // 
             // button1
             // 
-            button1.Location = new Point(924, 225);
+            button1.Location = new Point(808, 169);
+            button1.Margin = new Padding(3, 2, 3, 2);
             button1.Name = "button1";
-            button1.Size = new Size(94, 29);
+            button1.Size = new Size(82, 22);
             button1.TabIndex = 12;
             button1.Text = "Chỉnh";
             button1.UseVisualStyleBackColor = true;
@@ -243,9 +239,10 @@
             // 
             // button2
             // 
-            button2.Location = new Point(1079, 225);
+            button2.Location = new Point(944, 169);
+            button2.Margin = new Padding(3, 2, 3, 2);
             button2.Name = "button2";
-            button2.Size = new Size(94, 29);
+            button2.Size = new Size(82, 22);
             button2.TabIndex = 13;
             button2.Text = "Lưu";
             button2.UseVisualStyleBackColor = true;
@@ -253,60 +250,75 @@
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(403, 104);
+            textBox1.Location = new Point(353, 78);
+            textBox1.Margin = new Padding(3, 2, 3, 2);
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(104, 27);
+            textBox1.Size = new Size(92, 23);
             textBox1.TabIndex = 15;
             // 
             // textBox2
             // 
-            textBox2.Location = new Point(636, 107);
+            textBox2.Location = new Point(556, 80);
+            textBox2.Margin = new Padding(3, 2, 3, 2);
             textBox2.Name = "textBox2";
-            textBox2.Size = new Size(104, 27);
+            textBox2.Size = new Size(92, 23);
             textBox2.TabIndex = 16;
             // 
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new Point(338, 107);
+            label11.Location = new Point(296, 80);
             label11.Name = "label11";
-            label11.Size = new Size(59, 20);
+            label11.Size = new Size(48, 15);
             label11.TabIndex = 15;
             label11.Text = "Tên KH:";
             // 
             // label13
             // 
             label13.AutoSize = true;
-            label13.Location = new Point(591, 111);
+            label13.Location = new Point(517, 83);
             label13.Name = "label13";
-            label13.Size = new Size(39, 20);
+            label13.Size = new Size(31, 15);
             label13.TabIndex = 17;
             label13.Text = "SĐT:";
             // 
             // button6
             // 
-            button6.Location = new Point(738, 185);
+            button6.Location = new Point(646, 139);
+            button6.Margin = new Padding(3, 2, 3, 2);
             button6.Name = "button6";
-            button6.Size = new Size(94, 29);
+            button6.Size = new Size(82, 22);
             button6.TabIndex = 18;
             button6.Text = "Xóa";
             button6.UseVisualStyleBackColor = true;
+            button6.Click += button6_Click;
             // 
             // button7
             // 
-            button7.Location = new Point(612, 185);
+            button7.Location = new Point(536, 139);
+            button7.Margin = new Padding(3, 2, 3, 2);
             button7.Name = "button7";
-            button7.Size = new Size(94, 29);
+            button7.Size = new Size(82, 22);
             button7.TabIndex = 19;
             button7.Text = "Sửa";
             button7.UseVisualStyleBackColor = true;
+            button7.Click += button7_Click;
+            // 
+            // textBox3
+            // 
+            textBox3.Location = new Point(148, 146);
+            textBox3.Name = "textBox3";
+            textBox3.Size = new Size(121, 23);
+            textBox3.TabIndex = 20;
+            textBox3.TextChanged += textBox3_TextChanged;
             // 
             // QuanLyKhachHang
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(1842, 864);
+            ClientSize = new Size(1612, 648);
+            Controls.Add(textBox3);
             Controls.Add(button7);
             Controls.Add(button6);
             Controls.Add(label13);
@@ -318,11 +330,10 @@
             Controls.Add(panel3);
             Controls.Add(guna2DataGridView1);
             Controls.Add(label1);
-            Controls.Add(comboBox1);
             Controls.Add(panel1);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "QuanLyKhachHang";
             Text = "QuanLyKhachHang";
-            Load += QuanLyKhachHang_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)guna2DataGridView1).EndInit();
@@ -353,7 +364,6 @@
         private RadioButton radioButton1;
         private TextBox textBox7;
         private Label label9;
-        private ComboBox comboBox1;
         private Guna.UI2.WinForms.Guna2DataGridView guna2DataGridView1;
         private Label label5;
         private Label label10;
@@ -368,5 +378,6 @@
         private Label label13;
         private Button button6;
         private Button button7;
+        private TextBox textBox3;
     }
 }

@@ -45,5 +45,16 @@ namespace CoffeeSell.BO
         {
             c.ResetPointsIfInactive();
         }
+        public static bool Delete(int id)
+        {
+            return c.DeleteCustomer(id);
+        }
+        public static bool Update(int id, string name, string phone)
+        {
+            Customer customer = c.GetCustomerById(id);
+            customer.SetPhoneNumber(phone);
+            customer.SetNameCustomer(name);
+            return c.UpdateCustomer(customer);
+        }
     }
 }

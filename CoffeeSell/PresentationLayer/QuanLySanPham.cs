@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Security.AccessControl;
@@ -30,7 +31,7 @@ namespace CoffeeSell
             InitializeComponent();
             user = _user;
             guna2DataGridView2.CellClick += Guna2DataGridView1_CellClick;
-            QuanLyDanhMuc dmform = new QuanLyDanhMuc(user);
+            CaiDat dmform = new CaiDat(user);
             dmform.TopLevel = false;
             dmform.FormBorderStyle = FormBorderStyle.None;
             dmform.Dock = DockStyle.Fill;
@@ -126,16 +127,41 @@ namespace CoffeeSell
             txtM.Text = "";
             txtS.Text = "";
             txtName.Text = "";
-            // Bind data to DataGridView
             DataTable dt = BOFood.GetAllFood();
+
+            // Step 1: Add "BanChay" column to the DataTable
+            if (!dt.Columns.Contains("BanChay"))
+                dt.Columns.Add("BanChay", typeof(bool));
+
+            // Step 2: Determine top 5 based on Sold
+            var sortedRows = dt.AsEnumerable()
+                               .OrderByDescending(r => r.Field<int>("Sold"))
+                               .ToList();
+
+            bool hasTieAt5 = sortedRows.Count >= 6 && sortedRows[4].Field<int>("Sold") == sortedRows[5].Field<int>("Sold");
+
+            var topKeys = new HashSet<object>(
+                sortedRows.Take(5).Where((r, i) => !hasTieAt5 || i < 5).Select(r => r["FoodId"])
+            );
+
+            // Step 3: Mark rows in the DataTable
+            foreach (DataRow row in dt.Rows)
+            {
+                var key = row["FoodId"];
+                if (key != DBNull.Value && topKeys.Contains(key))
+                {
+                    row["BanChay"] = true;
+                }
+                else
+                {
+                    row["BanChay"] = false;
+                }
+            }
+
+            // Step 4: Bind to DataGridView
             dtgrid.DataSource = dt;
 
-            // Hide CategoryId column
-            if (dtgrid.Columns.Contains("CategoryId"))
-                dtgrid.Columns["CategoryId"].Visible = false;
-            dtgrid.Columns["Photo"].Visible = false;
-
-            // Set Vietnamese headers
+            // Step 5: Set headers, hide unwanted
             dtgrid.Columns["FoodId"].HeaderText = "Mã món";
             dtgrid.Columns["NameFood"].HeaderText = "Tên món";
             dtgrid.Columns["NameCategory"].HeaderText = "Danh mục";
@@ -143,32 +169,11 @@ namespace CoffeeSell
             dtgrid.Columns["Price_M"].HeaderText = "Giá size vừa";
             dtgrid.Columns["Price_L"].HeaderText = "Giá size lớn";
             dtgrid.Columns["Sold"].HeaderText = "Đã bán";
+            dtgrid.Columns["BanChay"].HeaderText = "Bán chạy";
 
-            // Add "Bán chạy" checkbox column
-            if (!dtgrid.Columns.Contains("BanChay"))
-            {
-                DataGridViewCheckBoxColumn chk = new DataGridViewCheckBoxColumn();
-                chk.HeaderText = "Bán chạy";
-                chk.Name = "BanChay";
-                chk.ReadOnly = true;
-                dtgrid.Columns.Add(chk);
-            }
+            dtgrid.Columns["CategoryId"].Visible = false;
+            dtgrid.Columns["Photo"].Visible = false;
 
-            // Determine top 5 by Sold (without ties at position 5)
-            var rows = dt.AsEnumerable()
-                         .OrderByDescending(r => r.Field<int>("Sold"))
-                         .ToList();
-
-            bool hasTieAt5 = rows.Count >= 6 && rows[4].Field<int>("Sold") == rows[5].Field<int>("Sold");
-
-            for (int i = 0; i < rows.Count; i++)
-            {
-                DataGridViewRow gridRow = dtgrid.Rows[i];
-
-                // Only check if in top 5 AND no tie at position 5
-                bool isTop5 = i < 5 && !hasTieAt5;
-                gridRow.Cells["BanChay"].Value = isTop5;
-            }
 
             // Fixed header height
             dtgrid.ColumnHeadersHeight = 40;
