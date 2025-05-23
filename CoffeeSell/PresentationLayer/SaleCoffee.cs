@@ -320,7 +320,7 @@ namespace CoffeeSell
         {
             try
             {
-                if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
+                if (e.RowIndex < 0 || e.ColumnIndex < 0) return  ;
 
                 // Xử lý nút "Sửa"
                 if (guna2DataGridView1.Columns[e.ColumnIndex].Name == "Edit")
@@ -334,7 +334,7 @@ namespace CoffeeSell
                         guna2DataGridView1.Rows[e.RowIndex].Cells["Quantity"].Value.ToString()
                     );
 
-                    if (int.TryParse(input, out int newQuantity) && newQuantity > 0)
+                    if (int.TryParse(input, out int newQuantity) && newQuantity > 0 && newQuantity <= 100)
                     {
                         guna2DataGridView1.Rows[e.RowIndex].Cells["Quantity"].Value = newQuantity;
                         guna2DataGridView1.Rows[e.RowIndex].Cells["Total"].Value = newQuantity * price;
@@ -342,7 +342,7 @@ namespace CoffeeSell
                     }
                     else if (!string.IsNullOrEmpty(input))
                     {
-                        MessageBox.Show("Vui lòng nhập số lượng hợp lệ!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Vui lòng nhập số lượng hợp lệ (từ 1 đến 100)!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
                 // Xử lý nút "Xóa" (trừ 1 đơn vị số lượng)
