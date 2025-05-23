@@ -10,7 +10,7 @@ namespace CoffeeSell.DataAccessLayer
         public int CreateBill(Bill bill)
         {
             string cmString = @"
-                INSERT INTO Bill (DateCheckIn, TotalPrice, CustomerId)
+                INSERT INTO Bill (DateCheckIn, TotalPrice,CustomerId)
                 OUTPUT INSERTED.BillId
                 VALUES (@CheckIn, @Total,  @CustomerId)";
 

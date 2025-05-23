@@ -582,6 +582,7 @@ namespace CoffeeSell
             {
                 customerinfo.SetCustomerId(BOCustomer.Add(customerinfo));
                 customerinfo.SetPoints(0);
+                //MessageBox.Show(customerinfo.GetCustomerId().ToString());
                 ReloadCustomer();
             }
             else
@@ -738,7 +739,7 @@ namespace CoffeeSell
                     }
                     if (customerinfo.GetCustomerId() != -1)
                     { BOCustomer.UpdatePoint(customerinfo.GetCustomerId(), (int)price); }
-                    BOActivityLog.Record(user.GetLoginName(), 'S', $"Đã tiến hành thoan toán hóa đơn{bill.BillId}");
+                    BOActivityLog.Record(user.GetLoginName(), 'S', $"Đã tiến hành thoan toán hóa đơn {bill.BillId}");
                     MessageBox.Show("Thanh toán thành công");
                     guna2DataGridView1.Rows.Clear();
 
