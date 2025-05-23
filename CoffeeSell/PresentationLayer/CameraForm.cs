@@ -19,7 +19,6 @@ namespace CoffeeSell.PresentationLayer
     public partial class CameraForm : Form
     {
         private volatile bool isRecognizing = false;
-        private string recognizedName = string.Empty;
         private VideoCapture capture;
         private Mat frame;
         private Bitmap image;
@@ -29,14 +28,13 @@ namespace CoffeeSell.PresentationLayer
         private bool goLogin;
         private volatile bool isProcessing = false;
 
-        public CameraForm(Account _user, bool LoginCheck =false)
+        public CameraForm(Account _user, bool LoginCheck = false)
         {
             user = _user;
             manager = BOManagerSecurity.Get(_user.GetLoginName());
             InitializeComponent();
             frame = new Mat();
             capture = new VideoCapture(0);
-            isRecognizing = LoginCheck;
             goLogin = LoginCheck;
             if (!capture.IsOpened())
             {
@@ -47,7 +45,6 @@ namespace CoffeeSell.PresentationLayer
 
             pictureBox1.Dock = DockStyle.Fill;
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            takePhotoButton.Click += takePhotoButton_Click;
             this.Load += CameraForm_Load;
             this.FormClosing += CameraForm_FormClosing;
 
@@ -66,9 +63,6 @@ namespace CoffeeSell.PresentationLayer
             }
 
             isCapturing = true;
-            isRecognizing = true;
-            isProcessing = false;
-
             var frameQueue = new ConcurrentQueue<Bitmap>();
             var recognitionTokenSource = new CancellationTokenSource();
             var token = recognitionTokenSource.Token;
@@ -88,13 +82,25 @@ namespace CoffeeSell.PresentationLayer
                             var bitmap = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(frame);
 
                             // 🖼️ Display frame in PictureBox (UI thread)
-                            pictureBox1.Invoke(() =>
+                            if (bitmap != null)
                             {
-                                pictureBox1.Image?.Dispose();
-                                pictureBox1.Image = (Bitmap)bitmap.Clone();
-                            });
+                                try
+                                {
+                                    Bitmap frameCopy = (Bitmap)bitmap.Clone();
+                                    _ = pictureBox1.BeginInvoke(new Action(() =>
+                                    {
+                                        pictureBox1.Image?.Dispose();
+                                        pictureBox1.Image = frameCopy;
+                                    }));
+                                }
+                                catch (Exception ex)
+                                {
+                                    Debug.WriteLine("Bitmap clone or assign error: " + ex.Message);
+                                }
+                            }
 
-                            // 🎯 Smart queue: Only enqueue if nothing is being processed
+                            image?.Dispose();
+                            image = (Bitmap)bitmap.Clone();
                             if (isRecognizing && !isProcessing)
                             {
                                 frameQueue.Enqueue((Bitmap)bitmap.Clone());
@@ -118,73 +124,77 @@ namespace CoffeeSell.PresentationLayer
             });
 
             // 🧠 Start background recognition loop
-            Task.Run(async () =>
+            if (isRecognizing)
             {
-                while (isCapturing && !token.IsCancellationRequested)
+                Task.Run(async () =>
                 {
-                    if (frameQueue.TryDequeue(out var frameToProcess))
+                    while (isCapturing && !token.IsCancellationRequested)
                     {
-                        isProcessing = true;
-
-                        try
+                        if (frameQueue.TryDequeue(out var frameToProcess))
                         {
-                            using var ms = new MemoryStream();
-                            frameToProcess.Save(ms, ImageFormat.Jpeg);
-                            frameToProcess.Dispose();
+                            isProcessing = true;
 
-                            string base64 = Convert.ToBase64String(ms.ToArray());
-                            string result = await Security.RecognizeFace(base64);
-                            Debug.WriteLine($"Recognition result: {result}");
-
-                            var json = JObject.Parse(result);
-                            var match = json["matches"]?.FirstOrDefault();
-                            if (match != null)
+                            try
                             {
-                                string name = match["name"]?.ToString() ?? "unknown";
-                                double confidence = match["confidence"]?.ToObject<double>() ?? 1.0;
-                                string expectedName = manager.GetLoginName();
+                                using var ms = new MemoryStream();
+                                frameToProcess.Save(ms, ImageFormat.Jpeg);
+                                frameToProcess.Dispose();
 
-                                Debug.WriteLine($"Parsed name: {name}, confidence: {confidence}");
+                                string base64 = Convert.ToBase64String(ms.ToArray());
+                                string result = await Security.RecognizeFace(base64);
+                                Debug.WriteLine($"Recognition result: {result}");
 
-                                if (!string.IsNullOrEmpty(name) &&
-                                    name != "unknown" &&
-                                    name.Equals(expectedName, StringComparison.OrdinalIgnoreCase) &&
-                                    confidence < 0.6) // Change based on your logic
+                                var json = JObject.Parse(result);
+                                var match = json["matches"]?.FirstOrDefault();
+                                if (match != null)
                                 {
-                                    isRecognizing = false;
-                                    isCapturing = false;
-                                    recognitionTokenSource.Cancel();
+                                    string name = match["name"]?.ToString() ?? "unknown";
+                                    double confidence = match["confidence"]?.ToObject<double>() ?? 1.0;
+                                    string expectedName = manager.GetLoginName();
 
-                                    pictureBox1.Invoke(() =>
+                                    Debug.WriteLine($"Parsed name: {name}, confidence: {confidence}");
+
+                                    if (!string.IsNullOrEmpty(name) &&
+                                        name != "unknown" &&
+                                        name.Equals(expectedName, StringComparison.OrdinalIgnoreCase) &&
+                                        confidence < 0.6) // Change based on your logic
                                     {
-                                        MessageBox.Show("Xác thực khuôn mặt thành công", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                        this.Invoke(() => this.Close());
+                                        isRecognizing = false;
+                                        isCapturing = false;
+                                        recognitionTokenSource.Cancel();
 
-                                        if (!goLogin)
-                                            new NhapOTP(user).Show();
-                                        new TrangChu(user).Show();
-                                    });
+                                        pictureBox1.Invoke(() =>
+                                        {
+                                            MessageBox.Show("Xác thực khuôn mặt thành công", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                            this.Invoke(() => this.Close());
+
+                                            if (!goLogin)
+                                                new NhapOTP(user).Show();
+                                            else
+                                                new TrangChu(user).Show();
+                                        });
+                                    }
+                                }
+                                else
+                                {
+                                    Debug.WriteLine("No match found in 'matches'.");
                                 }
                             }
-                            else
+                            catch (Exception ex)
                             {
-                                Debug.WriteLine("No match found in 'matches'.");
+                                pictureBox1.Invoke(() =>
+                                {
+                                    MessageBox.Show("Recognition error: " + ex.Message);
+                                });
                             }
-                        }
-                        catch (Exception ex)
-                        {
-                            pictureBox1.Invoke(() =>
-                            {
-                                MessageBox.Show("Recognition error: " + ex.Message);
-                            });
+
+                            isProcessing = false;
                         }
 
-                        isProcessing = false;
+                        await Task.Delay(200); // 🕓 Throttle recognition speed
                     }
-
-                    await Task.Delay(200); // 🕓 Throttle recognition speed
-                }
-            }, token);
+                }, token);
+            }
         }
 
 
@@ -195,82 +205,10 @@ namespace CoffeeSell.PresentationLayer
             capture.Release();
         }
 
-        private async void takePhotoButton_Click(object sender, EventArgs e)
+       
+
+        private async void CameraForm_Load(object sender, EventArgs e)
         {
-            if (image != null)
-            {
-                try
-                {
-                    using var ms = new MemoryStream();
-                    image.Save(ms, ImageFormat.Jpeg);
-                    string base64String = Convert.ToBase64String(ms.ToArray());
-
-                    string name = manager.GetLoginName();
-                    string result = await Security.RegisterFace(name, base64String);
-
-                    try
-                    {
-                        var json = JObject.Parse(result);
-                        string status = json["status"]?.ToString() ?? "";
-                        if (status.Equals("success", StringComparison.OrdinalIgnoreCase))
-                        {
-                            string encoding = json["encoding"]?.ToString();
-
-                            if (!string.IsNullOrEmpty(encoding))
-                            {
-                                BOManagerSecurity.Update(manager.GetLoginName(),encoding);
-
-                                MessageBox.Show("Đăng ký khuôn mặt thành công");
-
-                                // Only switch to recognition if registration was successful
-                                isCapturing = false;
-                                pictureBox1.Invoke(() =>
-                                {
-                                    pictureBox1.Image?.Dispose();
-                                    pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-                                    using (Graphics g = Graphics.FromImage(pictureBox1.Image))
-                                    {
-                                        g.Clear(Color.Black);
-                                    }
-                                });
-
-                                
-
-                                recognizedName = string.Empty;
-                                isRecognizing = true;
-                                this.Close();
-                                new CameraForm(user).Show();
-
-                            }
-                            else
-                            {
-                                MessageBox.Show("Đăng ký thành công nhưng không nhận được encoding.");
-                            }
-                        }
-                        else
-                        {
-                            MessageBox.Show("Đăng ký khuôn mặt thất bại: " + result);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Lỗi đọc file Json: " + ex.Message + "\nResult: " + result);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Register error: " + ex.Message);
-                }
-            }
-            else
-            {
-                MessageBox.Show("Chưa chụp được ảnh.");
-            }
-        }
-
-        private void CameraForm_Load(object sender, EventArgs e)
-        {
-            StartCamera();
 
             if (string.IsNullOrEmpty(manager.GetEncodingFace()))
             {
@@ -284,6 +222,10 @@ namespace CoffeeSell.PresentationLayer
                 isRecognizing = true;
                 label1.Text = "Nhận diện khuôn mặc";
             }
+            StartCamera();
+            Debug.WriteLine($"Button Visible: {takePhotoButton.Visible}, Enabled: {takePhotoButton.Enabled}");
+
+
         }
 
         private void CameraForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -296,7 +238,70 @@ namespace CoffeeSell.PresentationLayer
             // Optional
         }
 
-        
+        private async void takePhotoButton_Click_1(object sender, EventArgs e)
+        {
+            MessageBox.Show("Clicked");
+
+            if (image == null)
+            {
+                MessageBox.Show("Chưa chụp được ảnh.");
+                return;
+            }
+
+            // Offload the rest to a background thread
+            await Task.Run(async () =>
+            {
+                try
+                {
+                    using var ms = new MemoryStream();
+                    image.Save(ms, ImageFormat.Jpeg);
+                    string base64String = Convert.ToBase64String(ms.ToArray());
+
+                    string name = manager.GetLoginName();
+                    string result = await Security.RegisterFace(name, base64String);
+
+                    JObject json = JObject.Parse(result);
+                    string status = json["status"]?.ToString() ?? "";
+
+                    if (status.Equals("success", StringComparison.OrdinalIgnoreCase))
+                    {
+                        string encoding = json["encoding"]?.ToString();
+                        if (!string.IsNullOrEmpty(encoding))
+                        {
+                            BOManagerSecurity.Update(name, encoding);
+
+                            Invoke(() =>
+                            {
+                                MessageBox.Show("Đăng ký khuôn mặt thành công");
+
+                                isCapturing = false;
+                                pictureBox1.Image?.Dispose();
+                                pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+                                using (Graphics g = Graphics.FromImage(pictureBox1.Image))
+                                {
+                                    g.Clear(Color.Black);
+                                }
+
+                                this.Close();
+                                new CameraForm(user).Show();
+                            });
+                        }
+                        else
+                        {
+                            Invoke(() => MessageBox.Show("Đăng ký thành công nhưng không nhận được encoding."));
+                        }
+                    }
+                    else
+                    {
+                        Invoke(() => MessageBox.Show("Đăng ký khuôn mặt thất bại: " + result));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Invoke(() => MessageBox.Show("Lỗi: " + ex.Message));
+                }
+            });
+        }
 
     }
 }

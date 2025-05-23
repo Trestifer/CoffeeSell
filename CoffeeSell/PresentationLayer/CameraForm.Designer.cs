@@ -36,40 +36,44 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Location = new Point(57, 87);
+            pictureBox1.Location = new Point(65, 116);
+            pictureBox1.Margin = new Padding(3, 4, 3, 4);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(966, 595);
+            pictureBox1.Size = new Size(1104, 793);
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             pictureBox1.Click += pictureBox1_Click;
             // 
             // takePhotoButton
             // 
-            takePhotoButton.Location = new Point(493, 700);
+            takePhotoButton.Location = new Point(563, 933);
+            takePhotoButton.Margin = new Padding(3, 4, 3, 4);
             takePhotoButton.Name = "takePhotoButton";
-            takePhotoButton.Size = new Size(75, 25);
+            takePhotoButton.Size = new Size(86, 33);
             takePhotoButton.TabIndex = 1;
             takePhotoButton.Text = "button1";
             takePhotoButton.UseVisualStyleBackColor = true;
+            takePhotoButton.Click += takePhotoButton_Click_1;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 15F);
-            label1.Location = new Point(351, 43);
+            label1.Location = new Point(401, 57);
             label1.Name = "label1";
-            label1.Size = new Size(65, 28);
+            label1.Size = new Size(81, 35);
             label1.TabIndex = 2;
             label1.Text = "label1";
             // 
             // CameraForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1074, 774);
+            ClientSize = new Size(1227, 1032);
             Controls.Add(label1);
             Controls.Add(takePhotoButton);
             Controls.Add(pictureBox1);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "CameraForm";
             Text = "CameraForm";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
