@@ -287,7 +287,7 @@ namespace CoffeeSell
 
         private void ProductUserControl_ProductSelected(object sender, FoodInCart foodInCart)
         {
-            MessageBox.Show($"Thêm sản phẩm: {foodInCart.NameFood}, Size: {foodInCart.Size}, Giá: {foodInCart.Price:N0} VNĐ", "Debug", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show($"Thêm sản phẩm: {foodInCart.NameFood}, Size: {foodInCart.Size}, Giá: {foodInCart.Price:N0}K VNĐ", "Debug", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             foreach (DataGridViewRow row in guna2DataGridView1.Rows)
             {
@@ -320,7 +320,7 @@ namespace CoffeeSell
         {
             try
             {
-                if (e.RowIndex < 0 || e.ColumnIndex < 0) return  ;
+                if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
 
                 // Xử lý nút "Sửa"
                 if (guna2DataGridView1.Columns[e.ColumnIndex].Name == "Edit")
@@ -451,9 +451,9 @@ namespace CoffeeSell
             }
             finalPrice = total - discount;
 
-            lblTien.Text = total.ToString("N0") + " VNĐ"; // Hiển thị tổng tiền với định dạng
-            lblTienGiam.Text = discount.ToString("N0") + "VNĐ";
-            labeltotal.Text = finalPrice.ToString("N0") + "VNĐ";
+            lblTien.Text = total.ToString("N0") + "K VNĐ"; // Hiển thị tổng tiền với định dạng
+            lblTienGiam.Text = discount.ToString("N0") + "K VNĐ";
+            labeltotal.Text = finalPrice.ToString("N0") + "K VNĐ";
         }
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -589,14 +589,14 @@ namespace CoffeeSell
             {
                 customerinfo.SetCustomerId(-1);
             }
-            string cleaned = labeltotal.Text.Replace("VNĐ", "").Trim();
+            string cleaned = labeltotal.Text.Replace("K VNĐ", "").Trim();
 
             // Remove thousand separator
             cleaned = cleaned.Replace(",", "");
 
             // Parse to decimal
             decimal price = decimal.Parse(cleaned);
-            string cleanedd = lblTien.Text.Replace("VNĐ", "").Trim();
+            string cleanedd = lblTien.Text.Replace("K VNĐ", "").Trim();
 
             // Remove thousand separator
             cleanedd = cleanedd.Replace(",", "");
@@ -604,7 +604,7 @@ namespace CoffeeSell
             // Parse to decimal
             decimal pricee = decimal.Parse(cleanedd);
 
-            string cleaneddd = lblTienGiam.Text.Replace("VNĐ", "").Trim();
+            string cleaneddd = lblTienGiam.Text.Replace("K VNĐ", "").Trim();
 
             // Remove thousand separator
             cleaneddd = cleaneddd.Replace(",", "");
@@ -621,7 +621,7 @@ namespace CoffeeSell
                 decimal TienDua = 0;
                 string transferCode = null;
                 ThoiTienForm tempForm = new ThoiTienForm(price);
-                
+
                 if (checkBox1.Checked == true)
                 {
                     // Thanh toán bằng chuyển khoản (QR)
@@ -634,7 +634,7 @@ namespace CoffeeSell
                     }
                     // Nhân viên cần kiểm tra giao dịch thủ công trên ví/ngân hàng với nội dung chuyển khoản
                     DialogResult result = MessageBox.Show(
-                        $"Vui lòng kiểm tra giao dịch với nội dung CK: {transferCode} và số tiền: {price:N0} VNĐ. Xác nhận giao dịch thành công?",
+                        $"Vui lòng kiểm tra giao dịch với nội dung CK: {transferCode} và số tiền: {price:N0}K VNĐ. Xác nhận giao dịch thành công?",
                         "Xác nhận thanh toán",
                         MessageBoxButtons.YesNo,
                         MessageBoxIcon.Question
@@ -683,6 +683,9 @@ namespace CoffeeSell
                         billInfo.SetIdBill(bill.BillId);
                         billInfo.SetIdFood(Convert.ToInt32(row.Cells["FoodId"].Value));
                         billInfo.SetQuantity(Convert.ToInt32(row.Cells["Quantity"].Value));
+                        // Lấy giá từ cột "Price" trong DataGridView và gán cho foodPrice
+                        decimal foodPrice = Convert.ToDecimal(row.Cells["Price"].Value);
+                        billInfo.SetFoodPrice(foodPrice); // Giả sử có phương thức SetFoodPrice trong BillInfo
                         string productName = row.Cells["ProductName"].Value?.ToString() ?? "";
                         string size = row.Cells["Size"].Value?.ToString() ?? "";
                         string fullName = productName + "-" + size;
@@ -800,6 +803,16 @@ namespace CoffeeSell
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel8_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label13_Click(object sender, EventArgs e)
         {
 
         }

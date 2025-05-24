@@ -401,6 +401,7 @@
             panel8.Name = "panel8";
             panel8.Size = new Size(569, 374);
             panel8.TabIndex = 14;
+            panel8.Paint += panel8_Paint;
             // 
             // comboBox3
             // 
@@ -524,6 +525,7 @@
             label13.Size = new Size(99, 28);
             label13.TabIndex = 2;
             label13.Text = "Tổng tiền:";
+            label13.Click += label13_Click;
             // 
             // label12
             // 

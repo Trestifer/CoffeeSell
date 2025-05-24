@@ -42,7 +42,7 @@ namespace CoffeeSell.Ulti
                 string encodedTransferCode = Uri.EscapeDataString(transferCode);
 
                 // Tạo URL QR động (VietQR)
-                string qrUrl = $"https://img.vietqr.io/image/{bankId}-{accountNumber}-compact2.jpg?amount={price}&addInfo={encodedTransferCode}&accountName={encodedAccountName}";
+                string qrUrl = $"https://img.vietqr.io/image/{bankId}-{accountNumber}-compact2.jpg?amount={price*1000}&addInfo={encodedTransferCode}&accountName={encodedAccountName}";
 
                 // Tải ảnh QR từ URL
                 System.Net.WebRequest request = System.Net.WebRequest.Create(qrUrl);
@@ -70,7 +70,7 @@ namespace CoffeeSell.Ulti
 
                 Label lblPrice = new Label
                 {
-                    Text = $"Số tiền: {price:N0} VNĐ",
+                    Text = $"Số tiền: {price:N0}.000 VNĐ",
                     Font = new System.Drawing.Font("Segoe UI", 12, System.Drawing.FontStyle.Bold),
                     Size = new System.Drawing.Size(300, 30),
                     Location = new System.Drawing.Point(50, 330),

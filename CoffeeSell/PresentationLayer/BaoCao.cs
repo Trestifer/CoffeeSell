@@ -106,46 +106,92 @@ namespace CoffeeSell
         {
             try
             {
-                // Lấy dữ liệu từ cơ sở dữ liệu, lọc theo ngày chính xác
+                System.Diagnostics.Debug.WriteLine($"LoadRevenueReport được gọi với ngày: {selectedDate:dd/MM/yyyy}");
+
+                // Lấy dữ liệu từ cơ sở dữ liệu
                 DataTable billInfoTable = daoBillInfo.GetBillInfoByDate(selectedDate);
-                System.Diagnostics.Debug.WriteLine($"Lọc theo ngày (Revenue): {selectedDate:MM/dd/yyyy}, Số hàng: {billInfoTable.Rows.Count}");
+                System.Diagnostics.Debug.WriteLine($"Lọc theo ngày (Revenue): {selectedDate:dd/MM/yyyy}, Số hàng BillInfo: {billInfoTable?.Rows.Count ?? 0}");
 
                 DataTable foodTable = daoFood.GetAllFood();
+                System.Diagnostics.Debug.WriteLine($"Số hàng Food: {foodTable?.Rows.Count ?? 0}");
 
-                if (billInfoTable == null || foodTable == null)
+                // Kiểm tra dữ liệu rỗng
+                if (billInfoTable == null || billInfoTable.Rows.Count == 0)
                 {
-                    MessageBox.Show("Lỗi khi truy xuất dữ liệu từ cơ sở dữ liệu!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    System.Diagnostics.Debug.WriteLine($"Không có dữ liệu BillInfo cho ngày {selectedDate:dd/MM/yyyy}.");
                     guna2DataGridView1.DataSource = null;
                     label3.Text = "0 VNĐ";
+                    MessageBox.Show($"Không có dữ liệu hóa đơn cho ngày {selectedDate:dd/MM/yyyy}.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                if (foodTable == null || foodTable.Rows.Count == 0)
+                {
+                    System.Diagnostics.Debug.WriteLine("Không có dữ liệu Food trong cơ sở dữ liệu.");
+                    guna2DataGridView1.DataSource = null;
+                    label3.Text = "0 VNĐ";
+                    MessageBox.Show("Không có dữ liệu món ăn trong cơ sở dữ liệu.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
                 // Tổng hợp doanh thu theo từng món
                 var foodRevenue = new Dictionary<int, decimal>();
+                int validRows = 0; // Đếm số hàng hợp lệ
                 foreach (DataRow billRow in billInfoTable.Rows)
                 {
-                    int foodId = Convert.ToInt32(billRow["IdFood"]);
-                    int quantity = Convert.ToInt32(billRow["Quantity"]);
-
-                    // Tìm giá của món trong foodTable (giả sử dùng Price_S, có thể mở rộng cho Price_M, Price_L)
-                    DataRow[] foodRows = foodTable.Select($"FoodId = {foodId}");
-                    if (foodRows.Length > 0)
+                    try
                     {
-                        decimal price = Convert.ToDecimal(foodRows[0]["Price_M"]); // Sử dụng giá nhỏ làm mặc định
-                        decimal revenue = price * quantity;
-                        if (foodRevenue.TryGetValue(foodId, out decimal existingRevenue))
+                        int foodId = billRow["IdFood"] != DBNull.Value ? Convert.ToInt32(billRow["IdFood"]) : -1;
+                        int quantity = billRow["Quantity"] != DBNull.Value ? Convert.ToInt32(billRow["Quantity"]) : 0;
+                        decimal foodPrice = billRow["foodPrice"] != DBNull.Value ? Convert.ToDecimal(billRow["foodPrice"]) : 0;
+
+                        System.Diagnostics.Debug.WriteLine($"Xử lý hàng BillInfo: IdFood={foodId}, Quantity={quantity}, foodPrice={foodPrice}");
+
+                        if (foodId == -1 || quantity == 0 || foodPrice == 0)
                         {
-                            foodRevenue[foodId] = existingRevenue + revenue;
+                            System.Diagnostics.Debug.WriteLine($"Dữ liệu không hợp lệ trong BillInfo: IdFood={foodId}, Quantity={quantity}, foodPrice={foodPrice}");
+                            continue;
+                        }
+
+                        DataRow[] foodRows = foodTable.Select($"FoodId = {foodId}");
+                        if (foodRows.Length > 0)
+                        {
+                            decimal revenue = foodPrice * quantity;
+                            if (foodRevenue.ContainsKey(foodId))
+                            {
+                                foodRevenue[foodId] += revenue;
+                            }
+                            else
+                            {
+                                foodRevenue[foodId] = revenue;
+                            }
+                            validRows++;
+                            System.Diagnostics.Debug.WriteLine($"Thêm doanh thu: FoodId={foodId}, Revenue={revenue}");
                         }
                         else
                         {
-                            foodRevenue[foodId] = revenue;
+                            System.Diagnostics.Debug.WriteLine($"Không tìm thấy món với FoodId = {foodId} trong Food.");
                         }
                     }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Lỗi khi xử lý hàng BillInfo: {ex.Message}");
+                        continue;
+                    }
+                }
+
+                System.Diagnostics.Debug.WriteLine($"Số hàng BillInfo hợp lệ: {validRows}");
+                if (validRows == 0)
+                {
+                    System.Diagnostics.Debug.WriteLine("Không có hàng BillInfo nào hợp lệ để tính doanh thu.");
+                    guna2DataGridView1.DataSource = null;
+                    label3.Text = "0 VNĐ";
+                    MessageBox.Show("Không có dữ liệu hóa đơn hợp lệ để hiển thị báo cáo.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
                 }
 
                 // Tính tổng doanh thu
                 decimal totalRevenue = foodRevenue.Values.Sum();
+                System.Diagnostics.Debug.WriteLine($"Tổng doanh thu: {totalRevenue}");
 
                 // Chuẩn bị dữ liệu cho DataGridView
                 DataTable reportTable = new DataTable();
@@ -157,20 +203,38 @@ namespace CoffeeSell
                 int stt = 1;
                 foreach (DataRow foodRow in foodTable.Rows)
                 {
-                    int foodId = Convert.ToInt32(foodRow["FoodId"]);
-                    if (foodRevenue.ContainsKey(foodId))
+                    try
                     {
-                        string name = foodRow["NameFood"]?.ToString() ?? "Không xác định";
-                        decimal revenue = foodRevenue[foodId];
-                        double ratio = totalRevenue > 0 ? (double)revenue / (double)totalRevenue * 100 : 0;
-                        reportTable.Rows.Add(stt++, name, revenue, $"{ratio:F2}%");
+                        int foodId = Convert.ToInt32(foodRow["FoodId"]);
+                        if (foodRevenue.ContainsKey(foodId))
+                        {
+                            string name = foodRow["NameFood"]?.ToString() ?? "Không xác định";
+                            decimal revenue = foodRevenue[foodId];
+                            double ratio = totalRevenue > 0 ? (double)revenue / (double)totalRevenue * 100 : 0;
+                            reportTable.Rows.Add(stt++, name, revenue, $"{ratio:F2}%");
+                            System.Diagnostics.Debug.WriteLine($"Thêm vào báo cáo: FoodId={foodId}, Name={name}, Revenue={revenue}, Ratio={ratio:F2}%");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Lỗi khi xử lý hàng Food: {ex.Message}");
+                        continue;
                     }
                 }
 
+                System.Diagnostics.Debug.WriteLine($"Số hàng trong reportTable: {reportTable.Rows.Count}");
+                if (reportTable.Rows.Count == 0)
+                {
+                    System.Diagnostics.Debug.WriteLine("reportTable rỗng, không có dữ liệu để hiển thị.");
+                    MessageBox.Show("Không có dữ liệu hợp lệ để hiển thị báo cáo doanh thu.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
                 // Gán dữ liệu vào DataGridView
+                guna2DataGridView1.DataSource = null; // Xóa dữ liệu cũ
                 guna2DataGridView1.DataSource = reportTable;
 
                 // Tùy chỉnh giao diện DataGridView
+                guna2DataGridView1.AutoGenerateColumns = true;
                 guna2DataGridView1.ColumnHeadersDefaultCellStyle.Font = new Font("Arial", 14, FontStyle.Bold);
                 guna2DataGridView1.ColumnHeadersHeight = 40;
 
@@ -179,7 +243,7 @@ namespace CoffeeSell
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"LoadRevenueReport error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"LoadRevenueReport error: {ex.Message}\nStackTrace: {ex.StackTrace}");
                 MessageBox.Show("Đã xảy ra lỗi khi tải báo cáo doanh thu!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 guna2DataGridView1.DataSource = null;
                 label3.Text = "0 VNĐ";
