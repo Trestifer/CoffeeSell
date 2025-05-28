@@ -66,6 +66,7 @@
             Column4 = new DataGridViewTextBoxColumn();
             guna2PictureBox7 = new Guna.UI2.WinForms.Guna2PictureBox();
             panel8 = new Panel();
+            pictureBox2 = new PictureBox();
             comboBox3 = new ComboBox();
             checkBox1 = new CheckBox();
             lblTien = new Label();
@@ -94,6 +95,7 @@
             ((System.ComponentModel.ISupportInitialize)guna2DataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)guna2PictureBox7).BeginInit();
             panel8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             SuspendLayout();
             // 
             // panel1
@@ -382,6 +384,7 @@
             // 
             // panel8
             // 
+            panel8.Controls.Add(pictureBox2);
             panel8.Controls.Add(comboBox3);
             panel8.Controls.Add(checkBox1);
             panel8.Controls.Add(lblTien);
@@ -402,6 +405,17 @@
             panel8.Size = new Size(569, 374);
             panel8.TabIndex = 14;
             panel8.Paint += panel8_Paint;
+            // 
+            // pictureBox2
+            // 
+            pictureBox2.Image = Properties.Resources.bell;
+            pictureBox2.Location = new Point(24, 147);
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.Size = new Size(60, 43);
+            pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox2.TabIndex = 19;
+            pictureBox2.TabStop = false;
+            pictureBox2.Click += pictureBox2_Click_1;
             // 
             // comboBox3
             // 
@@ -641,6 +655,7 @@
             ((System.ComponentModel.ISupportInitialize)guna2PictureBox7).EndInit();
             panel8.ResumeLayout(false);
             panel8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -695,5 +710,6 @@
         private Label lblTienGiam;
         private ComboBox comboBox3;
         private CheckBox checkBox1;
+        private PictureBox pictureBox2;
     }
 }
