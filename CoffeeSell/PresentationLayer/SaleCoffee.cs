@@ -11,6 +11,8 @@ using System.Drawing;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using CoffeeSell.DataAccessLayer;
+using System.Net.NetworkInformation;
 
 namespace CoffeeSell
 {
@@ -22,7 +24,7 @@ namespace CoffeeSell
         private decimal? minPrice = null;
         private decimal? maxPrice = null;
         private System.Windows.Forms.Timer searchTimer;
-        private string connectionString = "Server=26.58.112.204,1433;Database=CoffeeSell;User Id=trestifer;Password=tam73105;Encrypt=False";
+        private string connectionString = "Server=26.131.118.180,1433;Database=CoffeeSell;User Id=KTPM;Password=123456;TrustServerCertificate=True;MultipleActiveResultSets=True;";
         private int orderIndex = 1;
         private Account user;
         private List<Customer> fullCustomer;
@@ -55,9 +57,71 @@ namespace CoffeeSell
             };
 
             guna2TextBox1.TextChanged += guna2TextBox1_TextChanged;
-            txtKhachHang.ReadOnly = true;
+            LoadDeviceIdsToComboBoxAndAddNone();
+
+           
 
 
+        }
+
+
+        private void LoadDeviceIdsToComboBoxAndAddNone()
+        {
+            // Lấy địa chỉ MAC hiện tại
+            string currentMac = GetMacAddressOfFirstActiveAdapter();
+
+            // Tạo một DataTable mới để chứa "None" và Device ID khớp
+            DataTable combinedTable = new DataTable();
+            combinedTable.Columns.Add("DeviceId", typeof(string));
+
+            // Thêm hàng "None" vào đầu DataTable
+            DataRow noneRow = combinedTable.NewRow();
+            noneRow["DeviceId"] = "None";
+            combinedTable.Rows.Add(noneRow);
+
+            // Nếu không tìm thấy MAC, chỉ có "None"
+            if (currentMac == "MAC Not Found")
+            {
+                MessageBox.Show("Không thể lấy địa chỉ MAC của thiết bị. Chỉ hiển thị 'None'.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                // Lấy tất cả các thiết bị từ DB
+                DataTable allEspDevices = new BOEsp().GetAllEspDevices();
+
+                if (allEspDevices != null && allEspDevices.Rows.Count > 0)
+                {
+                    // Tìm thiết bị có MAC khớp
+                    var matchedDevice = allEspDevices.AsEnumerable()
+                                                     .FirstOrDefault(row =>
+                                                        row.Field<string>("AssignedMAC") == currentMac);
+
+                    if (matchedDevice != null)
+                    {
+                        // Thêm Device ID khớp vào DataTable sau mục "None"
+                        DataRow matchedRow = combinedTable.NewRow();
+                        matchedRow["DeviceId"] = matchedDevice.Field<string>("DeviceId");
+                        combinedTable.Rows.Add(matchedRow);
+                        MessageBox.Show($"Tìm thấy Device ID khớp với MAC hiện tại: {matchedDevice.Field<string>("DeviceId")}", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Không tìm thấy thiết bị nào khớp với địa chỉ MAC hiện tại. Chỉ hiển thị 'None'.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Không có thiết bị ESP nào trong cơ sở dữ liệu. Chỉ hiển thị 'None'.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+
+            // Gán DataTable đã kết hợp làm DataSource
+            comboBox4.DataSource = combinedTable;
+            comboBox4.DisplayMember = "DeviceId";
+            comboBox4.ValueMember = "DeviceId";
+
+            // Mặc định chọn mục "None" (index 0)
+            comboBox4.SelectedIndex = 0;
         }
         private void ReloadCustomer()
         {
@@ -819,13 +883,80 @@ namespace CoffeeSell
 
         private void pictureBox2_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void pictureBox2_Click_1(object sender, EventArgs e)
         {
             BellForm bellform = new BellForm();
             bellform.Show();
+        }
+
+        private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+        private string GetDeviceIdByCurrentMac()
+        {
+            string currentMac = GetMacAddressOfFirstActiveAdapter(); // Lấy MAC hiện tại
+
+            if (currentMac == "MAC Not Found")
+            {
+                MessageBox.Show("Không thể lấy địa chỉ MAC của thiết bị. Vui lòng kiểm tra kết nối mạng.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null; // Trả về null nếu không lấy được MAC
+            }
+
+            DataTable allEspDevices = new BOEsp().GetAllEspDevices(); // Lấy tất cả thiết bị từ BO
+
+            if (allEspDevices == null || allEspDevices.Rows.Count == 0)
+            {
+                // Không có dữ liệu thiết bị hoặc lỗi khi tải
+                return null;
+            }
+
+            // Sử dụng LINQ để tìm DeviceId khớp với AssignedMAC
+            var matchedDevice = allEspDevices.AsEnumerable() // Chuyển DataTable thành IEnumerable<DataRow>
+                                             .FirstOrDefault(row =>
+                                                row.Field<string>("AssignedMAC") == currentMac);
+
+            if (matchedDevice != null)
+            {
+                // Nếu tìm thấy, trả về DeviceId
+                return matchedDevice.Field<string>("DeviceId");
+            }
+            else
+            {
+                // Không tìm thấy thiết bị nào khớp
+                return null;
+            }
+        }
+
+        // Phương thức GetMacAddressOfFirstActiveAdapter() của bạn (đặt trong cùng lớp Form)
+        private string GetMacAddressOfFirstActiveAdapter()
+        {
+            foreach (NetworkInterface nic in NetworkInterface.GetAllNetworkInterfaces())
+            {
+                if (nic.OperationalStatus == OperationalStatus.Up &&
+                    (nic.NetworkInterfaceType == NetworkInterfaceType.Ethernet ||
+                     nic.NetworkInterfaceType == NetworkInterfaceType.Wireless80211))
+                {
+                    string macAddress = nic.GetPhysicalAddress().ToString();
+                    if (!string.IsNullOrEmpty(macAddress))
+                    {
+                        // Đảm bảo định dạng MAC address khớp với cách bạn lưu trong DB
+                        // Nếu trong DB lưu là "AA:BB:CC:DD:EE:FF", thì cần định dạng lại
+                        // Nếu trong DB lưu là "AABBCCDDEEFF", thì không cần thêm dấu hai chấm
+                        return string.Join(":", Enumerable.Range(0, macAddress.Length / 2)
+                                                         .Select(i => macAddress.Substring(i * 2, 2)));
+                    }
+                }
+            }
+            return "MAC Not Found";
+        }
+
+        private void flowLayoutPanelProducts_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

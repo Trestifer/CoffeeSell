@@ -214,13 +214,13 @@ namespace CoffeeSell.PresentationLayer
             {
                 takePhotoButton.Visible = true;
                 isRecognizing = false;
-                label1.Text = "Đăng ký khuôn mặc";
+                label1.Text = "Đăng ký khuôn mặt";
             }
             else
             {
                 takePhotoButton.Visible = false;
                 isRecognizing = true;
-                label1.Text = "Nhận diện khuôn mặc";
+                label1.Text = "Nhận diện khuôn mặt";
             }
             StartCamera();
             Debug.WriteLine($"Button Visible: {takePhotoButton.Visible}, Enabled: {takePhotoButton.Enabled}");

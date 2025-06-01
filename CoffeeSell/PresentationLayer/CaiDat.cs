@@ -82,10 +82,9 @@ namespace CoffeeSell
             config.SetWifi(textBox3.Text);                   // Wifi
             config.SetPassword(textBox4.Text);               // Mật khẩu (Password)
             config.SetSlogan(textBox5.Text);                 // Slogan
-            config.SetBankAccountNumber(textBox6.Text);      // Số tài khoản ngân hàng (Bank Account Number)
-            config.SetBank(comboBox1.Text.ToLower());                   // Bank (e.g., "BIDV")
-            config.SetBankName(textBox7.Text);               // Bank Name (same as Bank for now)
-
+            config.SetBankName(textBox6.Text);               // Bank Name (same as Bank for now)
+            config.SetBank(comboBox1.Text.ToLower());        // Bank (e.g., "BIDV")
+            config.SetBankAccountNumber(textBox7.Text);      // Số tài khoản ngân hàng (Bank Account Number)
             return config;
         }
 
@@ -115,11 +114,16 @@ namespace CoffeeSell
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            if(BOSettingConfig.Update(GetSetting()))
+            if (BOSettingConfig.Update(GetSetting()))
             {
                 MessageBox.Show("Lưu thành công");
                 BOActivityLog.Record(user.GetLoginName(), 'E', "Đã thay đổi thông tin quán");
             }
+        }
+
+        private void textBox7_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
