@@ -810,6 +810,8 @@ namespace CoffeeSell
                     BOActivityLog.Record(user.GetLoginName(), 'S', $"Đã tiến hành thoan toán hóa đơn {bill.BillId}");
                     MessageBox.Show("Thanh toán thành công");
                     guna2DataGridView1.Rows.Clear();
+                    UpdateTotalLabel();
+                    
 
                 }
                 LoadBillToDeviceData(comboBox4.Text,bill.BillId);
