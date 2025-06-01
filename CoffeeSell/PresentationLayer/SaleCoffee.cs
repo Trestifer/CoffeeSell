@@ -58,8 +58,9 @@ namespace CoffeeSell
 
             guna2TextBox1.TextChanged += guna2TextBox1_TextChanged;
             LoadDeviceIdsToComboBoxAndAddNone();
+            LoadBillToDeviceData();
 
-           
+
 
 
         }
@@ -811,6 +812,7 @@ namespace CoffeeSell
                     guna2DataGridView1.Rows.Clear();
 
                 }
+                LoadBillToDeviceData(comboBox4.Text,bill.BillId);
             }
         }
 
@@ -957,6 +959,100 @@ namespace CoffeeSell
         private void flowLayoutPanelProducts_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void guna2DataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Kiểm tra xem có phải nhấp vào một hàng hợp lệ không (không phải tiêu đề)
+            if (e.RowIndex < 0) return;
+
+            // Lấy tên của cột được nhấp vào
+            string columnName = guna2DataGridView2.Columns[e.ColumnIndex].Name;
+
+            // Lấy hàng hiện tại
+            DataGridViewRow row = guna2DataGridView2.Rows[e.RowIndex];
+
+            // Lấy giá trị của cột "SoHoaDon" và "MaThietBi" từ hàng được nhấp
+            string soHoaDon = row.Cells["SoHoaDon"].Value?.ToString();
+            string maThietBi = row.Cells["MaThietBi"].Value?.ToString();
+
+            if (columnName == "BtnKichHoat")
+            {
+                // Logic khi nút "Kích hoạt" được nhấp
+                MessageBox.Show($"Kích hoạt Hóa đơn: {soHoaDon} cho Thiết bị: {maThietBi}", "Kích hoạt", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // Bạn sẽ thêm logic kích hoạt thực tế ở đây, ví dụ: gửi lệnh tới thiết bị
+            }
+            else if (columnName == "BtnHoanThanh")
+            {
+                // Logic khi nút "Hoàn thành" được nhấp
+                DialogResult dialogResult = MessageBox.Show(
+                    $"Xác nhận hoàn thành Hóa đơn: {soHoaDon} và loại bỏ khỏi Thiết bị: {maThietBi}?",
+                    "Xác nhận Hoàn thành",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
+
+                if (dialogResult == DialogResult.Yes)
+                {
+                    // Thực hiện loại bỏ số hóa đơn khỏi thiết bị
+                    // Đây là nơi bạn sẽ gọi phương thức BO để cập nhật DB
+                    // Ví dụ: _boEsp.RemoveBillFromDevice(soHoaDon, maThietBi);
+                    MessageBox.Show($"Hoàn thành Hóa đơn: {soHoaDon} đã được loại bỏ khỏi Thiết bị: {maThietBi}", "Hoàn thành", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Sau khi hoàn thành, bạn có thể xóa hàng khỏi DataGridView
+                    guna2DataGridView2.Rows.RemoveAt(e.RowIndex);
+                    // Hoặc tải lại toàn bộ dữ liệu nếu bạn có hàm LoadBillToDeviceData() thực tế từ DB
+                    // LoadBillToDeviceData();
+                }
+            }
+        }
+        private void LoadBillToDeviceData(string value = "None", int SoHoaDonGia =-1)
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("SoHoaDon", typeof(string));
+            dt.Columns.Add("MaThietBi", typeof(string));
+
+            // Populate DataTable with data from comboBox4, excluding "None"
+            foreach (DataRowView item in comboBox4.Items)
+            {
+                string deviceId = item["DeviceId"].ToString();
+                if (deviceId != "None")
+                {
+                    DataRow newRow = dt.NewRow();
+                    newRow["SoHoaDon"] = SoHoaDonGia ==-1 && value != deviceId ? null:$"{SoHoaDonGia}"; // Set SoHoaDon to null
+                    newRow["MaThietBi"] = deviceId;
+                    dt.Rows.Add(newRow);
+                }
+            }
+
+
+            // Clear old columns if any, to avoid duplication when reloading
+            guna2DataGridView2.Columns.Clear();
+
+            // Add columns from DataTable
+            guna2DataGridView2.DataSource = dt;
+
+            // Add "Kích hoạt" button column
+            DataGridViewButtonColumn activateButtonColumn = new DataGridViewButtonColumn();
+            activateButtonColumn.Name = "BtnKichHoat";
+            activateButtonColumn.HeaderText = "Kích Hoạt";
+            activateButtonColumn.Text = "Kích hoạt";
+            activateButtonColumn.UseColumnTextForButtonValue = true;
+            guna2DataGridView2.Columns.Add(activateButtonColumn);
+
+            // Add "Hoàn thành" button column
+            DataGridViewButtonColumn completeButtonColumn = new DataGridViewButtonColumn();
+            completeButtonColumn.Name = "BtnHoanThanh";
+            completeButtonColumn.HeaderText = "Hoàn Thành";
+            completeButtonColumn.Text = "Hoàn thành";
+            completeButtonColumn.UseColumnTextForButtonValue = true;
+            guna2DataGridView2.Columns.Add(completeButtonColumn);
+
+            // Customize column header display
+            guna2DataGridView2.Columns["SoHoaDon"].HeaderText = "Số Hóa Đơn";
+            guna2DataGridView2.Columns["MaThietBi"].HeaderText = "Mã Thiết Bị";
+
+            guna2DataGridView2.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
         }
     }
 }
