@@ -122,6 +122,7 @@
             // 
             // comboBox1
             // 
+            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox1.FormattingEnabled = true;
             comboBox1.Location = new Point(288, 627);
             comboBox1.Margin = new Padding(3, 4, 3, 4);
@@ -175,7 +176,7 @@
             textBox2.Location = new Point(248, 221);
             textBox2.Margin = new Padding(3, 4, 3, 4);
             textBox2.Name = "textBox2";
-            textBox2.Size = new Size(114, 27);
+            textBox2.Size = new Size(157, 27);
             textBox2.TabIndex = 13;
             // 
             // textBox1
@@ -183,6 +184,7 @@
             textBox1.Location = new Point(248, 145);
             textBox1.Margin = new Padding(3, 4, 3, 4);
             textBox1.Name = "textBox1";
+            textBox1.ReadOnly = true;
             textBox1.Size = new Size(114, 27);
             textBox1.TabIndex = 12;
             // 
@@ -192,9 +194,9 @@
             label9.ForeColor = Color.Black;
             label9.Location = new Point(40, 556);
             label9.Name = "label9";
-            label9.Size = new Size(180, 20);
+            label9.Size = new Size(171, 20);
             label9.TabIndex = 11;
-            label9.Text = "Tên tài khoảng ngân hàng";
+            label9.Text = "Tên tài khoản ngân hàng";
             // 
             // label6
             // 
@@ -212,9 +214,9 @@
             label4.ForeColor = Color.Black;
             label4.Location = new Point(40, 701);
             label4.Name = "label4";
-            label4.Size = new Size(174, 20);
+            label4.Size = new Size(165, 20);
             label4.TabIndex = 9;
-            label4.Text = "Số tài khoảng ngân hàng";
+            label4.Text = "Số tài khoản ngân hàng";
             // 
             // label8
             // 

@@ -114,6 +114,47 @@ namespace CoffeeSell
 
         private void button1_Click_1(object sender, EventArgs e)
         {
+            // Kiểm tra các trường bắt buộc không được để trống
+            if (string.IsNullOrWhiteSpace(textBox6.Text)) // Tên tài khoản ngân hàng
+            {
+                MessageBox.Show("Vui lòng nhập tên tài khoản ngân hàng.", "Thiếu thông tin", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(textBox7.Text)) // Số tài khoản ngân hàng
+            {
+                MessageBox.Show("Vui lòng nhập số tài khoản ngân hàng.", "Thiếu thông tin", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(textBox2.Text)) // Địa chỉ
+            {
+                MessageBox.Show("Vui lòng nhập địa chỉ.", "Thiếu thông tin", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(textBox3.Text)) // WiFi
+            {
+                MessageBox.Show("Vui lòng nhập tên WiFi.", "Thiếu thông tin", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(textBox4.Text)) // Mật khẩu WiFi
+            {
+                MessageBox.Show("Vui lòng nhập mật khẩu WiFi.", "Thiếu thông tin", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(textBox5.Text)) // Slogan
+            {
+                MessageBox.Show("Vui lòng nhập Slogan.", "Thiếu thông tin", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (!long.TryParse(textBox7.Text.Trim(), out _) || textBox7.Text.Length < 8 || textBox7.Text.Length > 16)
+            {
+                MessageBox.Show("Số tài khoản ngân hàng phải là số nguyên có từ 8 đến 16 chữ số.", "Sai định dạng", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             if (BOSettingConfig.Update(GetSetting()))
             {
                 MessageBox.Show("Lưu thành công");

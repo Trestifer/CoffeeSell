@@ -37,6 +37,22 @@ namespace CoffeeSell
         }
         private void guna2Button1_Click(object sender, EventArgs e)
         {
+            string username = guna2TextBox1.Text.Trim();
+            string password = guna2TextBox2.Text;
+
+            // Kiểm tra trống
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            {
+                MessageBox.Show("Tên đăng nhập và mật khẩu không được để trống.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Kiểm tra ký tự đặc biệt trong tên đăng nhập (chỉ cho phép chữ cái, số và dấu gạch dưới)
+            if (!System.Text.RegularExpressions.Regex.IsMatch(username, @"^[a-zA-Z0-9_]+$"))
+            {
+                MessageBox.Show("Tên đăng nhập không được chứa ký tự đặc biệt.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             Account account = BOAccount.Login(guna2TextBox1.Text, guna2TextBox2.Text);
             if (account != null)
             {

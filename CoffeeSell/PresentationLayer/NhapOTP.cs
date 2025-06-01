@@ -108,7 +108,21 @@ namespace CoffeeSell
 
         private void button2_Click(object sender, EventArgs e)
         {
-            
+            string otp = textBox1.Text.Trim();
+
+            // Kiểm tra OTP có bị trống không
+            if (string.IsNullOrEmpty(otp))
+            {
+                MessageBox.Show("Vui lòng nhập mã OTP.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Kiểm tra OTP phải là 6 chữ số
+            if (!System.Text.RegularExpressions.Regex.IsMatch(otp, @"^\d{6}$"))
+            {
+                MessageBox.Show("Mã OTP phải gồm đúng 6 chữ số.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             if (DateTime.Now < security.GetOTPExpired())
             {
                 if (textBox1.Text == security.GetCurrentOTP())
@@ -123,6 +137,10 @@ namespace CoffeeSell
                     new DoiMatKhau(user).Show();
                     this.Close();
 
+                }
+                else
+                {
+                    MessageBox.Show("Mã OTP không đúng. Vui lòng kiểm tra lại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else

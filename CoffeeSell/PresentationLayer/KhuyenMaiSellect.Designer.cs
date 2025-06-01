@@ -108,6 +108,7 @@
             MaximizeBox = false;
             Name = "KhuyenMaiSellect";
             Text = "KhuyenMaiSellect";
+            Load += KhuyenMaiSellect_Load;
             ((System.ComponentModel.ISupportInitialize)guna2DataGridView1).EndInit();
             ResumeLayout(false);
         }
