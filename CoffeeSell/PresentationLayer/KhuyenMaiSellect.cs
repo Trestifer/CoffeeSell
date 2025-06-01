@@ -20,7 +20,7 @@ namespace CoffeeSell.PresentationLayer
             InitializeComponent();
             // Set the data source
             guna2DataGridView1.DataSource = BODiscount.GetDiscountForCustomer(CustomerId);
-
+            guna2DataGridView1.ColumnHeadersHeight = 50;
             // Set the data source
 
             // Prevent auto-generating all columns
@@ -90,5 +90,9 @@ namespace CoffeeSell.PresentationLayer
             this.Close();
         }
 
+        private void KhuyenMaiSellect_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

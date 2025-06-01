@@ -140,11 +140,13 @@ namespace CoffeeSell
             button1.Enabled = true;
             button2.Enabled = false;
             panel3.Enabled = false;
+
             Ranking b = new Ranking();
             b.Dong = Convert.ToInt32(txt1.Text);
             b.Bac = Convert.ToInt32(txt2.Text);
             b.Vang = Convert.ToInt32(txt3.Text);
             b.KimCuong = Convert.ToInt32(txt4.Text);
+
             BOCustomer.Update(b);
         }
 
@@ -167,6 +169,34 @@ namespace CoffeeSell
 
         private void button7_Click(object sender, EventArgs e)
         {
+            string tenKH = textBox1.Text.Trim();
+            string sdt = textBox2.Text.Trim();
+
+            // Kiểm tra tên khách hàng
+            if (string.IsNullOrEmpty(tenKH))
+            {
+                MessageBox.Show("Tên khách hàng không được để trống.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (tenKH.Length > 50)
+            {
+                MessageBox.Show("Tên khách hàng không được vượt quá 50 ký tự.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Kiểm tra số điện thoại
+            if (string.IsNullOrEmpty(sdt))
+            {
+                MessageBox.Show("Số điện thoại không được để trống.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Định dạng số điện thoại: 10 chữ số, bắt đầu bằng số 0
+            if (!System.Text.RegularExpressions.Regex.IsMatch(sdt, @"^0\d{9}$"))
+            {
+                MessageBox.Show("Số điện thoại không đúng định dạng. Vui lòng nhập 10 chữ số và bắt đầu bằng số 0.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             if (BOCustomer.Update(Id, textBox1.Text, textBox2.Text))
             {
                 MessageBox.Show("Sửa thành công");

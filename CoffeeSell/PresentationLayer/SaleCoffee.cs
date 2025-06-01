@@ -60,12 +60,40 @@ namespace CoffeeSell
             LoadDeviceIdsToComboBoxAndAddNone();
             LoadBillToDeviceData();
 
-
+            // Gán sự kiện KeyPress cho txtSDT
+            txtSDT.KeyPress += txtSDT_KeyPress;
 
 
         }
 
+        private void txtSDT_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Cho phép các phím điều khiển như Backspace, Delete
+            if (char.IsControl(e.KeyChar))
+            {
+                return;
+            }
 
+            // Chặn nếu độ dài đã đạt tối đa
+            if (txtSDT.Text.Length >= 10)
+            {
+                e.Handled = true;
+                return;
+            }
+
+            // Chỉ cho phép nhập số
+            if (!char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+                return;
+            }
+
+            // Kiểm tra nếu là ký tự đầu tiên, phải là '0'
+            if (txtSDT.Text.Length == 0 && e.KeyChar != '0')
+            {
+                e.Handled = true;
+            }
+        }
         private void LoadDeviceIdsToComboBoxAndAddNone()
         {
             // Lấy địa chỉ MAC hiện tại
@@ -545,6 +573,24 @@ namespace CoffeeSell
         {
             try
             {
+                // Kiểm tra đầu vào giá tối thiểu và tối đa
+                if (!minPrice.HasValue || !maxPrice.HasValue)
+                {
+                    MessageBox.Show("Vui lòng nhập giá tối thiểu và giá tối đa.", "Thiếu thông tin", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (minPrice <= 0 || maxPrice <= 0)
+                {
+                    MessageBox.Show("Giá tối thiểu và giá tối đa phải là số lớn hơn 0.", "Giá không hợp lệ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (minPrice >= maxPrice)
+                {
+                    MessageBox.Show("Giá tối thiểu phải nhỏ hơn giá tối đa.", "Giá không hợp lệ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 flowLayoutPanelProducts.Controls.Clear();
                 string query = "SELECT * FROM Food";
                 var conditions = new List<string>();
