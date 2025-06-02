@@ -58,7 +58,7 @@ namespace CoffeeSell
 
             guna2TextBox1.TextChanged += guna2TextBox1_TextChanged;
             LoadDeviceIdsToComboBoxAndAddNone();
-            LoadBillToDeviceData();
+            //LoadBillToDeviceData();
 
             // Gán sự kiện KeyPress cho txtSDT
             txtSDT.KeyPress += txtSDT_KeyPress;
@@ -131,7 +131,6 @@ namespace CoffeeSell
                         DataRow matchedRow = combinedTable.NewRow();
                         matchedRow["DeviceId"] = matchedDevice.Field<string>("DeviceId");
                         combinedTable.Rows.Add(matchedRow);
-                        MessageBox.Show($"Tìm thấy Device ID khớp với MAC hiện tại: {matchedDevice.Field<string>("DeviceId")}", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {
@@ -863,6 +862,7 @@ namespace CoffeeSell
                 }
                 LoadBillToDeviceData(comboBox4.Text,bill.BillId);
             }
+            UpdateTotalLabel();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -1010,30 +1010,63 @@ namespace CoffeeSell
 
         }
 
-        private void guna2DataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private async void guna2DataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            // Kiểm tra xem có phải nhấp vào một hàng hợp lệ không (không phải tiêu đề)
+
             if (e.RowIndex < 0) return;
 
-            // Lấy tên của cột được nhấp vào
             string columnName = guna2DataGridView2.Columns[e.ColumnIndex].Name;
-
-            // Lấy hàng hiện tại
             DataGridViewRow row = guna2DataGridView2.Rows[e.RowIndex];
 
-            // Lấy giá trị của cột "SoHoaDon" và "MaThietBi" từ hàng được nhấp
             string soHoaDon = row.Cells["SoHoaDon"].Value?.ToString();
             string maThietBi = row.Cells["MaThietBi"].Value?.ToString();
 
             if (columnName == "BtnKichHoat")
             {
-                // Logic khi nút "Kích hoạt" được nhấp
-                MessageBox.Show($"Kích hoạt Hóa đơn: {soHoaDon} cho Thiết bị: {maThietBi}", "Kích hoạt", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                // Bạn sẽ thêm logic kích hoạt thực tế ở đây, ví dụ: gửi lệnh tới thiết bị
+                string rawMac = GetMacAddressOfFirstActiveAdapter(); // dạng AA:BB:CC:DD:EE:FF
+
+                if (rawMac == "MAC Not Found")
+                {
+                    MessageBox.Show("Không tìm thấy địa chỉ MAC của thiết bị.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                string macNoColon = rawMac.Replace(":", "").Trim();
+                maThietBi = maThietBi?.Trim().ToUpper();
+
+                if (string.IsNullOrEmpty(maThietBi) || string.IsNullOrEmpty(macNoColon))
+                {
+                    MessageBox.Show("Thiếu mã thiết bị hoặc MAC.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                string buzzUrl = $"http://esp8266.local/buzz?id=ESP1ABC123";
+                Console.WriteLine($"Buzz URL: {buzzUrl}");
+
+                try
+                {
+                    using (HttpClient client = new HttpClient())
+                    {
+                        var buzzResponse = await client.GetAsync(buzzUrl);
+                        string buzzContent = await buzzResponse.Content.ReadAsStringAsync();
+
+                        if (!buzzResponse.IsSuccessStatusCode)
+                        {
+                            MessageBox.Show($"Gửi lệnh buzzer thất bại: {buzzContent}", "Lỗi buzzer", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+
+                        MessageBox.Show($"Kích hoạt Hóa đơn: {soHoaDon} cho Thiết bị: {maThietBi}", "Kích hoạt", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Lỗi khi gửi lệnh: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
+
             else if (columnName == "BtnHoanThanh")
             {
-                // Logic khi nút "Hoàn thành" được nhấp
                 DialogResult dialogResult = MessageBox.Show(
                     $"Xác nhận hoàn thành Hóa đơn: {soHoaDon} và loại bỏ khỏi Thiết bị: {maThietBi}?",
                     "Xác nhận Hoàn thành",
@@ -1043,20 +1076,19 @@ namespace CoffeeSell
 
                 if (dialogResult == DialogResult.Yes)
                 {
-                    // Thực hiện loại bỏ số hóa đơn khỏi thiết bị
-                    // Đây là nơi bạn sẽ gọi phương thức BO để cập nhật DB
-                    // Ví dụ: _boEsp.RemoveBillFromDevice(soHoaDon, maThietBi);
+                    // _boEsp.RemoveBillFromDevice(soHoaDon, maThietBi);
                     MessageBox.Show($"Hoàn thành Hóa đơn: {soHoaDon} đã được loại bỏ khỏi Thiết bị: {maThietBi}", "Hoàn thành", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    // Sau khi hoàn thành, bạn có thể xóa hàng khỏi DataGridView
                     guna2DataGridView2.Rows.RemoveAt(e.RowIndex);
-                    // Hoặc tải lại toàn bộ dữ liệu nếu bạn có hàm LoadBillToDeviceData() thực tế từ DB
                     // LoadBillToDeviceData();
                 }
             }
         }
+
+
         private void LoadBillToDeviceData(string value = "None", int SoHoaDonGia =-1)
         {
+            guna2DataGridView2.ColumnHeadersHeight = 35;
+            
             DataTable dt = new DataTable();
             dt.Columns.Add("SoHoaDon", typeof(string));
             dt.Columns.Add("MaThietBi", typeof(string));
@@ -1065,22 +1097,20 @@ namespace CoffeeSell
             foreach (DataRowView item in comboBox4.Items)
             {
                 string deviceId = item["DeviceId"].ToString();
-                if (deviceId != "None")
+                if (value != "None"&& deviceId!="None")
                 {
                     DataRow newRow = dt.NewRow();
-                    newRow["SoHoaDon"] = SoHoaDonGia ==-1 && value != deviceId ? null:$"{SoHoaDonGia}"; // Set SoHoaDon to null
+                    newRow["SoHoaDon"] = $"{SoHoaDonGia}" ; // Set SoHoaDon to null
                     newRow["MaThietBi"] = deviceId;
                     dt.Rows.Add(newRow);
                 }
             }
-
 
             // Clear old columns if any, to avoid duplication when reloading
             guna2DataGridView2.Columns.Clear();
 
             // Add columns from DataTable
             guna2DataGridView2.DataSource = dt;
-
             // Add "Kích hoạt" button column
             DataGridViewButtonColumn activateButtonColumn = new DataGridViewButtonColumn();
             activateButtonColumn.Name = "BtnKichHoat";
@@ -1102,7 +1132,6 @@ namespace CoffeeSell
             guna2DataGridView2.Columns["SoHoaDon"].HeaderText = "Số Hóa Đơn";
             guna2DataGridView2.Columns["MaThietBi"].HeaderText = "Mã Thiết Bị";
 
-            guna2DataGridView2.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
         }
     }
 }
