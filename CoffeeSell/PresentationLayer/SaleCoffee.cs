@@ -58,7 +58,7 @@ namespace CoffeeSell
 
             guna2TextBox1.TextChanged += guna2TextBox1_TextChanged;
             LoadDeviceIdsToComboBoxAndAddNone();
-            LoadBillToDeviceData();
+            //LoadBillToDeviceData();
 
             // Gán sự kiện KeyPress cho txtSDT
             txtSDT.KeyPress += txtSDT_KeyPress;
@@ -1009,7 +1009,6 @@ namespace CoffeeSell
 
         private async void guna2DataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            guna2DataGridView2.ColumnHeadersHeight = 35;
 
             if (e.RowIndex < 0) return;
 
@@ -1085,6 +1084,8 @@ namespace CoffeeSell
 
         private void LoadBillToDeviceData(string value = "None", int SoHoaDonGia =-1)
         {
+            guna2DataGridView2.ColumnHeadersHeight = 35;
+            
             DataTable dt = new DataTable();
             dt.Columns.Add("SoHoaDon", typeof(string));
             dt.Columns.Add("MaThietBi", typeof(string));
@@ -1093,22 +1094,20 @@ namespace CoffeeSell
             foreach (DataRowView item in comboBox4.Items)
             {
                 string deviceId = item["DeviceId"].ToString();
-                if (deviceId != "None")
+                if (value != "None"&& deviceId!="None")
                 {
                     DataRow newRow = dt.NewRow();
-                    newRow["SoHoaDon"] = SoHoaDonGia ==-1 && value != deviceId ? null:$"{SoHoaDonGia}"; // Set SoHoaDon to null
+                    newRow["SoHoaDon"] = $"{SoHoaDonGia}" ; // Set SoHoaDon to null
                     newRow["MaThietBi"] = deviceId;
                     dt.Rows.Add(newRow);
                 }
             }
-
 
             // Clear old columns if any, to avoid duplication when reloading
             guna2DataGridView2.Columns.Clear();
 
             // Add columns from DataTable
             guna2DataGridView2.DataSource = dt;
-
             // Add "Kích hoạt" button column
             DataGridViewButtonColumn activateButtonColumn = new DataGridViewButtonColumn();
             activateButtonColumn.Name = "BtnKichHoat";
