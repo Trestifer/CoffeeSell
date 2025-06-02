@@ -111,7 +111,6 @@ namespace CoffeeSell
             // Nếu không tìm thấy MAC, chỉ có "None"
             if (currentMac == "MAC Not Found")
             {
-                MessageBox.Show("Không thể lấy địa chỉ MAC của thiết bị. Chỉ hiển thị 'None'.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
@@ -947,40 +946,8 @@ namespace CoffeeSell
         {
 
         }
-        private string GetDeviceIdByCurrentMac()
-        {
-            string currentMac = GetMacAddressOfFirstActiveAdapter(); // Lấy MAC hiện tại
-
-            if (currentMac == "MAC Not Found")
-            {
-                MessageBox.Show("Không thể lấy địa chỉ MAC của thiết bị. Vui lòng kiểm tra kết nối mạng.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return null; // Trả về null nếu không lấy được MAC
-            }
-
-            DataTable allEspDevices = new BOEsp().GetAllEspDevices(); // Lấy tất cả thiết bị từ BO
-
-            if (allEspDevices == null || allEspDevices.Rows.Count == 0)
-            {
-                // Không có dữ liệu thiết bị hoặc lỗi khi tải
-                return null;
-            }
-
-            // Sử dụng LINQ để tìm DeviceId khớp với AssignedMAC
-            var matchedDevice = allEspDevices.AsEnumerable() // Chuyển DataTable thành IEnumerable<DataRow>
-                                             .FirstOrDefault(row =>
-                                                row.Field<string>("AssignedMAC") == currentMac);
-
-            if (matchedDevice != null)
-            {
-                // Nếu tìm thấy, trả về DeviceId
-                return matchedDevice.Field<string>("DeviceId");
-            }
-            else
-            {
-                // Không tìm thấy thiết bị nào khớp
-                return null;
-            }
-        }
+       
+        
 
         // Phương thức GetMacAddressOfFirstActiveAdapter() của bạn (đặt trong cùng lớp Form)
         private string GetMacAddressOfFirstActiveAdapter()
@@ -1031,16 +998,14 @@ namespace CoffeeSell
                     return;
                 }
 
-                string macNoColon = rawMac.Replace(":", "").Trim();
-                maThietBi = maThietBi?.Trim().ToUpper();
 
-                if (string.IsNullOrEmpty(maThietBi) || string.IsNullOrEmpty(macNoColon))
+                if (string.IsNullOrEmpty(maThietBi) || string.IsNullOrEmpty(rawMac))
                 {
                     MessageBox.Show("Thiếu mã thiết bị hoặc MAC.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                string buzzUrl = $"http://esp8266.local/buzz?id=ESP1ABC123";
+                string buzzUrl = $"http://esp8266.local/buzz?id={maThietBi+rawMac}";
                 Console.WriteLine($"Buzz URL: {buzzUrl}");
 
                 try

@@ -68,7 +68,7 @@ namespace CoffeeSell.PresentationLayer
             }
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e) // Thêm thiết bị
+        private async void pictureBox1_Click(object sender, EventArgs e) // Thêm thiết bị
         {
             string deviceId = textBox1.Text;
             string assignedMAC = GetMacAddressOfFirstActiveAdapter();
@@ -85,9 +85,31 @@ namespace CoffeeSell.PresentationLayer
                 return;
             }
 
+
             ESP newEspDevice = new ESP(deviceId, assignedMAC);
             string result = _boEsp.CreateEspDevice(newEspDevice); // Gọi qua BOEsp
+            string buzzUrl = $"http://esp8266.local/verify?id={deviceId+GetMacAddressOfFirstActiveAdapter}";
+            Console.WriteLine($"Buzz URL: {buzzUrl}");
 
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    var buzzResponse = await client.GetAsync(buzzUrl);
+                    string buzzContent = await buzzResponse.Content.ReadAsStringAsync();
+
+                    if (!buzzResponse.IsSuccessStatusCode)
+                    {
+                        MessageBox.Show($"Đăng ký thất bại cho thiết bị có mã{deviceId}", "Lỗi khi đăng ký", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi gửi lệnh: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             if (result == "Success")
             {
                 MessageBox.Show("Thiết bị ESP đã được thêm thành công vào cơ sở dữ liệu!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
