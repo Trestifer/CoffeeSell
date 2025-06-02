@@ -32,13 +32,14 @@
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             tabPage2 = new TabPage();
+            label2 = new Label();
             button1 = new Button();
             label3 = new Label();
             comboBox3 = new ComboBox();
             guna2DataGridView1 = new Guna.UI2.WinForms.Guna2DataGridView();
             label1 = new Label();
             tabControl1 = new TabControl();
-            label2 = new Label();
+            button2 = new Button();
             tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)guna2DataGridView1).BeginInit();
             tabControl1.SuspendLayout();
@@ -46,6 +47,7 @@
             // 
             // tabPage2
             // 
+            tabPage2.Controls.Add(button2);
             tabPage2.Controls.Add(label2);
             tabPage2.Controls.Add(button1);
             tabPage2.Controls.Add(label3);
@@ -61,6 +63,16 @@
             tabPage2.Text = "Danh sách hóa đơn";
             tabPage2.UseVisualStyleBackColor = true;
             tabPage2.Click += tabPage2_Click;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(1082, 798);
+            label2.Name = "label2";
+            label2.Size = new Size(177, 31);
+            label2.TabIndex = 7;
+            label2.Text = "Lịch sử hóa đơn";
+            label2.Click += label2_Click;
             // 
             // button1
             // 
@@ -162,15 +174,15 @@
             tabControl1.Size = new Size(1894, 1070);
             tabControl1.TabIndex = 0;
             // 
-            // label2
+            // button2
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(1082, 798);
-            label2.Name = "label2";
-            label2.Size = new Size(177, 31);
-            label2.TabIndex = 7;
-            label2.Text = "Lịch sử hóa đơn";
-            label2.Click += label2_Click;
+            button2.Location = new Point(995, 106);
+            button2.Name = "button2";
+            button2.Size = new Size(196, 46);
+            button2.TabIndex = 8;
+            button2.Text = "Xóa";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // QuanLyHoaDon
             // 
@@ -198,5 +210,6 @@
         private Label label1;
         private TabControl tabControl1;
         private Label label2;
+        private Button button2;
     }
 }

@@ -68,14 +68,21 @@ namespace CoffeeSell.DataAccessLayer
 
         public bool DeleteBill(int billId)
         {
-            string cmString = "DELETE FROM Bill WHERE BillId = @Id";
+            string deleteBillInfo = "DELETE FROM BillInfo WHERE Id = @Id";
+            string deleteDiscountBill = "DELETE FROM DiscountBillInfo WHERE BillId = @Id";
+            string deleteBill = "DELETE FROM Bill WHERE BillId = @Id";
 
             try
             {
-                return ExecuteNonQuery(
-                    cmString,
-                    new string[] { "@Id" },
-                    new object[] { billId }) > 0;
+                // Optional: Use transaction if your ExecuteNonQuery supports it
+                int rowsAffected = 0;
+
+                rowsAffected += ExecuteNonQuery(deleteBillInfo, new[] { "@Id" }, new object[] { billId });
+                rowsAffected += ExecuteNonQuery(deleteDiscountBill, new[] { "@Id" }, new object[] { billId });
+                rowsAffected += ExecuteNonQuery(deleteBill, new[] { "@Id" }, new object[] { billId });
+
+                // Return true only if the final deletion from Bill table was successful
+                return rowsAffected > 0;
             }
             catch (Exception ex)
             {
@@ -83,6 +90,7 @@ namespace CoffeeSell.DataAccessLayer
                 return false;
             }
         }
+
 
         public DataTable GetAllBill()
         {

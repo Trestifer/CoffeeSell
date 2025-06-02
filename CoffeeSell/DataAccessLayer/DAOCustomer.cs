@@ -135,6 +135,39 @@ namespace CoffeeSell.DataAccessLayer
                 return null;
             }
         }
+        public Customer GetCustomerByPhoneNumber(string phoneNumber)
+        {
+            string cmString = "SELECT * FROM Customer WHERE PhoneNumber = @Phone";
+
+            try
+            {
+                DataTable dt = ExecuteQuery(
+                    cmString,
+                    new string[] { "@Phone" },
+                    new object[] { phoneNumber });
+
+                if (dt.Rows.Count == 1)
+                {
+                    DataRow r = dt.Rows[0];
+                    Customer c = new Customer();
+                    c.SetCustomerId(Convert.ToInt32(r["CustomerId"]));
+                    c.SetNameCustomer(r["NameCustomer"].ToString());
+                    c.SetPhoneNumber(r["PhoneNumber"].ToString());
+                    c.SetPoints(Convert.ToInt32(r["Points"]));
+                    c.SetRegisterDate(Convert.ToDateTime(r["RegisterDate"]));
+                    c.SetLattestBuy(Convert.ToDateTime(r["LattestBuy"]));
+                    return c;
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"GetCustomerByPhoneNumber error: {ex.Message}");
+                return null;
+            }
+        }
+
 
         public int GetMaxCustomerId()
         {

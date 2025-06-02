@@ -27,5 +27,9 @@ namespace CoffeeSell.BO
         {
             return bil.UpdateBillPhoto(id,photo);
         }
+        public static bool Delete(int id)
+        {
+            return bil.DeleteBill(id);
+        }
     }
 }

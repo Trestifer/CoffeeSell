@@ -13,11 +13,12 @@ namespace CoffeeSell
         private DAOBill daoBill = new DAOBill();
         private DAOBillInfo daoBillInfo = new DAOBillInfo();
         private DAOFood daoFood = new DAOFood();
-
+        int maHoaDon = -1;
         public QuanLyHoaDon()
         {
-            InitializeComponent();
             AllBill = daoBill.GetBillWithCustomerInfo();
+
+            InitializeComponent();
             KhoiTaoComboBox();
             TaiLaiDuLieu();
 
@@ -45,7 +46,8 @@ namespace CoffeeSell
 
         private void TaiLaiDuLieu()
         {
-            guna2DataGridView1.DataSource = AllBill;
+            maHoaDon = -1;
+            guna2DataGridView1.DataSource = daoBill.GetBillWithCustomerInfo();
             guna2DataGridView1.Show();
 
             guna2DataGridView1.ColumnHeadersHeight = 40;
@@ -143,15 +145,15 @@ namespace CoffeeSell
             {
                 try
                 {
-                    int maHoaDon = Convert.ToInt32(guna2DataGridView1.SelectedRows[0].Cells["BillId"].Value);
+                    int maHoaDon1 = Convert.ToInt32(guna2DataGridView1.SelectedRows[0].Cells["BillId"].Value);
                     string path = (guna2DataGridView1.SelectedRows[0].Cells["Photo"].Value).ToString();
                     PhotoFunction.OpenImageByName(path);
-                    HienThiChiTietHoaDon(maHoaDon);
+                    HienThiChiTietHoaDon(maHoaDon1);
                 }
                 catch (Exception ex)
                 {
+                    maHoaDon = -1;
                     System.Diagnostics.Debug.WriteLine($"button1_Click error: {ex.Message}");
-                    MessageBox.Show("Lỗi khi xem chi tiết hóa đơn: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
@@ -166,8 +168,10 @@ namespace CoffeeSell
             {
                 try
                 {
-                    int maHoaDon = Convert.ToInt32(guna2DataGridView1.Rows[e.RowIndex].Cells["BillId"].Value);
-                    HienThiChiTietHoaDon(maHoaDon);
+                    int maHoaDon1 = Convert.ToInt32(guna2DataGridView1.Rows[e.RowIndex].Cells["BillId"].Value);
+                    maHoaDon = maHoaDon1;
+                    MessageBox.Show(maHoaDon.ToString());
+
                 }
                 catch (Exception ex)
                 {
@@ -290,6 +294,51 @@ namespace CoffeeSell
         private void label2_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+
+
+            if (guna2DataGridView1.SelectedRows.Count > 0)
+            {
+                try
+                {
+                    int maHoaDon1 = Convert.ToInt32(guna2DataGridView1.SelectedRows[0].Cells["BillId"].Value);
+                    HienThiChiTietHoaDon(maHoaDon1);
+                    maHoaDon = maHoaDon1;
+                    if (maHoaDon == -1)
+                    {
+                        return;
+                    }
+                    if (BOBill.Delete(maHoaDon))
+                    {
+                        BOCustomer.MinusPoint(guna2DataGridView1.SelectedRows[0].Cells["PhoneNumber"].Value.ToString(), 1000);
+                        MessageBox.Show("Xoá thành công");
+                        TaiLaiDuLieu();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Xóa thất bại");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    maHoaDon = -1;
+                    System.Diagnostics.Debug.WriteLine($"button1_Click error: {ex.Message}");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng chọn một hóa đơn để xóa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+
+
+
+
+            
         }
     }
 }

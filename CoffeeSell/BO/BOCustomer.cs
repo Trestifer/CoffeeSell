@@ -56,5 +56,11 @@ namespace CoffeeSell.BO
             customer.SetNameCustomer(name);
             return c.UpdateCustomer(customer);
         }
+        public static bool MinusPoint(string phoneNumber,int point)
+        {
+            Customer temp = c.GetCustomerByPhoneNumber(phoneNumber);
+            UpdatePoint(temp.GetCustomerId(), point * -1);
+            return true;
+        }
     }
 }
