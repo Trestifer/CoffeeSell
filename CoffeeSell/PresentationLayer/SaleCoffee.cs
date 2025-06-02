@@ -541,6 +541,7 @@ namespace CoffeeSell
                 }
                 if (totalDiscount > 100)
                     totalDiscount = 100;
+                discount = total * totalDiscount / 100;
             }
             finalPrice = total - discount;
 
@@ -1086,6 +1087,7 @@ namespace CoffeeSell
             activateButtonColumn.HeaderText = "Kích Hoạt";
             activateButtonColumn.Text = "Kích hoạt";
             activateButtonColumn.UseColumnTextForButtonValue = true;
+            if(SoHoaDonGia == -1)
             guna2DataGridView2.Columns.Add(activateButtonColumn);
 
             // Add "Hoàn thành" button column
